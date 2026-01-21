@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_f6b7210acad6808d65dd8389c2754d85 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+
+            <style>html, body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            </style>
+
+            <style>#map {
+                position:absolute;
+                top:0;
+                bottom:0;
+                right:0;
+                left:0;
+                }
+            </style>
+
+            <script>
+                L_NO_TOUCH = false;
+                L_DISABLE_3D = false;
+            </script>
+
+        
+</head>
+<body>
+    
+    
+<div style="
+position: fixed; top: 12px; left: 50%; transform: translateX(-50%);
+z-index: 9999; background: white; padding: 10px 18px; border-radius: 6px;
+box-shadow: 0 2px 6px rgba(0,0,0,0.3); font-size: 16px; font-weight: bold;">
+Paul Co Map
+</div>
+    
+<div style="
+position: fixed; bottom: 40px; left: 40px; z-index: 9999;
+background: white; padding: 10px 14px; border-radius: 6px;
+box-shadow: 0 2px 6px rgba(0,0,0,0.3); font-size: 12px;">
+<b>Legend</b><br>
+<span style="color:blue;">●</span> PUREHEALTH<br>
+<span style="color:green;">●</span> SNF<br>
+</div>
+    
+            <div class="folium-map" id="map_f6b7210acad6808d65dd8389c2754d85" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_f6b7210acad6808d65dd8389c2754d85 = L.map(
+                "map_f6b7210acad6808d65dd8389c2754d85",
+                {
+                    center: [30.55487931034483, -96.5312379310345],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 6,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+            L.control.scale().addTo(map_f6b7210acad6808d65dd8389c2754d85);
+
+            
+
+        
+    
+            var tile_layer_e29fd08a550e2e711912c3541b57037a = L.tileLayer(
+                "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 20,
+  "maxNativeZoom": 20,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"https://carto.com/attributions\"\u003eCARTO\u003c/a\u003e",
+  "subdomains": "abcd",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_e29fd08a550e2e711912c3541b57037a.addTo(map_f6b7210acad6808d65dd8389c2754d85);
+        
+    
+            var tile_layer_b041c0a98b6a4067cf5b24402e045b9a = L.tileLayer(
+                "https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 20,
+  "maxNativeZoom": 20,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"https://carto.com/attributions\"\u003eCARTO\u003c/a\u003e",
+  "subdomains": "abcd",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_b041c0a98b6a4067cf5b24402e045b9a.addTo(map_f6b7210acad6808d65dd8389c2754d85);
+        
+    
+            var tile_layer_2cce02959e207e31fed1010db295a5a9 = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 19,
+  "maxNativeZoom": 19,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_2cce02959e207e31fed1010db295a5a9.addTo(map_f6b7210acad6808d65dd8389c2754d85);
+        
+    
+            var tile_layer_0c62fdf2ce1a603464433e5177221cd4 = L.tileLayer(
+                "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+                {
+  "minZoom": 0,
+  "maxZoom": 18,
+  "maxNativeZoom": 18,
+  "noWrap": false,
+  "attribution": "Tiles \u0026copy; Esri \u0026mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_0c62fdf2ce1a603464433e5177221cd4.addTo(map_f6b7210acad6808d65dd8389c2754d85);
+        
+    
+            var circle_marker_0813c19e86b0fe6cec4e91652175d2fe = L.circleMarker(
+                [29.3866, -94.987],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6.8, "stroke": true, "weight": 3}
+            ).addTo(map_f6b7210acad6808d65dd8389c2754d85);
+        
+    
+        var popup_e07623f5a7108443a71bcd14e7144f66 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_420028d573939eb6172bfb60664ae19d = $(`<div id="html_420028d573939eb6172bfb60664ae19d" style="width: 100.0%; height: 100.0%;"><b>Country Village Care</b><br>Type: SNF<br>Provider ID: 675696<br>Beds: 136<br>Overall rating: 1.0</div>`)[0];
+                popup_e07623f5a7108443a71bcd14e7144f66.setContent(html_420028d573939eb6172bfb60664ae19d);
+            
+        
+
+        circle_marker_0813c19e86b0fe6cec4e91652175d2fe.bindPopup(popup_e07623f5a7108443a71bcd14e7144f66)
+        ;
+
+        
+    
+    
+            var circle_marker_ffc56e0230fb117f2fdda0ca3166122a = L.circleMarker(
+                [29.3888, -94.9026],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7.5, "stroke": true, "weight": 3}
+            ).addTo(map_f6b7210acad6808d65dd8389c2754d85);
+        
+    
+        var popup_e129814465c1cbf611718e02264fdf29 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_641eb0e7bff0dec3dd64765c207d383e = $(`<div id="html_641eb0e7bff0dec3dd64765c207d383e" style="width: 100.0%; height: 100.0%;"><b>River Hills Health and Rehabilitation Center</b><br>Type: SNF<br>Provider ID: 676114<br>Beds: 150<br>Overall rating: 2.0</div>`)[0];
+                popup_e129814465c1cbf611718e02264fdf29.setContent(html_641eb0e7bff0dec3dd64765c207d383e);
+            
+        
+
+        circle_marker_ffc56e0230fb117f2fdda0ca3166122a.bindPopup(popup_e129814465c1cbf611718e02264fdf29)
+        ;
+
+        
+    
+    
+            var circle_marker_5a79bdcd48618600144815f64964be4a = L.circleMarker(
+                [29.3871, -95.005],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6.75, "stroke": true, "weight": 3}
+            ).addTo(map_f6b7210acad6808d65dd8389c2754d85);
+        
+    
+        var popup_ed754c19d9cb193e483403428595981e = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_eac3fdd8cafedf80a5ed8088e28821ea = $(`<div id="html_eac3fdd8cafedf80a5ed8088e28821ea" style="width: 100.0%; height: 100.0%;"><b>Willow Creek Lodge</b><br>Type: SNF<br>Provider ID: 676244<br>Beds: 135<br>Overall rating: 4.0</div>`)[0];
+                popup_ed754c19d9cb193e483403428595981e.setContent(html_eac3fdd8cafedf80a5ed8088e28821ea);
+            
+        
+
+        circle_marker_5a79bdcd48618600144815f64964be4a.bindPopup(popup_ed754c19d9cb193e483403428595981e)
+        ;
+
+        
+    
+    
+            var circle_marker_865db1f072fb315d849ce39a00f4ea6d = L.circleMarker(
+                [29.3775, -95.012],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6.25, "stroke": true, "weight": 3}
+            ).addTo(map_f6b7210acad6808d65dd8389c2754d85);
+        
+    
+        var popup_2c88bf8f40efda777aa39a07ea188e79 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_cd07633b272be80f2ec564429465dba9 = $(`<div id="html_cd07633b272be80f2ec564429465dba9" style="width: 100.0%; height: 100.0%;"><b>Eagle Crest Rapid Recovery</b><br>Type: SNF<br>Provider ID: 676208<br>Beds: 125<br>Overall rating: 3.0</div>`)[0];
+                popup_2c88bf8f40efda777aa39a07ea188e79.setContent(html_cd07633b272be80f2ec564429465dba9);
+            
+        
+
+        circle_marker_865db1f072fb315d849ce39a00f4ea6d.bindPopup(popup_2c88bf8f40efda777aa39a07ea188e79)
+        ;
+
+        
+    
+    
+            var circle_marker_f894a760608205dab6fa0806afc56392 = L.circleMarker(
+                [29.4016, -94.931],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6.5, "stroke": true, "weight": 3}
+            ).addTo(map_f6b7210acad6808d65dd8389c2754d85);
+        
+    
+        var popup_1973542d54a243c535a398702a687424 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_4aec4a556a679e0974be7f0a46409e28 = $(`<div id="html_4aec4a556a679e0974be7f0a46409e28" style="width: 100.0%; height: 100.0%;"><b>Falcon Point Post Acute</b><br>Type: SNF<br>Provider ID: 676195<br>Beds: 130<br>Overall rating: 4.0</div>`)[0];
+                popup_1973542d54a243c535a398702a687424.setContent(html_4aec4a556a679e0974be7f0a46409e28);
+            
+        
+
+        circle_marker_f894a760608205dab6fa0806afc56392.bindPopup(popup_1973542d54a243c535a398702a687424)
+        ;
+
+        
+    
+    
+            var circle_marker_49f5278b08c9dea97fb1d157d3a97f3f = L.circleMarker(
+                [29.3888, -94.9026],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_f6b7210acad6808d65dd8389c2754d85);
+        
+    
+        var popup_237df8343e5073adfc27e411a3e2d7a0 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_8d86e0a6d886fad47d3817118c58b8e9 = $(`<div id="html_8d86e0a6d886fad47d3817118c58b8e9" style="width: 100.0%; height: 100.0%;"><b>PARKS HEALTH CENTER</b><br>Type: SNF<br>Provider ID: 455690<br>Beds: 90<br>Overall rating: 3.0</div>`)[0];
+                popup_237df8343e5073adfc27e411a3e2d7a0.setContent(html_8d86e0a6d886fad47d3817118c58b8e9);
+            
+        
+
+        circle_marker_49f5278b08c9dea97fb1d157d3a97f3f.bindPopup(popup_237df8343e5073adfc27e411a3e2d7a0)
+        ;
+
+        
+    
+    
+            var circle_marker_65eb8d46041ad6d4fe0c57f8650e7524 = L.circleMarker(
+                [29.3934, -94.901],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_f6b7210acad6808d65dd8389c2754d85);
+        
+    
+        var popup_df02f8e00ef2b03fa8807a8926b6e8df = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_56c4e5448bba96ad826c8b3cb94bbc94 = $(`<div id="html_56c4e5448bba96ad826c8b3cb94bbc94" style="width: 100.0%; height: 100.0%;"><b>La Dora Nursing and Rehabilitation Center</b><br>Type: SNF<br>Provider ID: 675934<br>Beds: 62<br>Overall rating: 5.0</div>`)[0];
+                popup_df02f8e00ef2b03fa8807a8926b6e8df.setContent(html_56c4e5448bba96ad826c8b3cb94bbc94);
+            
+        
+
+        circle_marker_65eb8d46041ad6d4fe0c57f8650e7524.bindPopup(popup_df02f8e00ef2b03fa8807a8926b6e8df)
+        ;
+
+        
+    
+    
+            var circle_marker_90d7ba3079d98236a395225f652e71f3 = L.circleMarker(
+                [29.6763, -95.1607],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5.75, "stroke": true, "weight": 3}
+            ).addTo(map_f6b7210acad6808d65dd8389c2754d85);
+        
+    
+        var popup_854bec31e4fee1ed1c9268fd006d26ab = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_db19a65f0f2c52dab111f3bf6fde476e = $(`<div id="html_db19a65f0f2c52dab111f3bf6fde476e" style="width: 100.0%; height: 100.0%;"><b>REMARKABLE HEALTHCARE OF SEGUIN</b><br>Type: SNF<br>Provider ID: 676274<br>Beds: 115<br>Overall rating: 2.0</div>`)[0];
+                popup_854bec31e4fee1ed1c9268fd006d26ab.setContent(html_db19a65f0f2c52dab111f3bf6fde476e);
+            
+        
+
+        circle_marker_90d7ba3079d98236a395225f652e71f3.bindPopup(popup_854bec31e4fee1ed1c9268fd006d26ab)
+        ;
+
+        
+    
+    
+            var circle_marker_6bb57dbc0673ca5ecb31baed3867d80c = L.circleMarker(
+                [29.5211, -95.082],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7.5, "stroke": true, "weight": 3}
+            ).addTo(map_f6b7210acad6808d65dd8389c2754d85);
+        
+    
+        var popup_023e1dea4937190dbeb82a9295f50e60 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_e0f566ab023a89b34997599282559eaa = $(`<div id="html_e0f566ab023a89b34997599282559eaa" style="width: 100.0%; height: 100.0%;"><b>Southern Oaks Therapy and Living Center</b><br>Type: SNF<br>Provider ID: 745056<br>Beds: 150<br>Overall rating: 4.0</div>`)[0];
+                popup_023e1dea4937190dbeb82a9295f50e60.setContent(html_e0f566ab023a89b34997599282559eaa);
+            
+        
+
+        circle_marker_6bb57dbc0673ca5ecb31baed3867d80c.bindPopup(popup_023e1dea4937190dbeb82a9295f50e60)
+        ;
+
+        
+    
+    
+            var circle_marker_4820b484ee473ede9c5e57ed2fe9916f = L.circleMarker(
+                [29.5226, -95.08],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6.0, "stroke": true, "weight": 3}
+            ).addTo(map_f6b7210acad6808d65dd8389c2754d85);
+        
+    
+        var popup_fb9a4fa0e35b3019a1e2dc68a128bc30 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_ca4b511d5da8144738624b381223ff16 = $(`<div id="html_ca4b511d5da8144738624b381223ff16" style="width: 100.0%; height: 100.0%;"><b>Mustang Park Therapy and Living Center</b><br>Type: SNF<br>Provider ID: 676363<br>Beds: 120<br>Overall rating: 1.0</div>`)[0];
+                popup_fb9a4fa0e35b3019a1e2dc68a128bc30.setContent(html_ca4b511d5da8144738624b381223ff16);
+            
+        
+
+        circle_marker_4820b484ee473ede9c5e57ed2fe9916f.bindPopup(popup_fb9a4fa0e35b3019a1e2dc68a128bc30)
+        ;
+
+        
+    
+    
+            var circle_marker_e6ab7adb11b8f12c53f20dd27bb56667 = L.circleMarker(
+                [29.2504, -94.871],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6.0, "stroke": true, "weight": 3}
+            ).addTo(map_f6b7210acad6808d65dd8389c2754d85);
+        
+    
+        var popup_d2abf034b2a48ab8d623b591b649adee = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_7bb9d96d81b99b1634d885d2a092ece2 = $(`<div id="html_7bb9d96d81b99b1634d885d2a092ece2" style="width: 100.0%; height: 100.0%;"><b>Mallard Creek Therapy and Living Center</b><br>Type: SNF<br>Provider ID: 676285<br>Beds: 120<br>Overall rating: nan</div>`)[0];
+                popup_d2abf034b2a48ab8d623b591b649adee.setContent(html_7bb9d96d81b99b1634d885d2a092ece2);
+            
+        
+
+        circle_marker_e6ab7adb11b8f12c53f20dd27bb56667.bindPopup(popup_d2abf034b2a48ab8d623b591b649adee)
+        ;
+
+        
+    
+    
+            var circle_marker_458681a8bf53cc751e18bb1c6070819a = L.circleMarker(
+                [29.545, -95.123],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5.2, "stroke": true, "weight": 3}
+            ).addTo(map_f6b7210acad6808d65dd8389c2754d85);
+        
+    
+        var popup_49d838634fe2a7ab1af94672e5a6a162 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_a40d5419fbb7eb80cff7e51b137fbbdf = $(`<div id="html_a40d5419fbb7eb80cff7e51b137fbbdf" style="width: 100.0%; height: 100.0%;"><b>TRUCARE LIVING CENTERS-COLUMBUS</b><br>Type: SNF<br>Provider ID: 676229<br>Beds: 104<br>Overall rating: 5.0</div>`)[0];
+                popup_49d838634fe2a7ab1af94672e5a6a162.setContent(html_a40d5419fbb7eb80cff7e51b137fbbdf);
+            
+        
+
+        circle_marker_458681a8bf53cc751e18bb1c6070819a.bindPopup(popup_49d838634fe2a7ab1af94672e5a6a162)
+        ;
+
+        
+    
+    
+            var circle_marker_2963eda78d7e6749ef2b6701aac16b13 = L.circleMarker(
+                [29.2904, -94.788],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6.0, "stroke": true, "weight": 3}
+            ).addTo(map_f6b7210acad6808d65dd8389c2754d85);
+        
+    
+        var popup_b93e838af414b8b5bf56b490825e2fa8 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_6712b60704e1bd49ca406a02238ddc8b = $(`<div id="html_6712b60704e1bd49ca406a02238ddc8b" style="width: 100.0%; height: 100.0%;"><b>TRUCARE LIVING CENTERS</b><br>Type: SNF<br>Provider ID: 676257<br>Beds: 120<br>Overall rating: 5.0</div>`)[0];
+                popup_b93e838af414b8b5bf56b490825e2fa8.setContent(html_6712b60704e1bd49ca406a02238ddc8b);
+            
+        
+
+        circle_marker_2963eda78d7e6749ef2b6701aac16b13.bindPopup(popup_b93e838af414b8b5bf56b490825e2fa8)
+        ;
+
+        
+    
+    
+            var circle_marker_ca3076e4975653dfed2d63774b13e92a = L.circleMarker(
+                [29.5401, -95.143],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7.5, "stroke": true, "weight": 3}
+            ).addTo(map_f6b7210acad6808d65dd8389c2754d85);
+        
+    
+        var popup_b729f4c71a714adae70559875dc96cb2 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_623f2453b48fe4a74a5febeb02641982 = $(`<div id="html_623f2453b48fe4a74a5febeb02641982" style="width: 100.0%; height: 100.0%;"><b>HILLTOP VILLAGE NURSING AND REHABILITATION</b><br>Type: SNF<br>Provider ID: 455628<br>Beds: 150<br>Overall rating: 1.0</div>`)[0];
+                popup_b729f4c71a714adae70559875dc96cb2.setContent(html_623f2453b48fe4a74a5febeb02641982);
+            
+        
+
+        circle_marker_ca3076e4975653dfed2d63774b13e92a.bindPopup(popup_b729f4c71a714adae70559875dc96cb2)
+        ;
+
+        
+    
+    
+            var circle_marker_b104807ca36ab647accaaef6eeedb8e2 = L.circleMarker(
+                [29.5568, -95.136],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6.0, "stroke": true, "weight": 3}
+            ).addTo(map_f6b7210acad6808d65dd8389c2754d85);
+        
+    
+        var popup_a16ad66ba25ac96ca19f1b3dfa0616b0 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_1d6f11e8a0a72620a450aac94b925b2f = $(`<div id="html_1d6f11e8a0a72620a450aac94b925b2f" style="width: 100.0%; height: 100.0%;"><b>Harbor Valley Health and Rehabilitation</b><br>Type: SNF<br>Provider ID: 676478<br>Beds: 120<br>Overall rating: 2.0</div>`)[0];
+                popup_a16ad66ba25ac96ca19f1b3dfa0616b0.setContent(html_1d6f11e8a0a72620a450aac94b925b2f);
+            
+        
+
+        circle_marker_b104807ca36ab647accaaef6eeedb8e2.bindPopup(popup_a16ad66ba25ac96ca19f1b3dfa0616b0)
+        ;
+
+        
+    
+    
+            var circle_marker_e1f301b0a99dca6f8956627f788ffe02 = L.circleMarker(
+                [29.3846, -95.234],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6.4, "stroke": true, "weight": 3}
+            ).addTo(map_f6b7210acad6808d65dd8389c2754d85);
+        
+    
+        var popup_85ad4adce88496b2040883029c5aa36c = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_fd91b4d03e3c19bdd9b31100653e6be0 = $(`<div id="html_fd91b4d03e3c19bdd9b31100653e6be0" style="width: 100.0%; height: 100.0%;"><b>TRUCARE LIVING CENTERS - SELMA</b><br>Type: SNF<br>Provider ID: 676406<br>Beds: 128<br>Overall rating: 3.0</div>`)[0];
+                popup_85ad4adce88496b2040883029c5aa36c.setContent(html_fd91b4d03e3c19bdd9b31100653e6be0);
+            
+        
+
+        circle_marker_e1f301b0a99dca6f8956627f788ffe02.bindPopup(popup_85ad4adce88496b2040883029c5aa36c)
+        ;
+
+        
+    
+    
+            var circle_marker_db42e20b19f7b8327c3f5fdbe6a76023 = L.circleMarker(
+                [29.5076, -95.192],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_f6b7210acad6808d65dd8389c2754d85);
+        
+    
+        var popup_0d3847672b5c08fe88de595f5cf27e8f = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_f7d2ad99197204ee6a2883ccb3096c25 = $(`<div id="html_f7d2ad99197204ee6a2883ccb3096c25" style="width: 100.0%; height: 100.0%;"><b>Homeplace Manor Healthcare Center</b><br>Type: SNF<br>Provider ID: 675058<br>Beds: 60<br>Overall rating: 3.0</div>`)[0];
+                popup_0d3847672b5c08fe88de595f5cf27e8f.setContent(html_f7d2ad99197204ee6a2883ccb3096c25);
+            
+        
+
+        circle_marker_db42e20b19f7b8327c3f5fdbe6a76023.bindPopup(popup_0d3847672b5c08fe88de595f5cf27e8f)
+        ;
+
+        
+    
+    
+            var circle_marker_bceade5f45d8ef2d2cc9969de9b733eb = L.circleMarker(
+                [29.4341, -95.242],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_f6b7210acad6808d65dd8389c2754d85);
+        
+    
+        var popup_722c24db9ad7e7627b307760fa0c2940 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_34c0962e2eceb2d30d3dd6a34cb29676 = $(`<div id="html_34c0962e2eceb2d30d3dd6a34cb29676" style="width: 100.0%; height: 100.0%;"><b>Groveton Nursing Home</b><br>Type: SNF<br>Provider ID: 676172<br>Beds: 47<br>Overall rating: 5.0</div>`)[0];
+                popup_722c24db9ad7e7627b307760fa0c2940.setContent(html_34c0962e2eceb2d30d3dd6a34cb29676);
+            
+        
+
+        circle_marker_bceade5f45d8ef2d2cc9969de9b733eb.bindPopup(popup_722c24db9ad7e7627b307760fa0c2940)
+        ;
+
+        
+    
+    
+            var circle_marker_82f791832cd225bbde6461b42a694a5b = L.circleMarker(
+                [29.5873, -95.206],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6.25, "stroke": true, "weight": 3}
+            ).addTo(map_f6b7210acad6808d65dd8389c2754d85);
+        
+    
+        var popup_b41bb1f3cc9f61ff093903511f7aab97 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_39caea2741e3c62d499c3a81183a3f7f = $(`<div id="html_39caea2741e3c62d499c3a81183a3f7f" style="width: 100.0%; height: 100.0%;"><b>Willow Park Rehabilitation and Care Center</b><br>Type: SNF<br>Provider ID: 676365<br>Beds: 125<br>Overall rating: 4.0</div>`)[0];
+                popup_b41bb1f3cc9f61ff093903511f7aab97.setContent(html_39caea2741e3c62d499c3a81183a3f7f);
+            
+        
+
+        circle_marker_82f791832cd225bbde6461b42a694a5b.bindPopup(popup_b41bb1f3cc9f61ff093903511f7aab97)
+        ;
+
+        
+    
+    
+            var circle_marker_e0a3db8f2a0407bcde5ad57072c35287 = L.circleMarker(
+                [29.6661, -95.015],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_f6b7210acad6808d65dd8389c2754d85);
+        
+    
+        var popup_e3c647db116d0d61e269738d603e4e5d = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_a9db992b4b57c3038b6fe722846c5f41 = $(`<div id="html_a9db992b4b57c3038b6fe722846c5f41" style="width: 100.0%; height: 100.0%;"><b>Hico Nursing and Rehabilitation</b><br>Type: SNF<br>Provider ID: 675468<br>Beds: 80<br>Overall rating: 3.0</div>`)[0];
+                popup_e3c647db116d0d61e269738d603e4e5d.setContent(html_a9db992b4b57c3038b6fe722846c5f41);
+            
+        
+
+        circle_marker_e0a3db8f2a0407bcde5ad57072c35287.bindPopup(popup_e3c647db116d0d61e269738d603e4e5d)
+        ;
+
+        
+    
+    
+            var circle_marker_846f98c6186faf459ad09ff17b8531be = L.circleMarker(
+                [32.7561, -97.136],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_f6b7210acad6808d65dd8389c2754d85);
+        
+    
+        var popup_55c68b48ede9077ef9f3a1ce43b94cce = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_2938f671ab5523c2207eeb28d4b1689b = $(`<div id="html_2938f671ab5523c2207eeb28d4b1689b" style="width: 100.0%; height: 100.0%;"><b>PH Ops of Arlington LLC</b><br>Type: PUREHEALTH<br>Provider ID: 676407<br>Beds: 54<br>Overall rating: 2.0</div>`)[0];
+                popup_55c68b48ede9077ef9f3a1ce43b94cce.setContent(html_2938f671ab5523c2207eeb28d4b1689b);
+            
+        
+
+        circle_marker_846f98c6186faf459ad09ff17b8531be.bindPopup(popup_55c68b48ede9077ef9f3a1ce43b94cce)
+        ;
+
+        
+    
+    
+            var circle_marker_fb54872e678eedf3a74a87190d2767d9 = L.circleMarker(
+                [33.2372, -97.144],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_f6b7210acad6808d65dd8389c2754d85);
+        
+    
+        var popup_017da55d3494502e6c3f2dce87db9e59 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_85d2e474f1e376f69ccda22d1e4c67a4 = $(`<div id="html_85d2e474f1e376f69ccda22d1e4c67a4" style="width: 100.0%; height: 100.0%;"><b>Denton Village SNF</b><br>Type: PUREHEALTH<br>Provider ID: 455627<br>Beds: 88<br>Overall rating: 3.0</div>`)[0];
+                popup_017da55d3494502e6c3f2dce87db9e59.setContent(html_85d2e474f1e376f69ccda22d1e4c67a4);
+            
+        
+
+        circle_marker_fb54872e678eedf3a74a87190d2767d9.bindPopup(popup_017da55d3494502e6c3f2dce87db9e59)
+        ;
+
+        
+    
+    
+            var circle_marker_865f209c1934df491c343d8bb69ce91f = L.circleMarker(
+                [30.2821, -95.474],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7.5, "stroke": true, "weight": 3}
+            ).addTo(map_f6b7210acad6808d65dd8389c2754d85);
+        
+    
+        var popup_ba2e29a40354c8878af0c0bc0601e170 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_1749bc084b4f526d696b6be7eb9d4d16 = $(`<div id="html_1749bc084b4f526d696b6be7eb9d4d16" style="width: 100.0%; height: 100.0%;"><b>PH Ops of Conroe LLC</b><br>Type: PUREHEALTH<br>Provider ID: 676420<br>Beds: 150<br>Overall rating: 3.0</div>`)[0];
+                popup_ba2e29a40354c8878af0c0bc0601e170.setContent(html_1749bc084b4f526d696b6be7eb9d4d16);
+            
+        
+
+        circle_marker_865f209c1934df491c343d8bb69ce91f.bindPopup(popup_ba2e29a40354c8878af0c0bc0601e170)
+        ;
+
+        
+    
+    
+            var circle_marker_a1e58f2f30cb5198d6eebe70dcd26eab = L.circleMarker(
+                [32.8766, -96.751],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_f6b7210acad6808d65dd8389c2754d85);
+        
+    
+        var popup_c5d49d10c0ea804bbb4373418dda028e = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_e0aacc592365cb9661fb707b54139995 = $(`<div id="html_e0aacc592365cb9661fb707b54139995" style="width: 100.0%; height: 100.0%;"><b>PH Ops of Dallas LLC</b><br>Type: PUREHEALTH<br>Provider ID: 676410<br>Beds: 49<br>Overall rating: 5.0</div>`)[0];
+                popup_c5d49d10c0ea804bbb4373418dda028e.setContent(html_e0aacc592365cb9661fb707b54139995);
+            
+        
+
+        circle_marker_a1e58f2f30cb5198d6eebe70dcd26eab.bindPopup(popup_c5d49d10c0ea804bbb4373418dda028e)
+        ;
+
+        
+    
+    
+            var circle_marker_aeec00eb5e26b69deab0569b01af9f18 = L.circleMarker(
+                [29.3866, -94.987],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6.7, "stroke": true, "weight": 3}
+            ).addTo(map_f6b7210acad6808d65dd8389c2754d85);
+        
+    
+        var popup_4ce93dcf87756c5e6a9a28783e1106bf = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_21ca86ed5362bdddbaca8d6713c09358 = $(`<div id="html_21ca86ed5362bdddbaca8d6713c09358" style="width: 100.0%; height: 100.0%;"><b>The Shoal</b><br>Type: PUREHEALTH<br>Provider ID: 676360<br>Beds: 134<br>Overall rating: 3.0</div>`)[0];
+                popup_4ce93dcf87756c5e6a9a28783e1106bf.setContent(html_21ca86ed5362bdddbaca8d6713c09358);
+            
+        
+
+        circle_marker_aeec00eb5e26b69deab0569b01af9f18.bindPopup(popup_4ce93dcf87756c5e6a9a28783e1106bf)
+        ;
+
+        
+    
+    
+            var circle_marker_652774a9d5bd23f8def02df9301be80b = L.circleMarker(
+                [35.0188, -106.72],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6.0, "stroke": true, "weight": 3}
+            ).addTo(map_f6b7210acad6808d65dd8389c2754d85);
+        
+    
+        var popup_e1e032e5a57762e6d1db5bc1db076cf6 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_93a6d85e23af6b9ca1c69d4068a2ce3d = $(`<div id="html_93a6d85e23af6b9ca1c69d4068a2ce3d" style="width: 100.0%; height: 100.0%;"><b>PH Ops of Las Estancias LLC</b><br>Type: PUREHEALTH<br>Provider ID: 325126<br>Beds: 120<br>Overall rating: 5.0</div>`)[0];
+                popup_e1e032e5a57762e6d1db5bc1db076cf6.setContent(html_93a6d85e23af6b9ca1c69d4068a2ce3d);
+            
+        
+
+        circle_marker_652774a9d5bd23f8def02df9301be80b.bindPopup(popup_e1e032e5a57762e6d1db5bc1db076cf6)
+        ;
+
+        
+    
+    
+            var circle_marker_d1eaacef1932c335b9a92b353417ab06 = L.circleMarker(
+                [35.0836, -106.57],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 18.45, "stroke": true, "weight": 3}
+            ).addTo(map_f6b7210acad6808d65dd8389c2754d85);
+        
+    
+        var popup_a5f9ca059e475a0f3ab2bff699062520 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_28c7c74761d847d06eb235176c46a023 = $(`<div id="html_28c7c74761d847d06eb235176c46a023" style="width: 100.0%; height: 100.0%;"><b>Princeton Health and Rehabilitation</b><br>Type: PUREHEALTH<br>Provider ID: 325045<br>Beds: 369<br>Overall rating: 2.0</div>`)[0];
+                popup_a5f9ca059e475a0f3ab2bff699062520.setContent(html_28c7c74761d847d06eb235176c46a023);
+            
+        
+
+        circle_marker_d1eaacef1932c335b9a92b353417ab06.bindPopup(popup_a5f9ca059e475a0f3ab2bff699062520)
+        ;
+
+        
+    
+    
+            var circle_marker_27c6c322fe5381a8b58bab30cbdf61af = L.circleMarker(
+                [35.0855, -106.59],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5.85, "stroke": true, "weight": 3}
+            ).addTo(map_f6b7210acad6808d65dd8389c2754d85);
+        
+    
+        var popup_b7496524cffadd37b83f6ca39c899989 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_d5db8bc2eef2d6c63cdd750cf4cf6c30 = $(`<div id="html_d5db8bc2eef2d6c63cdd750cf4cf6c30" style="width: 100.0%; height: 100.0%;"><b>Manzano Del Sol SNF</b><br>Type: PUREHEALTH<br>Provider ID: 325074<br>Beds: 117<br>Overall rating: 5.0</div>`)[0];
+                popup_b7496524cffadd37b83f6ca39c899989.setContent(html_d5db8bc2eef2d6c63cdd750cf4cf6c30);
+            
+        
+
+        circle_marker_27c6c322fe5381a8b58bab30cbdf61af.bindPopup(popup_b7496524cffadd37b83f6ca39c899989)
+        ;
+
+        
+    
+    
+            var circle_marker_6ec798def8705d9767fe7e9f211a69b7 = L.circleMarker(
+                [33.1588, -97.12],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_f6b7210acad6808d65dd8389c2754d85);
+        
+    
+        var popup_317aa6786cfe7f0e35351b6069e49612 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_ca4d71f7685d951389f2b44276ba65ae = $(`<div id="html_ca4d71f7685d951389f2b44276ba65ae" style="width: 100.0%; height: 100.0%;"><b>Lake Forest Village SNF</b><br>Type: PUREHEALTH<br>Provider ID: 455685<br>Beds: 60<br>Overall rating: 4.0</div>`)[0];
+                popup_317aa6786cfe7f0e35351b6069e49612.setContent(html_ca4d71f7685d951389f2b44276ba65ae);
+            
+        
+
+        circle_marker_6ec798def8705d9767fe7e9f211a69b7.bindPopup(popup_317aa6786cfe7f0e35351b6069e49612)
+        ;
+
+        
+    
+    
+            var layer_control_126cffe7a70751e6d48313f6dbe39d88_layers = {
+                base_layers : {
+                    "Light (Google-like)" : tile_layer_e29fd08a550e2e711912c3541b57037a,
+                    "Detailed" : tile_layer_b041c0a98b6a4067cf5b24402e045b9a,
+                    "Standard" : tile_layer_2cce02959e207e31fed1010db295a5a9,
+                    "Satellite" : tile_layer_0c62fdf2ce1a603464433e5177221cd4,
+                },
+                overlays :  {
+                },
+            };
+            let layer_control_126cffe7a70751e6d48313f6dbe39d88 = L.control.layers(
+                layer_control_126cffe7a70751e6d48313f6dbe39d88_layers.base_layers,
+                layer_control_126cffe7a70751e6d48313f6dbe39d88_layers.overlays,
+                {
+  "position": "topright",
+  "collapsed": false,
+  "autoZIndex": true,
+}
+            ).addTo(map_f6b7210acad6808d65dd8389c2754d85);
+
+        
+</script>
+</html>
