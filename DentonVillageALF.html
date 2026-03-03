@@ -1,0 +1,4275 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_640739ad75f389bd3446b0b64a17683d {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+
+            <style>html, body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            </style>
+
+            <style>#map {
+                position:absolute;
+                top:0;
+                bottom:0;
+                right:0;
+                left:0;
+                }
+            </style>
+
+            <script>
+                L_NO_TOUCH = false;
+                L_DISABLE_3D = false;
+            </script>
+
+        
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.1.0/leaflet.markercluster.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.1.0/MarkerCluster.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.1.0/MarkerCluster.Default.css"/>
+</head>
+<body>
+    
+    
+    <div style="
+        position: fixed;
+        bottom: 40px; left: 40px;
+        width: 250px;
+        background-color: rgba(255,255,255,0.95);
+        border: 2px solid #888;
+        z-index: 9999;
+        font-size: 13px;
+        padding: 12px;
+        box-shadow: 3px 3px 10px rgba(0,0,0,0.25);
+        border-radius: 8px;
+        font-family: Arial;
+    ">
+      <b>Legend</b><br><br>
+      <span style="color:green;">●</span> ALF<br>
+      <span style="color:red;">●</span> SNF<br>
+      <span style="color:blue;">●</span> PUREHEALTH<br>
+      <span style="color:purple;">●</span> Other<br><br>
+      <span style="color:#1f77b4;">◯</span> 5 / 10 / 20 Mile Radius<br><br>
+      Bubble size = # of Beds
+    </div>
+    
+    
+    <div style="
+        position: fixed;
+        top: 20px; left: 50%;
+        transform: translateX(-50%);
+        z-index: 9999;
+        background-color: rgba(255,255,255,0.95);
+        padding: 10px 20px;
+        border-radius: 10px;
+        box-shadow: 3px 3px 10px rgba(0,0,0,0.25);
+        font-size: 18px;
+        font-weight: 700;
+        font-family: Arial;
+    ">
+        Denton Village ALF Market - Hub and Competitors
+    </div>
+    
+    
+            <div class="folium-map" id="map_640739ad75f389bd3446b0b64a17683d" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_640739ad75f389bd3446b0b64a17683d = L.map(
+                "map_640739ad75f389bd3446b0b64a17683d",
+                {
+                    center: [33.236392, -97.141912],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 10,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_aec59eee49fa05052b3345ed2573b484 = L.tileLayer(
+                "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 20,
+  "maxNativeZoom": 20,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"https://carto.com/attributions\"\u003eCARTO\u003c/a\u003e",
+  "subdomains": "abcd",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_aec59eee49fa05052b3345ed2573b484.addTo(map_640739ad75f389bd3446b0b64a17683d);
+        
+    
+            var tile_layer_49efb37cd7ee40c42c4eb877805b2f03 = L.tileLayer(
+                "https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 17,
+  "maxNativeZoom": 17,
+  "noWrap": false,
+  "attribution": "Map data: \u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors, \u003ca href=\"http://viewfinderpanoramas.org\"\u003eSRTM\u003c/a\u003e | Map style: \u0026copy; \u003ca href=\"https://opentopomap.org\"\u003eOpenTopoMap\u003c/a\u003e (\u003ca href=\"https://creativecommons.org/licenses/by-sa/3.0/\"\u003eCC-BY-SA\u003c/a\u003e)",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_49efb37cd7ee40c42c4eb877805b2f03.addTo(map_640739ad75f389bd3446b0b64a17683d);
+        
+    
+            var tile_layer_ef442734473b9a83a378c4ea7813c814 = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 19,
+  "maxNativeZoom": 19,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_ef442734473b9a83a378c4ea7813c814.addTo(map_640739ad75f389bd3446b0b64a17683d);
+        
+    
+            var tile_layer_ca75a594fdb3105cfb391c4255b93ed4 = L.tileLayer(
+                "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+                {
+  "minZoom": 0,
+  "maxZoom": 18,
+  "maxNativeZoom": 18,
+  "noWrap": false,
+  "attribution": "Esri",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_ca75a594fdb3105cfb391c4255b93ed4.addTo(map_640739ad75f389bd3446b0b64a17683d);
+        
+    
+            var circle_986ba42a645330a37125596bdd7f0ba3 = L.circle(
+                [33.236392, -97.141912],
+                {"bubblingMouseEvents": true, "color": "#1f77b4", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#1f77b4", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8046.7, "stroke": true, "weight": 2}
+            ).addTo(map_640739ad75f389bd3446b0b64a17683d);
+        
+    
+            circle_986ba42a645330a37125596bdd7f0ba3.bindTooltip(
+                `<div>
+                     5 mile radius
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_922a5285662b85839c08d24938f50ea0 = L.circle(
+                [33.236392, -97.141912],
+                {"bubblingMouseEvents": true, "color": "#1f77b4", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#1f77b4", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 16093.4, "stroke": true, "weight": 2}
+            ).addTo(map_640739ad75f389bd3446b0b64a17683d);
+        
+    
+            circle_922a5285662b85839c08d24938f50ea0.bindTooltip(
+                `<div>
+                     10 mile radius
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_d399c53e9af04957a2c043da3468d98c = L.circle(
+                [33.236392, -97.141912],
+                {"bubblingMouseEvents": true, "color": "#1f77b4", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#1f77b4", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 32186.8, "stroke": true, "weight": 2}
+            ).addTo(map_640739ad75f389bd3446b0b64a17683d);
+        
+    
+            circle_d399c53e9af04957a2c043da3468d98c.bindTooltip(
+                `<div>
+                     20 mile radius
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_eab41c5c9171c6f80602545958e86c02 = L.marker(
+                [33.236392, -97.141912],
+                {
+}
+            ).addTo(map_640739ad75f389bd3446b0b64a17683d);
+        
+    
+            var icon_659fc574d117a394305b4079ab68f179 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "star",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+            marker_eab41c5c9171c6f80602545958e86c02.bindTooltip(
+                `<div>
+                     Hub: DENTON VILLAGE BY PUREHEALTH
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_eab41c5c9171c6f80602545958e86c02.setIcon(icon_659fc574d117a394305b4079ab68f179);
+            
+    
+            var marker_cluster_e715a3c9037bc0e9590ea852aeb3681b = L.markerClusterGroup(
+                {
+}
+            );
+        
+    
+            var circle_marker_617f13c439c5a49cf4a5494ad5fe7582 = L.circleMarker(
+                [33.237655, -97.146286],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4.8, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_e715a3c9037bc0e9590ea852aeb3681b);
+        
+    
+        var popup_ff5bed46cd47070dbb2a983c2d7999bd = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_7c0ff867333e1742b0d2a7ce8f6c4101 = $(`<div id="html_7c0ff867333e1742b0d2a7ce8f6c4101" style="width: 100.0%; height: 100.0%;">     <b>BROOKDALE DENTON NORTH</b><br>     Type: ALF - TYPE B<br>     Beds: 60<br>     Provider ID: 498<br>     Rate: $4200 -  $5400<br>     </div>`)[0];
+                popup_ff5bed46cd47070dbb2a983c2d7999bd.setContent(html_7c0ff867333e1742b0d2a7ce8f6c4101);
+            
+        
+
+        circle_marker_617f13c439c5a49cf4a5494ad5fe7582.bindPopup(popup_ff5bed46cd47070dbb2a983c2d7999bd)
+        ;
+
+        
+    
+    
+            circle_marker_617f13c439c5a49cf4a5494ad5fe7582.bindTooltip(
+                `<div>
+                     BROOKDALE DENTON NORTH (60 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_f8ee171195483f2a0a0f953aa90e31ab = L.circleMarker(
+                [33.248487, -97.142468],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_e715a3c9037bc0e9590ea852aeb3681b);
+        
+    
+        var popup_9b6405425203febfd84cf13c60483ed6 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_9ad86d2d2141d1f9a284cb136fc9576b = $(`<div id="html_9ad86d2d2141d1f9a284cb136fc9576b" style="width: 100.0%; height: 100.0%;">     <b>DENTON GOLDEN MEADOWS CARE INC</b><br>     Type: ALF - TYPE B<br>     Beds: 11<br>     Provider ID: 101459<br>     Rate: $3800 -  $5200<br>     </div>`)[0];
+                popup_9b6405425203febfd84cf13c60483ed6.setContent(html_9ad86d2d2141d1f9a284cb136fc9576b);
+            
+        
+
+        circle_marker_f8ee171195483f2a0a0f953aa90e31ab.bindPopup(popup_9b6405425203febfd84cf13c60483ed6)
+        ;
+
+        
+    
+    
+            circle_marker_f8ee171195483f2a0a0f953aa90e31ab.bindTooltip(
+                `<div>
+                     DENTON GOLDEN MEADOWS CARE INC (11 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_fce5df004b5832c50177d234b0cee6f5 = L.circleMarker(
+                [33.236692, -97.12684],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_e715a3c9037bc0e9590ea852aeb3681b);
+        
+    
+        var popup_6d8ce1cfe1e4736b79b266ecb3916614 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_1eafa04b9a41b19a02ba041694c033ab = $(`<div id="html_1eafa04b9a41b19a02ba041694c033ab" style="width: 100.0%; height: 100.0%;">     <b>TITAN FAIRHAVEN HOLDINGS, LLC</b><br>     Type: ALF - TYPE B<br>     Beds: 47<br>     Provider ID: 110399<br>     Rate: $4200 -  $5400<br>     </div>`)[0];
+                popup_6d8ce1cfe1e4736b79b266ecb3916614.setContent(html_1eafa04b9a41b19a02ba041694c033ab);
+            
+        
+
+        circle_marker_fce5df004b5832c50177d234b0cee6f5.bindPopup(popup_6d8ce1cfe1e4736b79b266ecb3916614)
+        ;
+
+        
+    
+    
+            circle_marker_fce5df004b5832c50177d234b0cee6f5.bindTooltip(
+                `<div>
+                     TITAN FAIRHAVEN HOLDINGS, LLC (47 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_f171f5a0012c39514f7fb2aea647c246 = L.circleMarker(
+                [33.2338, -97.1117],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_e715a3c9037bc0e9590ea852aeb3681b);
+        
+    
+        var popup_1c70c2d3f29728cdd71ab8f4a07db082 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_531bd033138e3dda5956c07eede52005 = $(`<div id="html_531bd033138e3dda5956c07eede52005" style="width: 100.0%; height: 100.0%;">     <b>SAGE OAK HOLDINGS OF DENTON, LLC</b><br>     Type: ALF - TYPE B<br>     Beds: 16<br>     Provider ID: 110684<br>     Rate: $3800 -  $5200<br>     </div>`)[0];
+                popup_1c70c2d3f29728cdd71ab8f4a07db082.setContent(html_531bd033138e3dda5956c07eede52005);
+            
+        
+
+        circle_marker_f171f5a0012c39514f7fb2aea647c246.bindPopup(popup_1c70c2d3f29728cdd71ab8f4a07db082)
+        ;
+
+        
+    
+    
+            circle_marker_f171f5a0012c39514f7fb2aea647c246.bindTooltip(
+                `<div>
+                     SAGE OAK HOLDINGS OF DENTON, LLC (16 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_6f12a572548669baae14161f91b2f17b = L.circleMarker(
+                [33.216395, -97.162889],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7.04, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_e715a3c9037bc0e9590ea852aeb3681b);
+        
+    
+        var popup_b658ea53b04b22e0ea910bb6f35b453a = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_730c3d230f542884c8ae562be2eeacfb = $(`<div id="html_730c3d230f542884c8ae562be2eeacfb" style="width: 100.0%; height: 100.0%;">     <b>VINTAGE ASSISTED LIVING OF DENTON</b><br>     Type: ALF - TYPE A<br>     Beds: 88<br>     Provider ID: 544<br>     Rate: $4200 -  $5400<br>     </div>`)[0];
+                popup_b658ea53b04b22e0ea910bb6f35b453a.setContent(html_730c3d230f542884c8ae562be2eeacfb);
+            
+        
+
+        circle_marker_6f12a572548669baae14161f91b2f17b.bindPopup(popup_b658ea53b04b22e0ea910bb6f35b453a)
+        ;
+
+        
+    
+    
+            circle_marker_6f12a572548669baae14161f91b2f17b.bindTooltip(
+                `<div>
+                     VINTAGE ASSISTED LIVING OF DENTON (88 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_f20dad5d781d68dde763d16bb829dc3e = L.circleMarker(
+                [33.201181, -97.140903],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5.2, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_e715a3c9037bc0e9590ea852aeb3681b);
+        
+    
+        var popup_f06cf35b2ed88555c02b8a866adca971 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_21b4a8a21a8796c455e90c68bc044b40 = $(`<div id="html_21b4a8a21a8796c455e90c68bc044b40" style="width: 100.0%; height: 100.0%;">     <b>CARRIAGE HOUSE</b><br>     Type: ALF - TYPE B<br>     Beds: 65<br>     Provider ID: 30109<br>     Rate: $4200 -  $5400<br>     </div>`)[0];
+                popup_f06cf35b2ed88555c02b8a866adca971.setContent(html_21b4a8a21a8796c455e90c68bc044b40);
+            
+        
+
+        circle_marker_f20dad5d781d68dde763d16bb829dc3e.bindPopup(popup_f06cf35b2ed88555c02b8a866adca971)
+        ;
+
+        
+    
+    
+            circle_marker_f20dad5d781d68dde763d16bb829dc3e.bindTooltip(
+                `<div>
+                     CARRIAGE HOUSE (65 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_467eb19e7fce4a1f786fc1dde0855433 = L.circleMarker(
+                [33.214464, -97.098693],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_e715a3c9037bc0e9590ea852aeb3681b);
+        
+    
+        var popup_89ed333b9dc206068d4693a94a6e0b3d = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_1f31a4619f13d81074c5f5b099fa2607 = $(`<div id="html_1f31a4619f13d81074c5f5b099fa2607" style="width: 100.0%; height: 100.0%;">     <b>BELLAIRE RESIDENTIAL ASSISTED LIVING AND MEMORY CARE</b><br>     Type: ALF - TYPE B<br>     Beds: 16<br>     Provider ID: 110523<br>     Rate: $3800 -  $5200<br>     </div>`)[0];
+                popup_89ed333b9dc206068d4693a94a6e0b3d.setContent(html_1f31a4619f13d81074c5f5b099fa2607);
+            
+        
+
+        circle_marker_467eb19e7fce4a1f786fc1dde0855433.bindPopup(popup_89ed333b9dc206068d4693a94a6e0b3d)
+        ;
+
+        
+    
+    
+            circle_marker_467eb19e7fce4a1f786fc1dde0855433.bindTooltip(
+                `<div>
+                     BELLAIRE RESIDENTIAL ASSISTED LIVING AND MEMORY CARE (16 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_84d2d8e091f7c23adf452dc86f424e77 = L.circleMarker(
+                [33.214464, -97.098693],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_e715a3c9037bc0e9590ea852aeb3681b);
+        
+    
+        var popup_927c6cd5b5d1bdc8a95e23aa093ed0ca = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_685f949aa04d39f553a1d0745e44cd6f = $(`<div id="html_685f949aa04d39f553a1d0745e44cd6f" style="width: 100.0%; height: 100.0%;">     <b>BELLAIRE RESIDENTIAL ASSISTED LIVING AND MEMORY CARE</b><br>     Type: ALF - TYPE B<br>     Beds: 16<br>     Provider ID: 110521<br>     Rate: $3800 -  $5200<br>     </div>`)[0];
+                popup_927c6cd5b5d1bdc8a95e23aa093ed0ca.setContent(html_685f949aa04d39f553a1d0745e44cd6f);
+            
+        
+
+        circle_marker_84d2d8e091f7c23adf452dc86f424e77.bindPopup(popup_927c6cd5b5d1bdc8a95e23aa093ed0ca)
+        ;
+
+        
+    
+    
+            circle_marker_84d2d8e091f7c23adf452dc86f424e77.bindTooltip(
+                `<div>
+                     BELLAIRE RESIDENTIAL ASSISTED LIVING AND MEMORY CARE (16 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_76f6094389e97a9d4b26bb5638d67985 = L.circleMarker(
+                [33.229043, -97.092053],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_e715a3c9037bc0e9590ea852aeb3681b);
+        
+    
+        var popup_0cc7e7c614a2ffd2ff7b0d1259fdffa0 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_beb12b33bf38bce8c4ecd5f0c176bc4f = $(`<div id="html_beb12b33bf38bce8c4ecd5f0c176bc4f" style="width: 100.0%; height: 100.0%;">     <b>SAGE OAK HOLDINGS OF DENTON, LLC</b><br>     Type: ALF - TYPE B<br>     Beds: 16<br>     Provider ID: 111490<br>     Rate: $3800 -  $5200<br>     </div>`)[0];
+                popup_0cc7e7c614a2ffd2ff7b0d1259fdffa0.setContent(html_beb12b33bf38bce8c4ecd5f0c176bc4f);
+            
+        
+
+        circle_marker_76f6094389e97a9d4b26bb5638d67985.bindPopup(popup_0cc7e7c614a2ffd2ff7b0d1259fdffa0)
+        ;
+
+        
+    
+    
+            circle_marker_76f6094389e97a9d4b26bb5638d67985.bindTooltip(
+                `<div>
+                     SAGE OAK HOLDINGS OF DENTON, LLC (16 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_ba35777fb2d9d8d2e72fdb07d6067db1 = L.circleMarker(
+                [33.229043, -97.092053],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_e715a3c9037bc0e9590ea852aeb3681b);
+        
+    
+        var popup_a23727576b015514e87067288de4d3a0 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_a92f0a1e37a17e81101d04502ea9a8c3 = $(`<div id="html_a92f0a1e37a17e81101d04502ea9a8c3" style="width: 100.0%; height: 100.0%;">     <b>SAGE OAK HOLDINGS OF DENTON, LLC</b><br>     Type: ALF - TYPE B<br>     Beds: 16<br>     Provider ID: 111489<br>     Rate: $3800 -  $5200<br>     </div>`)[0];
+                popup_a23727576b015514e87067288de4d3a0.setContent(html_a92f0a1e37a17e81101d04502ea9a8c3);
+            
+        
+
+        circle_marker_ba35777fb2d9d8d2e72fdb07d6067db1.bindPopup(popup_a23727576b015514e87067288de4d3a0)
+        ;
+
+        
+    
+    
+            circle_marker_ba35777fb2d9d8d2e72fdb07d6067db1.bindTooltip(
+                `<div>
+                     SAGE OAK HOLDINGS OF DENTON, LLC (16 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_f302934be748ade4f05d20854f5d2e75 = L.circleMarker(
+                [33.229043, -97.092053],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_e715a3c9037bc0e9590ea852aeb3681b);
+        
+    
+        var popup_fd5ce7768def97f020e5ddd171fa80fb = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_82f1904410af62869c0217321d5c4771 = $(`<div id="html_82f1904410af62869c0217321d5c4771" style="width: 100.0%; height: 100.0%;">     <b>SAGE OAK HOLDINGS OF DENTON, LLC</b><br>     Type: ALF - TYPE B<br>     Beds: 16<br>     Provider ID: 111482<br>     Rate: $3800 -  $5200<br>     </div>`)[0];
+                popup_fd5ce7768def97f020e5ddd171fa80fb.setContent(html_82f1904410af62869c0217321d5c4771);
+            
+        
+
+        circle_marker_f302934be748ade4f05d20854f5d2e75.bindPopup(popup_fd5ce7768def97f020e5ddd171fa80fb)
+        ;
+
+        
+    
+    
+            circle_marker_f302934be748ade4f05d20854f5d2e75.bindTooltip(
+                `<div>
+                     SAGE OAK HOLDINGS OF DENTON, LLC (16 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_6ca9deb4efd667a4a7fc253cdad70b6d = L.circleMarker(
+                [33.229043, -97.092053],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_e715a3c9037bc0e9590ea852aeb3681b);
+        
+    
+        var popup_178e48cace9456305942a927822cbb7c = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_89235da5e98839ea33f6fed04fc77ce9 = $(`<div id="html_89235da5e98839ea33f6fed04fc77ce9" style="width: 100.0%; height: 100.0%;">     <b>SAGE OAK HOLDINGS OF DENTON, LLC</b><br>     Type: ALF - TYPE B<br>     Beds: 16<br>     Provider ID: 111460<br>     Rate: $3800 -  $5200<br>     </div>`)[0];
+                popup_178e48cace9456305942a927822cbb7c.setContent(html_89235da5e98839ea33f6fed04fc77ce9);
+            
+        
+
+        circle_marker_6ca9deb4efd667a4a7fc253cdad70b6d.bindPopup(popup_178e48cace9456305942a927822cbb7c)
+        ;
+
+        
+    
+    
+            circle_marker_6ca9deb4efd667a4a7fc253cdad70b6d.bindTooltip(
+                `<div>
+                     SAGE OAK HOLDINGS OF DENTON, LLC (16 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_ca3fdc3933b9e96851ece25149b15a31 = L.circleMarker(
+                [33.178519, -97.124041],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_e715a3c9037bc0e9590ea852aeb3681b);
+        
+    
+        var popup_1d260ec0ed47db2a5739dbb37cac8f67 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_eade3efc7efe89035e6bb9a6367f06a0 = $(`<div id="html_eade3efc7efe89035e6bb9a6367f06a0" style="width: 100.0%; height: 100.0%;">     <b>A JOYFUL JOURNEY ASSISTED LIVING LLC</b><br>     Type: ALF - TYPE B<br>     Beds: 6<br>     Provider ID: 103403<br>     Rate: $3800 -  $5200<br>     </div>`)[0];
+                popup_1d260ec0ed47db2a5739dbb37cac8f67.setContent(html_eade3efc7efe89035e6bb9a6367f06a0);
+            
+        
+
+        circle_marker_ca3fdc3933b9e96851ece25149b15a31.bindPopup(popup_1d260ec0ed47db2a5739dbb37cac8f67)
+        ;
+
+        
+    
+    
+            circle_marker_ca3fdc3933b9e96851ece25149b15a31.bindTooltip(
+                `<div>
+                     A JOYFUL JOURNEY ASSISTED LIVING LLC (6 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_776fc7ec171e0524e14eccdd5c87c0ce = L.circleMarker(
+                [33.182772, -97.108548],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5.12, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_e715a3c9037bc0e9590ea852aeb3681b);
+        
+    
+        var popup_1be29501b4fccf4e6bd80cd57d25e5aa = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_b1bbc52620cd03283a084b269139dfd1 = $(`<div id="html_b1bbc52620cd03283a084b269139dfd1" style="width: 100.0%; height: 100.0%;">     <b>BROOKDALE DENTON SOUTH</b><br>     Type: ALF - TYPE A<br>     Beds: 64<br>     Provider ID: 30309<br>     Rate: $4200 -  $5400<br>     </div>`)[0];
+                popup_1be29501b4fccf4e6bd80cd57d25e5aa.setContent(html_b1bbc52620cd03283a084b269139dfd1);
+            
+        
+
+        circle_marker_776fc7ec171e0524e14eccdd5c87c0ce.bindPopup(popup_1be29501b4fccf4e6bd80cd57d25e5aa)
+        ;
+
+        
+    
+    
+            circle_marker_776fc7ec171e0524e14eccdd5c87c0ce.bindTooltip(
+                `<div>
+                     BROOKDALE DENTON SOUTH (64 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_cb903f846279e68d2f4927bb918ed9d3 = L.circleMarker(
+                [33.177992, -97.122393],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_e715a3c9037bc0e9590ea852aeb3681b);
+        
+    
+        var popup_467eccb1fce41399dd16f4ef15493cd5 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_dcd0c911a0364dccbceefc58ea98a98b = $(`<div id="html_dcd0c911a0364dccbceefc58ea98a98b" style="width: 100.0%; height: 100.0%;">     <b>SKYWAY SENIOR CARE HOME LLC</b><br>     Type: ALF - TYPE B<br>     Beds: 8<br>     Provider ID: 110538<br>     Rate: $3800 -  $5200<br>     </div>`)[0];
+                popup_467eccb1fce41399dd16f4ef15493cd5.setContent(html_dcd0c911a0364dccbceefc58ea98a98b);
+            
+        
+
+        circle_marker_cb903f846279e68d2f4927bb918ed9d3.bindPopup(popup_467eccb1fce41399dd16f4ef15493cd5)
+        ;
+
+        
+    
+    
+            circle_marker_cb903f846279e68d2f4927bb918ed9d3.bindTooltip(
+                `<div>
+                     SKYWAY SENIOR CARE HOME LLC (8 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_9a869e149fe5c70a00c184714c632078 = L.circleMarker(
+                [33.188211, -97.094529],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 9.92, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_e715a3c9037bc0e9590ea852aeb3681b);
+        
+    
+        var popup_e4043df288a1bbfc209d9566be22250e = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_6f907fa8e83bd16b97b59e06f839ea83 = $(`<div id="html_6f907fa8e83bd16b97b59e06f839ea83" style="width: 100.0%; height: 100.0%;">     <b>VILLAGE ON THE PARK DENTON</b><br>     Type: ALF - TYPE B<br>     Beds: 124<br>     Provider ID: 106583<br>     Rate: $4500 -  $5800<br>     </div>`)[0];
+                popup_e4043df288a1bbfc209d9566be22250e.setContent(html_6f907fa8e83bd16b97b59e06f839ea83);
+            
+        
+
+        circle_marker_9a869e149fe5c70a00c184714c632078.bindPopup(popup_e4043df288a1bbfc209d9566be22250e)
+        ;
+
+        
+    
+    
+            circle_marker_9a869e149fe5c70a00c184714c632078.bindTooltip(
+                `<div>
+                     VILLAGE ON THE PARK DENTON (124 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_547ad47f5a6fdf176fa3a1114fc983bc = L.circleMarker(
+                [33.185282, -97.094886],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6.88, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_e715a3c9037bc0e9590ea852aeb3681b);
+        
+    
+        var popup_ad55e7029ed0cb8132e1ce3c7182d71f = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_f51652c0dc79f276d21bfcd25dfd8b15 = $(`<div id="html_f51652c0dc79f276d21bfcd25dfd8b15" style="width: 100.0%; height: 100.0%;">     <b>WILLOW BEND ASSISTED LIVING AND MEMORY CARE</b><br>     Type: ALF - TYPE B<br>     Beds: 86<br>     Provider ID: 104946<br>     Rate: $4200 -  $5400<br>     </div>`)[0];
+                popup_ad55e7029ed0cb8132e1ce3c7182d71f.setContent(html_f51652c0dc79f276d21bfcd25dfd8b15);
+            
+        
+
+        circle_marker_547ad47f5a6fdf176fa3a1114fc983bc.bindPopup(popup_ad55e7029ed0cb8132e1ce3c7182d71f)
+        ;
+
+        
+    
+    
+            circle_marker_547ad47f5a6fdf176fa3a1114fc983bc.bindTooltip(
+                `<div>
+                     WILLOW BEND ASSISTED LIVING AND MEMORY CARE (86 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_8ede38a552e6cd31d063ac0a5c7922c6 = L.circleMarker(
+                [33.183536, -97.097301],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_e715a3c9037bc0e9590ea852aeb3681b);
+        
+    
+        var popup_28d5926f147a369c6052b54425c322cd = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_f262ba07e4dfeb7124113f8a991dab43 = $(`<div id="html_f262ba07e4dfeb7124113f8a991dab43" style="width: 100.0%; height: 100.0%;">     <b>EAGLE RIDGE ALZHEIMER'S SPECIAL CARE CENTER</b><br>     Type: ALF - TYPE B<br>     Beds: 50<br>     Provider ID: 104333<br>     Rate: $4200 -  $5400<br>     </div>`)[0];
+                popup_28d5926f147a369c6052b54425c322cd.setContent(html_f262ba07e4dfeb7124113f8a991dab43);
+            
+        
+
+        circle_marker_8ede38a552e6cd31d063ac0a5c7922c6.bindPopup(popup_28d5926f147a369c6052b54425c322cd)
+        ;
+
+        
+    
+    
+            circle_marker_8ede38a552e6cd31d063ac0a5c7922c6.bindTooltip(
+                `<div>
+                     EAGLE RIDGE ALZHEIMER'S SPECIAL CARE CENTER (50 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_2db0774c5917188c05dc92a26d55e7b3 = L.circleMarker(
+                [33.1721, -97.1637],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_e715a3c9037bc0e9590ea852aeb3681b);
+        
+    
+        var popup_16204a1d5f59e68dd45a90224a71c28e = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_efca5e4513131c65f0a73f9f44e2855b = $(`<div id="html_efca5e4513131c65f0a73f9f44e2855b" style="width: 100.0%; height: 100.0%;">     <b>TERESA'S HOUSE  ARGYLE</b><br>     Type: ALF - TYPE B<br>     Beds: 16<br>     Provider ID: 111467<br>     Rate: $3800 -  $5200<br>     </div>`)[0];
+                popup_16204a1d5f59e68dd45a90224a71c28e.setContent(html_efca5e4513131c65f0a73f9f44e2855b);
+            
+        
+
+        circle_marker_2db0774c5917188c05dc92a26d55e7b3.bindPopup(popup_16204a1d5f59e68dd45a90224a71c28e)
+        ;
+
+        
+    
+    
+            circle_marker_2db0774c5917188c05dc92a26d55e7b3.bindTooltip(
+                `<div>
+                     TERESA'S HOUSE  ARGYLE (16 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_6f1f43aa5372ff9deb4cf5b68f5720b9 = L.circleMarker(
+                [33.1721, -97.1637],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_e715a3c9037bc0e9590ea852aeb3681b);
+        
+    
+        var popup_74dcd021b4c240172ed88cbf61660910 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_93db0908fbfa52b45ebb754543fffe88 = $(`<div id="html_93db0908fbfa52b45ebb754543fffe88" style="width: 100.0%; height: 100.0%;">     <b>TERESA'S HOUSE  ARGYLE</b><br>     Type: ALF - TYPE B<br>     Beds: 16<br>     Provider ID: 111433<br>     Rate: $3800 -  $5200<br>     </div>`)[0];
+                popup_74dcd021b4c240172ed88cbf61660910.setContent(html_93db0908fbfa52b45ebb754543fffe88);
+            
+        
+
+        circle_marker_6f1f43aa5372ff9deb4cf5b68f5720b9.bindPopup(popup_74dcd021b4c240172ed88cbf61660910)
+        ;
+
+        
+    
+    
+            circle_marker_6f1f43aa5372ff9deb4cf5b68f5720b9.bindTooltip(
+                `<div>
+                     TERESA'S HOUSE  ARGYLE (16 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_7ccb0588d74fc87913a35acec6ae0baf = L.circleMarker(
+                [33.167255, -97.110843],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_e715a3c9037bc0e9590ea852aeb3681b);
+        
+    
+        var popup_44052d108b6c24eee4be5549b21f3c2f = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_2e8c331a507077ed4bfdfd6ea9cd7b04 = $(`<div id="html_2e8c331a507077ed4bfdfd6ea9cd7b04" style="width: 100.0%; height: 100.0%;">     <b>MAYBERRY GARDENS</b><br>     Type: ALF - TYPE A<br>     Beds: 16<br>     Provider ID: 106330<br>     Rate: $3800 -  $5200<br>     </div>`)[0];
+                popup_44052d108b6c24eee4be5549b21f3c2f.setContent(html_2e8c331a507077ed4bfdfd6ea9cd7b04);
+            
+        
+
+        circle_marker_7ccb0588d74fc87913a35acec6ae0baf.bindPopup(popup_44052d108b6c24eee4be5549b21f3c2f)
+        ;
+
+        
+    
+    
+            circle_marker_7ccb0588d74fc87913a35acec6ae0baf.bindTooltip(
+                `<div>
+                     MAYBERRY GARDENS (16 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_d7b3e1b675a9e508abe05b1ca15e1a83 = L.circleMarker(
+                [33.167255, -97.110843],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_e715a3c9037bc0e9590ea852aeb3681b);
+        
+    
+        var popup_06b663933beb4afc20f33d3bae2a0d07 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_d40bb1d2896d42ff8995f3a5943935dd = $(`<div id="html_d40bb1d2896d42ff8995f3a5943935dd" style="width: 100.0%; height: 100.0%;">     <b>MAYBERRY GARDENS</b><br>     Type: ALF - TYPE B<br>     Beds: 16<br>     Provider ID: 106328<br>     Rate: $3800 -  $5200<br>     </div>`)[0];
+                popup_06b663933beb4afc20f33d3bae2a0d07.setContent(html_d40bb1d2896d42ff8995f3a5943935dd);
+            
+        
+
+        circle_marker_d7b3e1b675a9e508abe05b1ca15e1a83.bindPopup(popup_06b663933beb4afc20f33d3bae2a0d07)
+        ;
+
+        
+    
+    
+            circle_marker_d7b3e1b675a9e508abe05b1ca15e1a83.bindTooltip(
+                `<div>
+                     MAYBERRY GARDENS (16 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_63f29b693a34ac47480a929c0d92a12b = L.circleMarker(
+                [33.167255, -97.110843],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_e715a3c9037bc0e9590ea852aeb3681b);
+        
+    
+        var popup_529a0e1e5453dda40f224031a0095bd8 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_aba0e3ac4c66370489ef34356f4976ca = $(`<div id="html_aba0e3ac4c66370489ef34356f4976ca" style="width: 100.0%; height: 100.0%;">     <b>MAYBERRY GARDENS</b><br>     Type: ALF - TYPE B<br>     Beds: 16<br>     Provider ID: 106327<br>     Rate: $3800 -  $5200<br>     </div>`)[0];
+                popup_529a0e1e5453dda40f224031a0095bd8.setContent(html_aba0e3ac4c66370489ef34356f4976ca);
+            
+        
+
+        circle_marker_63f29b693a34ac47480a929c0d92a12b.bindPopup(popup_529a0e1e5453dda40f224031a0095bd8)
+        ;
+
+        
+    
+    
+            circle_marker_63f29b693a34ac47480a929c0d92a12b.bindTooltip(
+                `<div>
+                     MAYBERRY GARDENS (16 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_3f527c409169f884f273b37c4253bc8e = L.circleMarker(
+                [33.167255, -97.110843],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_e715a3c9037bc0e9590ea852aeb3681b);
+        
+    
+        var popup_c9048493846a20664cd048b6dad5cb86 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_c1845498c38a9b24a53156439f5bc1ea = $(`<div id="html_c1845498c38a9b24a53156439f5bc1ea" style="width: 100.0%; height: 100.0%;">     <b>MAYBERRY GARDENS</b><br>     Type: ALF - TYPE A<br>     Beds: 16<br>     Provider ID: 106310<br>     Rate: $3800 -  $5200<br>     </div>`)[0];
+                popup_c9048493846a20664cd048b6dad5cb86.setContent(html_c1845498c38a9b24a53156439f5bc1ea);
+            
+        
+
+        circle_marker_3f527c409169f884f273b37c4253bc8e.bindPopup(popup_c9048493846a20664cd048b6dad5cb86)
+        ;
+
+        
+    
+    
+            circle_marker_3f527c409169f884f273b37c4253bc8e.bindTooltip(
+                `<div>
+                     MAYBERRY GARDENS (16 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_7c7a05541cb1f695cd469e386b54e842 = L.circleMarker(
+                [33.167255, -97.110843],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_e715a3c9037bc0e9590ea852aeb3681b);
+        
+    
+        var popup_1c8e52c049716dbac5bd8694e9fe9e23 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_ccdb1843d00ef8c44f7ea2316567376d = $(`<div id="html_ccdb1843d00ef8c44f7ea2316567376d" style="width: 100.0%; height: 100.0%;">     <b>MAYBERRY GARDENS ASSISTED LIVING & MEMORY CARE HOMES  DENTON HOUSE 4</b><br>     Type: ALF - TYPE B<br>     Beds: 16<br>     Provider ID: 106329<br>     Rate: $3800 -  $5200<br>     </div>`)[0];
+                popup_1c8e52c049716dbac5bd8694e9fe9e23.setContent(html_ccdb1843d00ef8c44f7ea2316567376d);
+            
+        
+
+        circle_marker_7c7a05541cb1f695cd469e386b54e842.bindPopup(popup_1c8e52c049716dbac5bd8694e9fe9e23)
+        ;
+
+        
+    
+    
+            circle_marker_7c7a05541cb1f695cd469e386b54e842.bindTooltip(
+                `<div>
+                     MAYBERRY GARDENS ASSISTED LIVING & MEMORY CARE HOMES  DENTON HOUSE 4 (16 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_c3448725187d1bc53feffb1227b9ec2a = L.circleMarker(
+                [33.1739, -97.0942],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_e715a3c9037bc0e9590ea852aeb3681b);
+        
+    
+        var popup_d9cd88c9cdf425b976dbbf42e1fa1d59 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_97d3c312b1bd08367e84ff495b922d2b = $(`<div id="html_97d3c312b1bd08367e84ff495b922d2b" style="width: 100.0%; height: 100.0%;">     <b>MAYBERRY GARDENS</b><br>     Type: ALF - TYPE B<br>     Beds: 16<br>     Provider ID: 112048<br>     Rate: $3800 -  $5200<br>     </div>`)[0];
+                popup_d9cd88c9cdf425b976dbbf42e1fa1d59.setContent(html_97d3c312b1bd08367e84ff495b922d2b);
+            
+        
+
+        circle_marker_c3448725187d1bc53feffb1227b9ec2a.bindPopup(popup_d9cd88c9cdf425b976dbbf42e1fa1d59)
+        ;
+
+        
+    
+    
+            circle_marker_c3448725187d1bc53feffb1227b9ec2a.bindTooltip(
+                `<div>
+                     MAYBERRY GARDENS (16 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_478cea03dc791c2aa4ee6ee2edd2d917 = L.circleMarker(
+                [33.157864, -97.118068],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_e715a3c9037bc0e9590ea852aeb3681b);
+        
+    
+        var popup_15a5156a1e951766c510f678a41d9668 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_fbd21d4a3698c528c5d0f891a5d0963c = $(`<div id="html_fbd21d4a3698c528c5d0f891a5d0963c" style="width: 100.0%; height: 100.0%;">     <b>LAKE FOREST VILLAGE BY PUREHEALTH</b><br>     Type: ALF - TYPE B<br>     Beds: 16<br>     Provider ID: 100868<br>     Rate: $3800 -  $5200<br>     </div>`)[0];
+                popup_15a5156a1e951766c510f678a41d9668.setContent(html_fbd21d4a3698c528c5d0f891a5d0963c);
+            
+        
+
+        circle_marker_478cea03dc791c2aa4ee6ee2edd2d917.bindPopup(popup_15a5156a1e951766c510f678a41d9668)
+        ;
+
+        
+    
+    
+            circle_marker_478cea03dc791c2aa4ee6ee2edd2d917.bindTooltip(
+                `<div>
+                     LAKE FOREST VILLAGE BY PUREHEALTH (16 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_e7645b37b8acb5f9ce68cbd27511e06a = L.circleMarker(
+                [33.149742, -97.118029],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_e715a3c9037bc0e9590ea852aeb3681b);
+        
+    
+        var popup_54ff144cc9dfa6a236a510ec8c781a12 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_041bc71e9c1b20e9cac9b09e94cc7f41 = $(`<div id="html_041bc71e9c1b20e9cac9b09e94cc7f41" style="width: 100.0%; height: 100.0%;">     <b>SERENITY GARDENS SENIORS LLC</b><br>     Type: ALF - TYPE B<br>     Beds: 8<br>     Provider ID: 111552<br>     Rate: $3800 -  $5200<br>     </div>`)[0];
+                popup_54ff144cc9dfa6a236a510ec8c781a12.setContent(html_041bc71e9c1b20e9cac9b09e94cc7f41);
+            
+        
+
+        circle_marker_e7645b37b8acb5f9ce68cbd27511e06a.bindPopup(popup_54ff144cc9dfa6a236a510ec8c781a12)
+        ;
+
+        
+    
+    
+            circle_marker_e7645b37b8acb5f9ce68cbd27511e06a.bindTooltip(
+                `<div>
+                     SERENITY GARDENS SENIORS LLC (8 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_13e6a274dd2b4bb0e90f97332fbbc195 = L.circleMarker(
+                [33.152588, -97.055272],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_e715a3c9037bc0e9590ea852aeb3681b);
+        
+    
+        var popup_57e4323b9e8dc880ea8e7dc17a46488f = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_af3b9477958da78676f496602c84fba0 = $(`<div id="html_af3b9477958da78676f496602c84fba0" style="width: 100.0%; height: 100.0%;">     <b>AUTUMN OAKS OF CORINTH ASSISTED LIVING</b><br>     Type: ALF - TYPE B<br>     Beds: 42<br>     Provider ID: 101899<br>     Rate: $4200 -  $5400<br>     </div>`)[0];
+                popup_57e4323b9e8dc880ea8e7dc17a46488f.setContent(html_af3b9477958da78676f496602c84fba0);
+            
+        
+
+        circle_marker_13e6a274dd2b4bb0e90f97332fbbc195.bindPopup(popup_57e4323b9e8dc880ea8e7dc17a46488f)
+        ;
+
+        
+    
+    
+            circle_marker_13e6a274dd2b4bb0e90f97332fbbc195.bindTooltip(
+                `<div>
+                     AUTUMN OAKS OF CORINTH ASSISTED LIVING (42 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_efdf4f32787d8092f191c9f7c429dd61 = L.circleMarker(
+                [33.366202, -97.172172],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_e715a3c9037bc0e9590ea852aeb3681b);
+        
+    
+        var popup_8cff59f713036cb718c5abb21747d673 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_ef71a12e6adbc4096bff82a8d2698984 = $(`<div id="html_ef71a12e6adbc4096bff82a8d2698984" style="width: 100.0%; height: 100.0%;">     <b>THE SANGER HOUSE</b><br>     Type: ALF - TYPE B<br>     Beds: 8<br>     Provider ID: 873<br>     Rate: $3800 -  $5200<br>     </div>`)[0];
+                popup_8cff59f713036cb718c5abb21747d673.setContent(html_ef71a12e6adbc4096bff82a8d2698984);
+            
+        
+
+        circle_marker_efdf4f32787d8092f191c9f7c429dd61.bindPopup(popup_8cff59f713036cb718c5abb21747d673)
+        ;
+
+        
+    
+    
+            circle_marker_efdf4f32787d8092f191c9f7c429dd61.bindTooltip(
+                `<div>
+                     THE SANGER HOUSE (8 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_1f9cd3132a5d5f6cd0709885a8daed77 = L.circleMarker(
+                [33.36668, -97.186578],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_e715a3c9037bc0e9590ea852aeb3681b);
+        
+    
+        var popup_6e4518142d862deb109bb894c756375a = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_33a5bbd6b8e0eabc9b66e08c7a873ca5 = $(`<div id="html_33a5bbd6b8e0eabc9b66e08c7a873ca5" style="width: 100.0%; height: 100.0%;">     <b>REDBIRD MANOR</b><br>     Type: ALF - TYPE B<br>     Beds: 16<br>     Provider ID: 105187<br>     Rate: $3800 -  $5200<br>     </div>`)[0];
+                popup_6e4518142d862deb109bb894c756375a.setContent(html_33a5bbd6b8e0eabc9b66e08c7a873ca5);
+            
+        
+
+        circle_marker_1f9cd3132a5d5f6cd0709885a8daed77.bindPopup(popup_6e4518142d862deb109bb894c756375a)
+        ;
+
+        
+    
+    
+            circle_marker_1f9cd3132a5d5f6cd0709885a8daed77.bindTooltip(
+                `<div>
+                     REDBIRD MANOR (16 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_2287fbea5bca7fa58fdfd9a735fcaff0 = L.circleMarker(
+                [33.091574, -97.191702],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_e715a3c9037bc0e9590ea852aeb3681b);
+        
+    
+        var popup_7dc8836d2086d39cbedc6893c7533a2b = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_9c03ad0569fd82d7cc2c74d0844e0daa = $(`<div id="html_9c03ad0569fd82d7cc2c74d0844e0daa" style="width: 100.0%; height: 100.0%;">     <b>TERESA'S HOUSE  ARGYLE</b><br>     Type: ALF - TYPE B<br>     Beds: 16<br>     Provider ID: 111597<br>     Rate: $3800 -  $5200<br>     </div>`)[0];
+                popup_7dc8836d2086d39cbedc6893c7533a2b.setContent(html_9c03ad0569fd82d7cc2c74d0844e0daa);
+            
+        
+
+        circle_marker_2287fbea5bca7fa58fdfd9a735fcaff0.bindPopup(popup_7dc8836d2086d39cbedc6893c7533a2b)
+        ;
+
+        
+    
+    
+            circle_marker_2287fbea5bca7fa58fdfd9a735fcaff0.bindTooltip(
+                `<div>
+                     TERESA'S HOUSE  ARGYLE (16 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_dd318dc4fd48f525e87659ab605ddbec = L.circleMarker(
+                [33.0918, -97.193],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_e715a3c9037bc0e9590ea852aeb3681b);
+        
+    
+        var popup_b03162e07996c8c01dd99c06ba7b72ce = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_2f7cde827cc88d514a0780a6a5d70dd9 = $(`<div id="html_2f7cde827cc88d514a0780a6a5d70dd9" style="width: 100.0%; height: 100.0%;">     <b>TERESA'S HOUSE</b><br>     Type: ALF - TYPE B<br>     Beds: 16<br>     Provider ID: 111557<br>     Rate: $3800 -  $5200<br>     </div>`)[0];
+                popup_b03162e07996c8c01dd99c06ba7b72ce.setContent(html_2f7cde827cc88d514a0780a6a5d70dd9);
+            
+        
+
+        circle_marker_dd318dc4fd48f525e87659ab605ddbec.bindPopup(popup_b03162e07996c8c01dd99c06ba7b72ce)
+        ;
+
+        
+    
+    
+            circle_marker_dd318dc4fd48f525e87659ab605ddbec.bindTooltip(
+                `<div>
+                     TERESA'S HOUSE (16 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_b3f241f042f2a9266330750bcf7abc97 = L.circleMarker(
+                [33.076087, -97.07278],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6.32, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_e715a3c9037bc0e9590ea852aeb3681b);
+        
+    
+        var popup_a1162e078ab955fe907933120b497c2b = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_064140b9c84cd5787c91e25230613dbe = $(`<div id="html_064140b9c84cd5787c91e25230613dbe" style="width: 100.0%; height: 100.0%;">     <b>RAMBLING OAKS COURTYARD ASSISTED LIVING RESIDENCE</b><br>     Type: ALF - TYPE B<br>     Beds: 79<br>     Provider ID: 102151<br>     Rate: $4200 -  $5400<br>     </div>`)[0];
+                popup_a1162e078ab955fe907933120b497c2b.setContent(html_064140b9c84cd5787c91e25230613dbe);
+            
+        
+
+        circle_marker_b3f241f042f2a9266330750bcf7abc97.bindPopup(popup_a1162e078ab955fe907933120b497c2b)
+        ;
+
+        
+    
+    
+            circle_marker_b3f241f042f2a9266330750bcf7abc97.bindTooltip(
+                `<div>
+                     RAMBLING OAKS COURTYARD ASSISTED LIVING RESIDENCE (79 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_b379d78bd20945fb19f0671ebe635b8c = L.circleMarker(
+                [33.076126, -97.071825],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_e715a3c9037bc0e9590ea852aeb3681b);
+        
+    
+        var popup_29460a16960e7b1138318324d119c7fd = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_8cda0d84a478eb9c577329f904686811 = $(`<div id="html_8cda0d84a478eb9c577329f904686811" style="width: 100.0%; height: 100.0%;">     <b>VILLAGE GREEN ALZHEIMER'S CARE HOME</b><br>     Type: ALF - TYPE B<br>     Beds: 20<br>     Provider ID: 111703<br>     Rate: $3800 -  $5200<br>     </div>`)[0];
+                popup_29460a16960e7b1138318324d119c7fd.setContent(html_8cda0d84a478eb9c577329f904686811);
+            
+        
+
+        circle_marker_b379d78bd20945fb19f0671ebe635b8c.bindPopup(popup_29460a16960e7b1138318324d119c7fd)
+        ;
+
+        
+    
+    
+            circle_marker_b379d78bd20945fb19f0671ebe635b8c.bindTooltip(
+                `<div>
+                     VILLAGE GREEN ALZHEIMER'S CARE HOME (20 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_680535002f4d69c3eedc87d8fd23d895 = L.circleMarker(
+                [33.066096, -97.088573],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_e715a3c9037bc0e9590ea852aeb3681b);
+        
+    
+        var popup_0e9b4e5924053c491a6d9428ecd09b0f = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_95490bfa6fd0be078762bf77e5d9ea54 = $(`<div id="html_95490bfa6fd0be078762bf77e5d9ea54" style="width: 100.0%; height: 100.0%;">     <b>DAVIS FAMILY ELDER CARE, LLC</b><br>     Type: ALF - TYPE B<br>     Beds: 9<br>     Provider ID: 110302<br>     Rate: $3800 -  $5200<br>     </div>`)[0];
+                popup_0e9b4e5924053c491a6d9428ecd09b0f.setContent(html_95490bfa6fd0be078762bf77e5d9ea54);
+            
+        
+
+        circle_marker_680535002f4d69c3eedc87d8fd23d895.bindPopup(popup_0e9b4e5924053c491a6d9428ecd09b0f)
+        ;
+
+        
+    
+    
+            circle_marker_680535002f4d69c3eedc87d8fd23d895.bindTooltip(
+                `<div>
+                     DAVIS FAMILY ELDER CARE, LLC (9 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_023358215b45334e4b36389907fa2f6e = L.circleMarker(
+                [33.07993, -97.042689],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_e715a3c9037bc0e9590ea852aeb3681b);
+        
+    
+        var popup_fdf2389694bc78ff336683b2ba6cdf87 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_356bbd8ff27837cc627d0c6cb1041a72 = $(`<div id="html_356bbd8ff27837cc627d0c6cb1041a72" style="width: 100.0%; height: 100.0%;">     <b>KENNY'S HEART SENIOR LIVING</b><br>     Type: ALF - TYPE B<br>     Beds: 12<br>     Provider ID: 110580<br>     Rate: $3800 -  $5200<br>     </div>`)[0];
+                popup_fdf2389694bc78ff336683b2ba6cdf87.setContent(html_356bbd8ff27837cc627d0c6cb1041a72);
+            
+        
+
+        circle_marker_023358215b45334e4b36389907fa2f6e.bindPopup(popup_fdf2389694bc78ff336683b2ba6cdf87)
+        ;
+
+        
+    
+    
+            circle_marker_023358215b45334e4b36389907fa2f6e.bindTooltip(
+                `<div>
+                     KENNY'S HEART SENIOR LIVING (12 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_f8bcc5440b4514b61000e0ee63f4e184 = L.circleMarker(
+                [33.067597, -97.062626],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_e715a3c9037bc0e9590ea852aeb3681b);
+        
+    
+        var popup_7d7a6de023b198b0d93d67f221279a74 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_fdef9feaa0b8b61f6d0904832b93d856 = $(`<div id="html_fdef9feaa0b8b61f6d0904832b93d856" style="width: 100.0%; height: 100.0%;">     <b>SODALIS FLOWER MOUND</b><br>     Type: ALF - TYPE B<br>     Beds: 50<br>     Provider ID: 398<br>     Rate: $4200 -  $5400<br>     </div>`)[0];
+                popup_7d7a6de023b198b0d93d67f221279a74.setContent(html_fdef9feaa0b8b61f6d0904832b93d856);
+            
+        
+
+        circle_marker_f8bcc5440b4514b61000e0ee63f4e184.bindPopup(popup_7d7a6de023b198b0d93d67f221279a74)
+        ;
+
+        
+    
+    
+            circle_marker_f8bcc5440b4514b61000e0ee63f4e184.bindTooltip(
+                `<div>
+                     SODALIS FLOWER MOUND (50 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_6cdbf22815ee0863336d7277faffcac6 = L.circleMarker(
+                [33.07477, -97.017612],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_e715a3c9037bc0e9590ea852aeb3681b);
+        
+    
+        var popup_5d9df2d68a9755398924a2abbf68bd04 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_42090991e2294f9584728da3b69b12e6 = $(`<div id="html_42090991e2294f9584728da3b69b12e6" style="width: 100.0%; height: 100.0%;">     <b>FRANKIE LANE ASSISTED LIVING</b><br>     Type: ALF - TYPE B<br>     Beds: 12<br>     Provider ID: 103043<br>     Rate: $3800 -  $5200<br>     </div>`)[0];
+                popup_5d9df2d68a9755398924a2abbf68bd04.setContent(html_42090991e2294f9584728da3b69b12e6);
+            
+        
+
+        circle_marker_6cdbf22815ee0863336d7277faffcac6.bindPopup(popup_5d9df2d68a9755398924a2abbf68bd04)
+        ;
+
+        
+    
+    
+            circle_marker_6cdbf22815ee0863336d7277faffcac6.bindTooltip(
+                `<div>
+                     FRANKIE LANE ASSISTED LIVING (12 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_51946deb5d49189d51a23dfa4743478f = L.circleMarker(
+                [33.053758, -97.068497],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_e715a3c9037bc0e9590ea852aeb3681b);
+        
+    
+        var popup_ed2f67cd9ce66c4941045769f1ba0eee = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_aeba58b4f61559a4bce57d460da3c07a = $(`<div id="html_aeba58b4f61559a4bce57d460da3c07a" style="width: 100.0%; height: 100.0%;">     <b>ROSE GARDEN SENIOR LIVING</b><br>     Type: ALF - TYPE B<br>     Beds: 7<br>     Provider ID: 111942<br>     Rate: $3800 -  $5200<br>     </div>`)[0];
+                popup_ed2f67cd9ce66c4941045769f1ba0eee.setContent(html_aeba58b4f61559a4bce57d460da3c07a);
+            
+        
+
+        circle_marker_51946deb5d49189d51a23dfa4743478f.bindPopup(popup_ed2f67cd9ce66c4941045769f1ba0eee)
+        ;
+
+        
+    
+    
+            circle_marker_51946deb5d49189d51a23dfa4743478f.bindTooltip(
+                `<div>
+                     ROSE GARDEN SENIOR LIVING (7 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_fe3277933263761fa929dce56dc32327 = L.circleMarker(
+                [33.052106, -97.068948],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_e715a3c9037bc0e9590ea852aeb3681b);
+        
+    
+        var popup_010ffa4743774d9a8f9a3e25ec664851 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_7c9bc17a1baf890c4699adbcf0ec4eb1 = $(`<div id="html_7c9bc17a1baf890c4699adbcf0ec4eb1" style="width: 100.0%; height: 100.0%;">     <b>THE MUSTANG CREEK ESTATES OF FLOWER MOUND HOUSE B</b><br>     Type: ALF - TYPE B<br>     Beds: 16<br>     Provider ID: 111751<br>     Rate: $3800 -  $5200<br>     </div>`)[0];
+                popup_010ffa4743774d9a8f9a3e25ec664851.setContent(html_7c9bc17a1baf890c4699adbcf0ec4eb1);
+            
+        
+
+        circle_marker_fe3277933263761fa929dce56dc32327.bindPopup(popup_010ffa4743774d9a8f9a3e25ec664851)
+        ;
+
+        
+    
+    
+            circle_marker_fe3277933263761fa929dce56dc32327.bindTooltip(
+                `<div>
+                     THE MUSTANG CREEK ESTATES OF FLOWER MOUND HOUSE B (16 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_e33a0fc75d70811a594011cbbe083107 = L.circleMarker(
+                [33.052107, -97.068822],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_e715a3c9037bc0e9590ea852aeb3681b);
+        
+    
+        var popup_bc668b680cbe184e7ae8330cf119ccf5 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_bda69d6037a54c44399bf67e2cb93340 = $(`<div id="html_bda69d6037a54c44399bf67e2cb93340" style="width: 100.0%; height: 100.0%;">     <b>THE MUSTANG CREEK ESTATES OF FLOWER MOUND HOUSE C</b><br>     Type: ALF - TYPE B<br>     Beds: 16<br>     Provider ID: 111848<br>     Rate: $3800 -  $5200<br>     </div>`)[0];
+                popup_bc668b680cbe184e7ae8330cf119ccf5.setContent(html_bda69d6037a54c44399bf67e2cb93340);
+            
+        
+
+        circle_marker_e33a0fc75d70811a594011cbbe083107.bindPopup(popup_bc668b680cbe184e7ae8330cf119ccf5)
+        ;
+
+        
+    
+    
+            circle_marker_e33a0fc75d70811a594011cbbe083107.bindTooltip(
+                `<div>
+                     THE MUSTANG CREEK ESTATES OF FLOWER MOUND HOUSE C (16 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_f6c61b0bf74548699d13fc68e721f4d7 = L.circleMarker(
+                [33.052102, -97.068701],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_e715a3c9037bc0e9590ea852aeb3681b);
+        
+    
+        var popup_4921d1179a6760335ae8d030958160ac = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_35220b4d5b9e32cff616f9330c32bce1 = $(`<div id="html_35220b4d5b9e32cff616f9330c32bce1" style="width: 100.0%; height: 100.0%;">     <b>THE MUSTANG CREEK ESTATES OF FLOWER MOUND HOUSE E</b><br>     Type: ALF - TYPE B<br>     Beds: 16<br>     Provider ID: 111821<br>     Rate: $3800 -  $5200<br>     </div>`)[0];
+                popup_4921d1179a6760335ae8d030958160ac.setContent(html_35220b4d5b9e32cff616f9330c32bce1);
+            
+        
+
+        circle_marker_f6c61b0bf74548699d13fc68e721f4d7.bindPopup(popup_4921d1179a6760335ae8d030958160ac)
+        ;
+
+        
+    
+    
+            circle_marker_f6c61b0bf74548699d13fc68e721f4d7.bindTooltip(
+                `<div>
+                     THE MUSTANG CREEK ESTATES OF FLOWER MOUND HOUSE E (16 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_7dd02f28fac1c1ecfb75b196ff28afeb = L.circleMarker(
+                [33.052102, -97.068675],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_e715a3c9037bc0e9590ea852aeb3681b);
+        
+    
+        var popup_8a2737eb7ee31a1f59eead9b9dd0a66d = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_1018773ded2f17de29098bcb22c522c8 = $(`<div id="html_1018773ded2f17de29098bcb22c522c8" style="width: 100.0%; height: 100.0%;">     <b>THE MUSTANG CREEK ESTATES OF FLOWER MOUND HOUSE A</b><br>     Type: ALF - TYPE B<br>     Beds: 16<br>     Provider ID: 111686<br>     Rate: $3800 -  $5200<br>     </div>`)[0];
+                popup_8a2737eb7ee31a1f59eead9b9dd0a66d.setContent(html_1018773ded2f17de29098bcb22c522c8);
+            
+        
+
+        circle_marker_7dd02f28fac1c1ecfb75b196ff28afeb.bindPopup(popup_8a2737eb7ee31a1f59eead9b9dd0a66d)
+        ;
+
+        
+    
+    
+            circle_marker_7dd02f28fac1c1ecfb75b196ff28afeb.bindTooltip(
+                `<div>
+                     THE MUSTANG CREEK ESTATES OF FLOWER MOUND HOUSE A (16 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_316f8b785da42f7dc1dbc181f43548de = L.circleMarker(
+                [33.0521, -97.06864],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_e715a3c9037bc0e9590ea852aeb3681b);
+        
+    
+        var popup_bb637fae6987a63b98be039b785112ad = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_a95f1251b644b6b95fa4333c43bc38bf = $(`<div id="html_a95f1251b644b6b95fa4333c43bc38bf" style="width: 100.0%; height: 100.0%;">     <b>THE MUSTANG CREEK ESTATES OF FLOWER MOUND HOUSE F</b><br>     Type: ALF - TYPE B<br>     Beds: 16<br>     Provider ID: 111977<br>     Rate: $3800 -  $5200<br>     </div>`)[0];
+                popup_bb637fae6987a63b98be039b785112ad.setContent(html_a95f1251b644b6b95fa4333c43bc38bf);
+            
+        
+
+        circle_marker_316f8b785da42f7dc1dbc181f43548de.bindPopup(popup_bb637fae6987a63b98be039b785112ad)
+        ;
+
+        
+    
+    
+            circle_marker_316f8b785da42f7dc1dbc181f43548de.bindTooltip(
+                `<div>
+                     THE MUSTANG CREEK ESTATES OF FLOWER MOUND HOUSE F (16 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_1d4cdf3fdd0731de920bb78d81685d33 = L.circleMarker(
+                [33.063674, -97.032345],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_e715a3c9037bc0e9590ea852aeb3681b);
+        
+    
+        var popup_e36a8d68ddfd0c2fce5f9b4546f5f126 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_00a10a5c47d598981bcbc175c9a6da53 = $(`<div id="html_00a10a5c47d598981bcbc175c9a6da53" style="width: 100.0%; height: 100.0%;">     <b>METROPLEX RESIDENTIAL SENIOR CARE  LLC</b><br>     Type: ALF - TYPE B<br>     Beds: 6<br>     Provider ID: 106689<br>     Rate: $3800 -  $5200<br>     </div>`)[0];
+                popup_e36a8d68ddfd0c2fce5f9b4546f5f126.setContent(html_00a10a5c47d598981bcbc175c9a6da53);
+            
+        
+
+        circle_marker_1d4cdf3fdd0731de920bb78d81685d33.bindPopup(popup_e36a8d68ddfd0c2fce5f9b4546f5f126)
+        ;
+
+        
+    
+    
+            circle_marker_1d4cdf3fdd0731de920bb78d81685d33.bindTooltip(
+                `<div>
+                     METROPLEX RESIDENTIAL SENIOR CARE  LLC (6 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_2120b2d68eb718dfc11b2c98972ae4f8 = L.circleMarker(
+                [33.057891, -97.033808],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_e715a3c9037bc0e9590ea852aeb3681b);
+        
+    
+        var popup_302ec30ca9608b7c991a4f25b8df9cdd = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_c2ab158fb76e6bd6f44e609edbd51893 = $(`<div id="html_c2ab158fb76e6bd6f44e609edbd51893" style="width: 100.0%; height: 100.0%;">     <b>HIGHLAND CARE ASSISTED LIVING HOME LLC</b><br>     Type: ALF - TYPE B<br>     Beds: 7<br>     Provider ID: 110642<br>     Rate: $3800 -  $5200<br>     </div>`)[0];
+                popup_302ec30ca9608b7c991a4f25b8df9cdd.setContent(html_c2ab158fb76e6bd6f44e609edbd51893);
+            
+        
+
+        circle_marker_2120b2d68eb718dfc11b2c98972ae4f8.bindPopup(popup_302ec30ca9608b7c991a4f25b8df9cdd)
+        ;
+
+        
+    
+    
+            circle_marker_2120b2d68eb718dfc11b2c98972ae4f8.bindTooltip(
+                `<div>
+                     HIGHLAND CARE ASSISTED LIVING HOME LLC (7 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_47265fe05596e47cdc014cbe5a32848c = L.circleMarker(
+                [33.055166, -97.034728],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4.8, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_e715a3c9037bc0e9590ea852aeb3681b);
+        
+    
+        var popup_0f5893e8ccd06650a642a2e86d482e76 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_89924eb93b2563125c3f1bfa28dc5573 = $(`<div id="html_89924eb93b2563125c3f1bfa28dc5573" style="width: 100.0%; height: 100.0%;">     <b>BROOKDALE LEWISVILLE</b><br>     Type: ALF - TYPE B<br>     Beds: 60<br>     Provider ID: 315<br>     Rate: $4200 -  $5400<br>     </div>`)[0];
+                popup_0f5893e8ccd06650a642a2e86d482e76.setContent(html_89924eb93b2563125c3f1bfa28dc5573);
+            
+        
+
+        circle_marker_47265fe05596e47cdc014cbe5a32848c.bindPopup(popup_0f5893e8ccd06650a642a2e86d482e76)
+        ;
+
+        
+    
+    
+            circle_marker_47265fe05596e47cdc014cbe5a32848c.bindTooltip(
+                `<div>
+                     BROOKDALE LEWISVILLE (60 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_063073211884542e239f37285050b1b6 = L.circleMarker(
+                [33.042868, -97.070645],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6.88, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_e715a3c9037bc0e9590ea852aeb3681b);
+        
+    
+        var popup_55765075f047e05d120ad08f6aa500e8 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_2ae68b5e129e6bc728e7b50ec4b61acb = $(`<div id="html_2ae68b5e129e6bc728e7b50ec4b61acb" style="width: 100.0%; height: 100.0%;">     <b>ROSEWOOD ASSISTED LIVING AND MEMORY CARE</b><br>     Type: ALF - TYPE B<br>     Beds: 86<br>     Provider ID: 105287<br>     Rate: $4200 -  $5400<br>     </div>`)[0];
+                popup_55765075f047e05d120ad08f6aa500e8.setContent(html_2ae68b5e129e6bc728e7b50ec4b61acb);
+            
+        
+
+        circle_marker_063073211884542e239f37285050b1b6.bindPopup(popup_55765075f047e05d120ad08f6aa500e8)
+        ;
+
+        
+    
+    
+            circle_marker_063073211884542e239f37285050b1b6.bindTooltip(
+                `<div>
+                     ROSEWOOD ASSISTED LIVING AND MEMORY CARE (86 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_d8b23fd408c84f19902a44427f734a79 = L.circleMarker(
+                [33.040339, -97.070598],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7.84, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_e715a3c9037bc0e9590ea852aeb3681b);
+        
+    
+        var popup_2fd524c1a7576b609543fab82731f728 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_58af6d559201e9e427eead7394e2d1a0 = $(`<div id="html_58af6d559201e9e427eead7394e2d1a0" style="width: 100.0%; height: 100.0%;">     <b>AVANTI SENIOR LIVING AT FLOWER MOUND</b><br>     Type: ALF - TYPE B<br>     Beds: 98<br>     Provider ID: 106788<br>     Rate: $5200 -  $6800<br>     </div>`)[0];
+                popup_2fd524c1a7576b609543fab82731f728.setContent(html_58af6d559201e9e427eead7394e2d1a0);
+            
+        
+
+        circle_marker_d8b23fd408c84f19902a44427f734a79.bindPopup(popup_2fd524c1a7576b609543fab82731f728)
+        ;
+
+        
+    
+    
+            circle_marker_d8b23fd408c84f19902a44427f734a79.bindTooltip(
+                `<div>
+                     AVANTI SENIOR LIVING AT FLOWER MOUND (98 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_a952ddd9649c8a8122a565f8f444a9d1 = L.circleMarker(
+                [33.142649, -96.921975],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_e715a3c9037bc0e9590ea852aeb3681b);
+        
+    
+        var popup_8484c53eecccfa42261047033dc039c1 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_dc8ab31fe858dbd9c434502c296f9f23 = $(`<div id="html_dc8ab31fe858dbd9c434502c296f9f23" style="width: 100.0%; height: 100.0%;">     <b>GEMS RESIDENCE</b><br>     Type: ALF - TYPE B<br>     Beds: 7<br>     Provider ID: 112016<br>     Rate: $3800 -  $5200<br>     </div>`)[0];
+                popup_8484c53eecccfa42261047033dc039c1.setContent(html_dc8ab31fe858dbd9c434502c296f9f23);
+            
+        
+
+        circle_marker_a952ddd9649c8a8122a565f8f444a9d1.bindPopup(popup_8484c53eecccfa42261047033dc039c1)
+        ;
+
+        
+    
+    
+            circle_marker_a952ddd9649c8a8122a565f8f444a9d1.bindTooltip(
+                `<div>
+                     GEMS RESIDENCE (7 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_ce266fa10c6c2e133112d7294e1a8be3 = L.circleMarker(
+                [33.036203, -97.078349],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_e715a3c9037bc0e9590ea852aeb3681b);
+        
+    
+        var popup_2382f442770340a71569b2646e738ba7 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_fb170d1a6267a7ffb4b98f988529933c = $(`<div id="html_fb170d1a6267a7ffb4b98f988529933c" style="width: 100.0%; height: 100.0%;">     <b>MAGNOLIA  FLOWER MOUND LLC</b><br>     Type: ALF - TYPE B<br>     Beds: 50<br>     Provider ID: 103044<br>     Rate: $4200 -  $5400<br>     </div>`)[0];
+                popup_2382f442770340a71569b2646e738ba7.setContent(html_fb170d1a6267a7ffb4b98f988529933c);
+            
+        
+
+        circle_marker_ce266fa10c6c2e133112d7294e1a8be3.bindPopup(popup_2382f442770340a71569b2646e738ba7)
+        ;
+
+        
+    
+    
+            circle_marker_ce266fa10c6c2e133112d7294e1a8be3.bindTooltip(
+                `<div>
+                     MAGNOLIA  FLOWER MOUND LLC (50 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_e67204d9b81a4507ac7024b0cc535af5 = L.circleMarker(
+                [33.055152, -97.019409],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_e715a3c9037bc0e9590ea852aeb3681b);
+        
+    
+        var popup_b32e0a6c41c3cb27f261a2b8a20ee8f2 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_6c750e04af3da86e8f4d8b2afef8b97f = $(`<div id="html_6c750e04af3da86e8f4d8b2afef8b97f" style="width: 100.0%; height: 100.0%;">     <b>KANDLE  CARE 2</b><br>     Type: ALF - TYPE B<br>     Beds: 8<br>     Provider ID: 101358<br>     Rate: $3800 -  $5200<br>     </div>`)[0];
+                popup_b32e0a6c41c3cb27f261a2b8a20ee8f2.setContent(html_6c750e04af3da86e8f4d8b2afef8b97f);
+            
+        
+
+        circle_marker_e67204d9b81a4507ac7024b0cc535af5.bindPopup(popup_b32e0a6c41c3cb27f261a2b8a20ee8f2)
+        ;
+
+        
+    
+    
+            circle_marker_e67204d9b81a4507ac7024b0cc535af5.bindTooltip(
+                `<div>
+                     KANDLE  CARE 2 (8 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_643723d585461aa5889142111df41198 = L.circleMarker(
+                [33.044882, -97.035154],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_e715a3c9037bc0e9590ea852aeb3681b);
+        
+    
+        var popup_e1eeaff35c86a7eb494213d5e8dfb6f5 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_2d6640207396b217e0a46098ddbc4636 = $(`<div id="html_2d6640207396b217e0a46098ddbc4636" style="width: 100.0%; height: 100.0%;">     <b>GARDEN RIDGE PLACE</b><br>     Type: ALF - TYPE B<br>     Beds: 24<br>     Provider ID: 106491<br>     Rate: $4200 -  $5400<br>     </div>`)[0];
+                popup_e1eeaff35c86a7eb494213d5e8dfb6f5.setContent(html_2d6640207396b217e0a46098ddbc4636);
+            
+        
+
+        circle_marker_643723d585461aa5889142111df41198.bindPopup(popup_e1eeaff35c86a7eb494213d5e8dfb6f5)
+        ;
+
+        
+    
+    
+            circle_marker_643723d585461aa5889142111df41198.bindTooltip(
+                `<div>
+                     GARDEN RIDGE PLACE (24 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_f889299e04bdec78ecd683d9241d825d = L.circleMarker(
+                [33.050332, -97.014814],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4.8, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_e715a3c9037bc0e9590ea852aeb3681b);
+        
+    
+        var popup_32c154bfe8daa8de20a3e42064e784b8 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_1455e3c0a9dbe3f6948cb97a4077d78d = $(`<div id="html_1455e3c0a9dbe3f6948cb97a4077d78d" style="width: 100.0%; height: 100.0%;">     <b>LEWISVILLE ESTATES</b><br>     Type: ALF - TYPE B<br>     Beds: 60<br>     Provider ID: 10063<br>     Rate: $4200 -  $5400<br>     </div>`)[0];
+                popup_32c154bfe8daa8de20a3e42064e784b8.setContent(html_1455e3c0a9dbe3f6948cb97a4077d78d);
+            
+        
+
+        circle_marker_f889299e04bdec78ecd683d9241d825d.bindPopup(popup_32c154bfe8daa8de20a3e42064e784b8)
+        ;
+
+        
+    
+    
+            circle_marker_f889299e04bdec78ecd683d9241d825d.bindTooltip(
+                `<div>
+                     LEWISVILLE ESTATES (60 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_d30aea9ae1775da4801b1f037cc6cdf1 = L.circleMarker(
+                [33.029458, -97.071953],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8.24, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_e715a3c9037bc0e9590ea852aeb3681b);
+        
+    
+        var popup_a3624cf0350484cf5962241ea873d1a8 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_9c045a155e38060d24f74f0d176d88eb = $(`<div id="html_9c045a155e38060d24f74f0d176d88eb" style="width: 100.0%; height: 100.0%;">     <b>THE OAKS AT FLOWER MOUND ASSISTED LIVING & MEMORY CARE</b><br>     Type: ALF - TYPE B<br>     Beds: 103<br>     Provider ID: 106343<br>     Rate: $4500 -  $5800<br>     </div>`)[0];
+                popup_a3624cf0350484cf5962241ea873d1a8.setContent(html_9c045a155e38060d24f74f0d176d88eb);
+            
+        
+
+        circle_marker_d30aea9ae1775da4801b1f037cc6cdf1.bindPopup(popup_a3624cf0350484cf5962241ea873d1a8)
+        ;
+
+        
+    
+    
+            circle_marker_d30aea9ae1775da4801b1f037cc6cdf1.bindTooltip(
+                `<div>
+                     THE OAKS AT FLOWER MOUND ASSISTED LIVING & MEMORY CARE (103 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_6b1abcbc0f96f120ecaa2bc6fbf523c6 = L.circleMarker(
+                [33.034592, -97.042961],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_e715a3c9037bc0e9590ea852aeb3681b);
+        
+    
+        var popup_2ebcfc30730f9b3b6c64a3c76bc2c8b6 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_138c2be6d3acb74b4ffa608d1f00744e = $(`<div id="html_138c2be6d3acb74b4ffa608d1f00744e" style="width: 100.0%; height: 100.0%;">     <b>COMPASSIONATE RESIDENTIAL LIVING LLC</b><br>     Type: ALF - TYPE B<br>     Beds: 6<br>     Provider ID: 110290<br>     Rate: $3800 -  $5200<br>     </div>`)[0];
+                popup_2ebcfc30730f9b3b6c64a3c76bc2c8b6.setContent(html_138c2be6d3acb74b4ffa608d1f00744e);
+            
+        
+
+        circle_marker_6b1abcbc0f96f120ecaa2bc6fbf523c6.bindPopup(popup_2ebcfc30730f9b3b6c64a3c76bc2c8b6)
+        ;
+
+        
+    
+    
+            circle_marker_6b1abcbc0f96f120ecaa2bc6fbf523c6.bindTooltip(
+                `<div>
+                     COMPASSIONATE RESIDENTIAL LIVING LLC (6 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_3e1b9e1f1375405109cb539a36cb1c62 = L.circleMarker(
+                [33.046554, -97.003922],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_e715a3c9037bc0e9590ea852aeb3681b);
+        
+    
+        var popup_48684171759a7c744da6e29c9c1153a6 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_7f0b4780570d996f49b89dba5ef65374 = $(`<div id="html_7f0b4780570d996f49b89dba5ef65374" style="width: 100.0%; height: 100.0%;">     <b>AVILACARE SENIOR LIVING AND MEMORY CARE LEWISVILLE</b><br>     Type: ALF - TYPE B<br>     Beds: 16<br>     Provider ID: 107307<br>     Rate: $3800 -  $5200<br>     </div>`)[0];
+                popup_48684171759a7c744da6e29c9c1153a6.setContent(html_7f0b4780570d996f49b89dba5ef65374);
+            
+        
+
+        circle_marker_3e1b9e1f1375405109cb539a36cb1c62.bindPopup(popup_48684171759a7c744da6e29c9c1153a6)
+        ;
+
+        
+    
+    
+            circle_marker_3e1b9e1f1375405109cb539a36cb1c62.bindTooltip(
+                `<div>
+                     AVILACARE SENIOR LIVING AND MEMORY CARE LEWISVILLE (16 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_99ea0391500bde244a44726508d53425 = L.circleMarker(
+                [33.155796, -96.885845],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_e715a3c9037bc0e9590ea852aeb3681b);
+        
+    
+        var popup_c30d047b3d60d90b13eebe84fbd542ce = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_f30b21b64c1604d3ba9420350c5bd52a = $(`<div id="html_f30b21b64c1604d3ba9420350c5bd52a" style="width: 100.0%; height: 100.0%;">     <b>MUSTANG CREEK ESTATES FRISCO HOUSE A</b><br>     Type: ALF - TYPE B<br>     Beds: 16<br>     Provider ID: 105813<br>     Rate: $3800 -  $5200<br>     </div>`)[0];
+                popup_c30d047b3d60d90b13eebe84fbd542ce.setContent(html_f30b21b64c1604d3ba9420350c5bd52a);
+            
+        
+
+        circle_marker_99ea0391500bde244a44726508d53425.bindPopup(popup_c30d047b3d60d90b13eebe84fbd542ce)
+        ;
+
+        
+    
+    
+            circle_marker_99ea0391500bde244a44726508d53425.bindTooltip(
+                `<div>
+                     MUSTANG CREEK ESTATES FRISCO HOUSE A (16 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_acac159769da12b64842fcf34d260a95 = L.circleMarker(
+                [33.155796, -96.885845],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_e715a3c9037bc0e9590ea852aeb3681b);
+        
+    
+        var popup_f3eef2b329770a350af475321c740f17 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_9aeb4a3892cb98b4f072f45f322bc041 = $(`<div id="html_9aeb4a3892cb98b4f072f45f322bc041" style="width: 100.0%; height: 100.0%;">     <b>MUSTANG CREEK ESTATES FRISCO HOUSE B</b><br>     Type: ALF - TYPE B<br>     Beds: 16<br>     Provider ID: 105809<br>     Rate: $3800 -  $5200<br>     </div>`)[0];
+                popup_f3eef2b329770a350af475321c740f17.setContent(html_9aeb4a3892cb98b4f072f45f322bc041);
+            
+        
+
+        circle_marker_acac159769da12b64842fcf34d260a95.bindPopup(popup_f3eef2b329770a350af475321c740f17)
+        ;
+
+        
+    
+    
+            circle_marker_acac159769da12b64842fcf34d260a95.bindTooltip(
+                `<div>
+                     MUSTANG CREEK ESTATES FRISCO HOUSE B (16 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_f1eaba56db5345cf579829cd763519cd = L.circleMarker(
+                [33.155796, -96.885845],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_e715a3c9037bc0e9590ea852aeb3681b);
+        
+    
+        var popup_408455c8dab8a26dbda62734a57f03ae = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_4fc99fde93ef62d9d97a4b8c88d1f5e2 = $(`<div id="html_4fc99fde93ef62d9d97a4b8c88d1f5e2" style="width: 100.0%; height: 100.0%;">     <b>MUSTANG CREEK ESTATES FRISCO HOUSE C AND D</b><br>     Type: ALF - TYPE A<br>     Beds: 30<br>     Provider ID: 105811<br>     Rate: $4200 -  $5400<br>     </div>`)[0];
+                popup_408455c8dab8a26dbda62734a57f03ae.setContent(html_4fc99fde93ef62d9d97a4b8c88d1f5e2);
+            
+        
+
+        circle_marker_f1eaba56db5345cf579829cd763519cd.bindPopup(popup_408455c8dab8a26dbda62734a57f03ae)
+        ;
+
+        
+    
+    
+            circle_marker_f1eaba56db5345cf579829cd763519cd.bindTooltip(
+                `<div>
+                     MUSTANG CREEK ESTATES FRISCO HOUSE C AND D (30 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_67570564bdb4a600fa0e82fcae12e131 = L.circleMarker(
+                [33.155796, -96.885845],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_e715a3c9037bc0e9590ea852aeb3681b);
+        
+    
+        var popup_501b08d2149b751d6629d681c1f33ca4 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_80a70c1360cbee17fe26a66f179ea624 = $(`<div id="html_80a70c1360cbee17fe26a66f179ea624" style="width: 100.0%; height: 100.0%;">     <b>MUSTANG CREEK ESTATES FRISCO HOUSE E</b><br>     Type: ALF - TYPE B<br>     Beds: 14<br>     Provider ID: 105812<br>     Rate: $3800 -  $5200<br>     </div>`)[0];
+                popup_501b08d2149b751d6629d681c1f33ca4.setContent(html_80a70c1360cbee17fe26a66f179ea624);
+            
+        
+
+        circle_marker_67570564bdb4a600fa0e82fcae12e131.bindPopup(popup_501b08d2149b751d6629d681c1f33ca4)
+        ;
+
+        
+    
+    
+            circle_marker_67570564bdb4a600fa0e82fcae12e131.bindTooltip(
+                `<div>
+                     MUSTANG CREEK ESTATES FRISCO HOUSE E (14 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_6d04f3d822f501188c62d7535a18d2b9 = L.circleMarker(
+                [33.155796, -96.885845],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_e715a3c9037bc0e9590ea852aeb3681b);
+        
+    
+        var popup_b39e06222b94e42f58f7209faaa9402f = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_99a62c9bc781648f54ede3702e27d570 = $(`<div id="html_99a62c9bc781648f54ede3702e27d570" style="width: 100.0%; height: 100.0%;">     <b>MUSTANG CREEK ESTATES RESIDENTIAL ASSISTED LIVING FRISCO HOUSE F</b><br>     Type: ALF - TYPE B<br>     Beds: 14<br>     Provider ID: 105814<br>     Rate: $3800 -  $5200<br>     </div>`)[0];
+                popup_b39e06222b94e42f58f7209faaa9402f.setContent(html_99a62c9bc781648f54ede3702e27d570);
+            
+        
+
+        circle_marker_6d04f3d822f501188c62d7535a18d2b9.bindPopup(popup_b39e06222b94e42f58f7209faaa9402f)
+        ;
+
+        
+    
+    
+            circle_marker_6d04f3d822f501188c62d7535a18d2b9.bindTooltip(
+                `<div>
+                     MUSTANG CREEK ESTATES RESIDENTIAL ASSISTED LIVING FRISCO HOUSE F (14 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_f27b4f9706c4ca0ea900cdb48b5f904c = L.circleMarker(
+                [33.019992, -97.03258],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_e715a3c9037bc0e9590ea852aeb3681b);
+        
+    
+        var popup_52a40dd49c2a626bd24353437accb548 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_bc0d40e46fa2cd7dd60371e7f4520552 = $(`<div id="html_bc0d40e46fa2cd7dd60371e7f4520552" style="width: 100.0%; height: 100.0%;">     <b>SUMMERTIME HOUSE</b><br>     Type: ALF - TYPE B<br>     Beds: 7<br>     Provider ID: 110305<br>     Rate: $3800 -  $5200<br>     </div>`)[0];
+                popup_52a40dd49c2a626bd24353437accb548.setContent(html_bc0d40e46fa2cd7dd60371e7f4520552);
+            
+        
+
+        circle_marker_f27b4f9706c4ca0ea900cdb48b5f904c.bindPopup(popup_52a40dd49c2a626bd24353437accb548)
+        ;
+
+        
+    
+    
+            circle_marker_f27b4f9706c4ca0ea900cdb48b5f904c.bindTooltip(
+                `<div>
+                     SUMMERTIME HOUSE (7 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_0863c5246d53fe274454ec1d9c8ca948 = L.circleMarker(
+                [33.008, -97.2175],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 11.040000000000001, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_e715a3c9037bc0e9590ea852aeb3681b);
+        
+    
+        var popup_65d166222e870bbd5d06224500d5e3bf = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_e950a626617b8ea2549c954a0dccd157 = $(`<div id="html_e950a626617b8ea2549c954a0dccd157" style="width: 100.0%; height: 100.0%;">     <b>HARVEST OF ROANOKE</b><br>     Type: ALF - TYPE B<br>     Beds: 138<br>     Provider ID: 110387<br>     Rate: $4500 -  $5800<br>     </div>`)[0];
+                popup_65d166222e870bbd5d06224500d5e3bf.setContent(html_e950a626617b8ea2549c954a0dccd157);
+            
+        
+
+        circle_marker_0863c5246d53fe274454ec1d9c8ca948.bindPopup(popup_65d166222e870bbd5d06224500d5e3bf)
+        ;
+
+        
+    
+    
+            circle_marker_0863c5246d53fe274454ec1d9c8ca948.bindTooltip(
+                `<div>
+                     HARVEST OF ROANOKE (138 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_aa3dddce5d8878b10e2c569dceb37d76 = L.circleMarker(
+                [33.180243, -96.863962],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_e715a3c9037bc0e9590ea852aeb3681b);
+        
+    
+        var popup_b313709b8e59105839cb3e1d146150dd = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_f94eea4caa3f3543718ed84837caa432 = $(`<div id="html_f94eea4caa3f3543718ed84837caa432" style="width: 100.0%; height: 100.0%;">     <b>WINDHAVEN SENIOR LIVING, LTD</b><br>     Type: ALF - TYPE B<br>     Beds: 16<br>     Provider ID: 110210<br>     Rate: $3800 -  $5200<br>     </div>`)[0];
+                popup_b313709b8e59105839cb3e1d146150dd.setContent(html_f94eea4caa3f3543718ed84837caa432);
+            
+        
+
+        circle_marker_aa3dddce5d8878b10e2c569dceb37d76.bindPopup(popup_b313709b8e59105839cb3e1d146150dd)
+        ;
+
+        
+    
+    
+            circle_marker_aa3dddce5d8878b10e2c569dceb37d76.bindTooltip(
+                `<div>
+                     WINDHAVEN SENIOR LIVING, LTD (16 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_0a2d50de3a074df3a29fff906cb88f48 = L.circleMarker(
+                [33.000557, -97.19051],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_e715a3c9037bc0e9590ea852aeb3681b);
+        
+    
+        var popup_ec2c4c3a12f69fc1ef607fb5bce4fdde = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_f96d145f0d540e16512678dd5b8f666d = $(`<div id="html_f96d145f0d540e16512678dd5b8f666d" style="width: 100.0%; height: 100.0%;">     <b>261 OAK HILL LLC</b><br>     Type: ALF - TYPE B<br>     Beds: 11<br>     Provider ID: 111677<br>     Rate: $3800 -  $5200<br>     </div>`)[0];
+                popup_ec2c4c3a12f69fc1ef607fb5bce4fdde.setContent(html_f96d145f0d540e16512678dd5b8f666d);
+            
+        
+
+        circle_marker_0a2d50de3a074df3a29fff906cb88f48.bindPopup(popup_ec2c4c3a12f69fc1ef607fb5bce4fdde)
+        ;
+
+        
+    
+    
+            circle_marker_0a2d50de3a074df3a29fff906cb88f48.bindTooltip(
+                `<div>
+                     261 OAK HILL LLC (11 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_7af287828e67abac84954462c40ec354 = L.circleMarker(
+                [33.180016, -96.863918],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_e715a3c9037bc0e9590ea852aeb3681b);
+        
+    
+        var popup_f67d9d3bebc4772452787d4374b84161 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_7c9f7c43344c3f8109a09567a1cf5e8e = $(`<div id="html_7c9f7c43344c3f8109a09567a1cf5e8e" style="width: 100.0%; height: 100.0%;">     <b>WINDHAVEN SENIOR LIVING LTD</b><br>     Type: ALF - TYPE B<br>     Beds: 16<br>     Provider ID: 110156<br>     Rate: $3800 -  $5200<br>     </div>`)[0];
+                popup_f67d9d3bebc4772452787d4374b84161.setContent(html_7c9f7c43344c3f8109a09567a1cf5e8e);
+            
+        
+
+        circle_marker_7af287828e67abac84954462c40ec354.bindPopup(popup_f67d9d3bebc4772452787d4374b84161)
+        ;
+
+        
+    
+    
+            circle_marker_7af287828e67abac84954462c40ec354.bindTooltip(
+                `<div>
+                     WINDHAVEN SENIOR LIVING LTD (16 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_d6f3f6454ef18859c7b19e7d772f21f6 = L.circleMarker(
+                [33.180015, -96.863916],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_e715a3c9037bc0e9590ea852aeb3681b);
+        
+    
+        var popup_cf880638772e94e7175f4980b1dd407a = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_1ebabd1f63e902522a4cf4038736cafa = $(`<div id="html_1ebabd1f63e902522a4cf4038736cafa" style="width: 100.0%; height: 100.0%;">     <b>WINDHAVEN SENIOR LIVING LTD</b><br>     Type: ALF - TYPE B<br>     Beds: 16<br>     Provider ID: 110136<br>     Rate: $3800 -  $5200<br>     </div>`)[0];
+                popup_cf880638772e94e7175f4980b1dd407a.setContent(html_1ebabd1f63e902522a4cf4038736cafa);
+            
+        
+
+        circle_marker_d6f3f6454ef18859c7b19e7d772f21f6.bindPopup(popup_cf880638772e94e7175f4980b1dd407a)
+        ;
+
+        
+    
+    
+            circle_marker_d6f3f6454ef18859c7b19e7d772f21f6.bindTooltip(
+                `<div>
+                     WINDHAVEN SENIOR LIVING LTD (16 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_0f29dd509bf166f32957d771b6513004 = L.circleMarker(
+                [33.180015, -96.863916],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_e715a3c9037bc0e9590ea852aeb3681b);
+        
+    
+        var popup_537ba6766990376c114e612e27e0b2df = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_cde9f053017e213096b2a57acfe895db = $(`<div id="html_cde9f053017e213096b2a57acfe895db" style="width: 100.0%; height: 100.0%;">     <b>WINDHAVEN SENIOR LIVING, LTD</b><br>     Type: ALF - TYPE B<br>     Beds: 16<br>     Provider ID: 110160<br>     Rate: $3800 -  $5200<br>     </div>`)[0];
+                popup_537ba6766990376c114e612e27e0b2df.setContent(html_cde9f053017e213096b2a57acfe895db);
+            
+        
+
+        circle_marker_0f29dd509bf166f32957d771b6513004.bindPopup(popup_537ba6766990376c114e612e27e0b2df)
+        ;
+
+        
+    
+    
+            circle_marker_0f29dd509bf166f32957d771b6513004.bindTooltip(
+                `<div>
+                     WINDHAVEN SENIOR LIVING, LTD (16 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_77a6bc2593b658f90358d512f530d255 = L.circleMarker(
+                [33.021846, -97.01464],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_e715a3c9037bc0e9590ea852aeb3681b);
+        
+    
+        var popup_df353286627a9f6313d62a1a9a2ec86b = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_45f3e741305c6a9e392d15483b539c34 = $(`<div id="html_45f3e741305c6a9e392d15483b539c34" style="width: 100.0%; height: 100.0%;">     <b>4 SEASONS SENIOR LIVING IX</b><br>     Type: ALF - TYPE B<br>     Beds: 9<br>     Provider ID: 30067<br>     Rate: $3800 -  $5200<br>     </div>`)[0];
+                popup_df353286627a9f6313d62a1a9a2ec86b.setContent(html_45f3e741305c6a9e392d15483b539c34);
+            
+        
+
+        circle_marker_77a6bc2593b658f90358d512f530d255.bindPopup(popup_df353286627a9f6313d62a1a9a2ec86b)
+        ;
+
+        
+    
+    
+            circle_marker_77a6bc2593b658f90358d512f530d255.bindTooltip(
+                `<div>
+                     4 SEASONS SENIOR LIVING IX (9 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_13acc6b81c8c4defbcec965303f4b28c = L.circleMarker(
+                [33.0192, -97.004],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_e715a3c9037bc0e9590ea852aeb3681b);
+        
+    
+        var popup_ac4bd1a6c8c77ee7080fdd988038d776 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_063465c71d3afc3e09aea12bc3014579 = $(`<div id="html_063465c71d3afc3e09aea12bc3014579" style="width: 100.0%; height: 100.0%;">     <b>GLENCAIRN HOUSE</b><br>     Type: ALF - TYPE B<br>     Beds: 6<br>     Provider ID: 107219<br>     Rate: $3800 -  $5200<br>     </div>`)[0];
+                popup_ac4bd1a6c8c77ee7080fdd988038d776.setContent(html_063465c71d3afc3e09aea12bc3014579);
+            
+        
+
+        circle_marker_13acc6b81c8c4defbcec965303f4b28c.bindPopup(popup_ac4bd1a6c8c77ee7080fdd988038d776)
+        ;
+
+        
+    
+    
+            circle_marker_13acc6b81c8c4defbcec965303f4b28c.bindTooltip(
+                `<div>
+                     GLENCAIRN HOUSE (6 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_5494fd50b4a6921285e6503d21c37944 = L.circleMarker(
+                [33.010034, -97.025036],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_e715a3c9037bc0e9590ea852aeb3681b);
+        
+    
+        var popup_34816fef7fcd69887702b2a7b551fe93 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_fb8bcf9fb4e4795ce8830e4cb11b0e9e = $(`<div id="html_fb8bcf9fb4e4795ce8830e4cb11b0e9e" style="width: 100.0%; height: 100.0%;">     <b>4 SEASONS SENIOR LIVING VI</b><br>     Type: ALF - TYPE B<br>     Beds: 8<br>     Provider ID: 102938<br>     Rate: $3800 -  $5200<br>     </div>`)[0];
+                popup_34816fef7fcd69887702b2a7b551fe93.setContent(html_fb8bcf9fb4e4795ce8830e4cb11b0e9e);
+            
+        
+
+        circle_marker_5494fd50b4a6921285e6503d21c37944.bindPopup(popup_34816fef7fcd69887702b2a7b551fe93)
+        ;
+
+        
+    
+    
+            circle_marker_5494fd50b4a6921285e6503d21c37944.bindTooltip(
+                `<div>
+                     4 SEASONS SENIOR LIVING VI (8 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_c96a55bfead4244afe65922e00215f30 = L.circleMarker(
+                [33.009712, -97.025252],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_e715a3c9037bc0e9590ea852aeb3681b);
+        
+    
+        var popup_f89ed070994bf0f03527be39bb5d60d9 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_895b041874e1785d23b103a497852cf4 = $(`<div id="html_895b041874e1785d23b103a497852cf4" style="width: 100.0%; height: 100.0%;">     <b>4 SEASONS SENIOR LIVING VIII</b><br>     Type: ALF - TYPE B<br>     Beds: 7<br>     Provider ID: 102343<br>     Rate: $3800 -  $5200<br>     </div>`)[0];
+                popup_f89ed070994bf0f03527be39bb5d60d9.setContent(html_895b041874e1785d23b103a497852cf4);
+            
+        
+
+        circle_marker_c96a55bfead4244afe65922e00215f30.bindPopup(popup_f89ed070994bf0f03527be39bb5d60d9)
+        ;
+
+        
+    
+    
+            circle_marker_c96a55bfead4244afe65922e00215f30.bindTooltip(
+                `<div>
+                     4 SEASONS SENIOR LIVING VIII (7 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_229ef945b59cd989aacf1983f6c69a80 = L.circleMarker(
+                [33.008139, -97.022597],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_e715a3c9037bc0e9590ea852aeb3681b);
+        
+    
+        var popup_f53951fb0f6bfd6b4df6d19aff075593 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_eddc5d9f09efa09db58c34d55a1a0750 = $(`<div id="html_eddc5d9f09efa09db58c34d55a1a0750" style="width: 100.0%; height: 100.0%;">     <b>AVALON MEMORY CARE</b><br>     Type: ALF - TYPE B<br>     Beds: 27<br>     Provider ID: 110487<br>     Rate: $ -  $<br>     </div>`)[0];
+                popup_f53951fb0f6bfd6b4df6d19aff075593.setContent(html_eddc5d9f09efa09db58c34d55a1a0750);
+            
+        
+
+        circle_marker_229ef945b59cd989aacf1983f6c69a80.bindPopup(popup_f53951fb0f6bfd6b4df6d19aff075593)
+        ;
+
+        
+    
+    
+            circle_marker_229ef945b59cd989aacf1983f6c69a80.bindTooltip(
+                `<div>
+                     AVALON MEMORY CARE (27 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_c051068b0a1ec76232cd86638f99ea0d = L.circleMarker(
+                [33.129943, -96.867451],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_e715a3c9037bc0e9590ea852aeb3681b);
+        
+    
+        var popup_b6eb6e4d35ed8a796347b7b24dd461c1 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_b69de784f33c78dc3685276c679d5d74 = $(`<div id="html_b69de784f33c78dc3685276c679d5d74" style="width: 100.0%; height: 100.0%;">     <b>BEEHIVE HOMES OF FRISCO</b><br>     Type: ALF - TYPE B<br>     Beds: 25<br>     Provider ID: 106341<br>     Rate: $4200 -  $5400<br>     </div>`)[0];
+                popup_b6eb6e4d35ed8a796347b7b24dd461c1.setContent(html_b69de784f33c78dc3685276c679d5d74);
+            
+        
+
+        circle_marker_c051068b0a1ec76232cd86638f99ea0d.bindPopup(popup_b6eb6e4d35ed8a796347b7b24dd461c1)
+        ;
+
+        
+    
+    
+            circle_marker_c051068b0a1ec76232cd86638f99ea0d.bindTooltip(
+                `<div>
+                     BEEHIVE HOMES OF FRISCO (25 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_19f1e29214fa86cfcde049311a43021f = L.circleMarker(
+                [33.140738, -96.861004],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_e715a3c9037bc0e9590ea852aeb3681b);
+        
+    
+        var popup_a06d9f734337bc81ee242fc33c90c0b0 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_546ff6b26c193060a5b85b88133c5f62 = $(`<div id="html_546ff6b26c193060a5b85b88133c5f62" style="width: 100.0%; height: 100.0%;">     <b>SILVER LEAF ASSISTED LIVING LLC</b><br>     Type: ALF - TYPE B<br>     Beds: 9<br>     Provider ID: 105024<br>     Rate: $3800 -  $5200<br>     </div>`)[0];
+                popup_a06d9f734337bc81ee242fc33c90c0b0.setContent(html_546ff6b26c193060a5b85b88133c5f62);
+            
+        
+
+        circle_marker_19f1e29214fa86cfcde049311a43021f.bindPopup(popup_a06d9f734337bc81ee242fc33c90c0b0)
+        ;
+
+        
+    
+    
+            circle_marker_19f1e29214fa86cfcde049311a43021f.bindTooltip(
+                `<div>
+                     SILVER LEAF ASSISTED LIVING LLC (9 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_e6d527cb14d9738f9e7a1aa983d1a50f = L.circleMarker(
+                [33.004882, -97.017396],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 14.16, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_e715a3c9037bc0e9590ea852aeb3681b);
+        
+    
+        var popup_143104bbb6f10cd4f77692f4c45ca670 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_1063f1de117f2cf3d7d8ec675119c60a = $(`<div id="html_1063f1de117f2cf3d7d8ec675119c60a" style="width: 100.0%; height: 100.0%;">     <b>THE PEARL SENIOR LIVING AT LEWISVILLE</b><br>     Type: ALF - TYPE B<br>     Beds: 177<br>     Provider ID: 107037<br>     Rate: $4500 -  $5800<br>     </div>`)[0];
+                popup_143104bbb6f10cd4f77692f4c45ca670.setContent(html_1063f1de117f2cf3d7d8ec675119c60a);
+            
+        
+
+        circle_marker_e6d527cb14d9738f9e7a1aa983d1a50f.bindPopup(popup_143104bbb6f10cd4f77692f4c45ca670)
+        ;
+
+        
+    
+    
+            circle_marker_e6d527cb14d9738f9e7a1aa983d1a50f.bindTooltip(
+                `<div>
+                     THE PEARL SENIOR LIVING AT LEWISVILLE (177 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_da784be3714b01268ba20b630a97da51 = L.circleMarker(
+                [33.166246, -96.848717],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8.0, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_e715a3c9037bc0e9590ea852aeb3681b);
+        
+    
+        var popup_caecec4084d74a1e2334723a9438e19e = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_c734f69ad9a5b6ed80c145ec216edeb1 = $(`<div id="html_c734f69ad9a5b6ed80c145ec216edeb1" style="width: 100.0%; height: 100.0%;">     <b>BETHESDA GARDENS FRISCO</b><br>     Type: ALF - TYPE B<br>     Beds: 100<br>     Provider ID: 103845<br>     Rate: $4500 -  $5800<br>     </div>`)[0];
+                popup_caecec4084d74a1e2334723a9438e19e.setContent(html_c734f69ad9a5b6ed80c145ec216edeb1);
+            
+        
+
+        circle_marker_da784be3714b01268ba20b630a97da51.bindPopup(popup_caecec4084d74a1e2334723a9438e19e)
+        ;
+
+        
+    
+    
+            circle_marker_da784be3714b01268ba20b630a97da51.bindTooltip(
+                `<div>
+                     BETHESDA GARDENS FRISCO (100 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_d7317e3b35537713866efd16f718a246 = L.circleMarker(
+                [33.160875, -96.848091],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5.2, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_e715a3c9037bc0e9590ea852aeb3681b);
+        
+    
+        var popup_328ec3f068808ad4701091778eb25a12 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_7b41432dbadaa8a2482d4126f0c1f0ab = $(`<div id="html_7b41432dbadaa8a2482d4126f0c1f0ab" style="width: 100.0%; height: 100.0%;">     <b>PEGASUS LANDING OF SADDLEBROOK</b><br>     Type: ALF - TYPE B<br>     Beds: 65<br>     Provider ID: 106148<br>     Rate: $4200 -  $5400<br>     </div>`)[0];
+                popup_328ec3f068808ad4701091778eb25a12.setContent(html_7b41432dbadaa8a2482d4126f0c1f0ab);
+            
+        
+
+        circle_marker_d7317e3b35537713866efd16f718a246.bindPopup(popup_328ec3f068808ad4701091778eb25a12)
+        ;
+
+        
+    
+    
+            circle_marker_d7317e3b35537713866efd16f718a246.bindTooltip(
+                `<div>
+                     PEGASUS LANDING OF SADDLEBROOK (65 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_bc0cdf08f2e17503918ada64a00ff01d = L.circleMarker(
+                [33.14676, -96.850312],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 10.88, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_e715a3c9037bc0e9590ea852aeb3681b);
+        
+    
+        var popup_9dc59b304adf9d0857a055583b7c182d = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_7840daf23b9ac8901af22612b1a3b834 = $(`<div id="html_7840daf23b9ac8901af22612b1a3b834" style="width: 100.0%; height: 100.0%;">     <b>LANDING AT WATERMERE FRISCO</b><br>     Type: ALF - TYPE B<br>     Beds: 136<br>     Provider ID: 106761<br>     Rate: $5200 -  $6800<br>     </div>`)[0];
+                popup_9dc59b304adf9d0857a055583b7c182d.setContent(html_7840daf23b9ac8901af22612b1a3b834);
+            
+        
+
+        circle_marker_bc0cdf08f2e17503918ada64a00ff01d.bindPopup(popup_9dc59b304adf9d0857a055583b7c182d)
+        ;
+
+        
+    
+    
+            circle_marker_bc0cdf08f2e17503918ada64a00ff01d.bindTooltip(
+                `<div>
+                     LANDING AT WATERMERE FRISCO (136 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_1baf552cd467387d23615d615aa30fe3 = L.circleMarker(
+                [33.009891, -96.981751],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4.16, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_e715a3c9037bc0e9590ea852aeb3681b);
+        
+    
+        var popup_0b45019446a399fe15f45d40fc0dcea1 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_802d769bab296d7149cadef6948645d5 = $(`<div id="html_802d769bab296d7149cadef6948645d5" style="width: 100.0%; height: 100.0%;">     <b>ROCKBROOK ASSISTED LIVING AND MEMORY CARE</b><br>     Type: ALF - TYPE B<br>     Beds: 52<br>     Provider ID: 103138<br>     Rate: $ -  $<br>     </div>`)[0];
+                popup_0b45019446a399fe15f45d40fc0dcea1.setContent(html_802d769bab296d7149cadef6948645d5);
+            
+        
+
+        circle_marker_1baf552cd467387d23615d615aa30fe3.bindPopup(popup_0b45019446a399fe15f45d40fc0dcea1)
+        ;
+
+        
+    
+    
+            circle_marker_1baf552cd467387d23615d615aa30fe3.bindTooltip(
+                `<div>
+                     ROCKBROOK ASSISTED LIVING AND MEMORY CARE (52 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_a8ba9a1d0419af370d0787f367552705 = L.circleMarker(
+                [33.031065, -96.937075],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_e715a3c9037bc0e9590ea852aeb3681b);
+        
+    
+        var popup_12d71dd0adc93cff43a7d7372f5265b1 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_dc61b660c152f6833420fa5e6dcabd83 = $(`<div id="html_dc61b660c152f6833420fa5e6dcabd83" style="width: 100.0%; height: 100.0%;">     <b>TEXBESTCARE4SENIORSLLC</b><br>     Type: ALF - TYPE B<br>     Beds: 6<br>     Provider ID: 104248<br>     Rate: $3800 -  $5200<br>     </div>`)[0];
+                popup_12d71dd0adc93cff43a7d7372f5265b1.setContent(html_dc61b660c152f6833420fa5e6dcabd83);
+            
+        
+
+        circle_marker_a8ba9a1d0419af370d0787f367552705.bindPopup(popup_12d71dd0adc93cff43a7d7372f5265b1)
+        ;
+
+        
+    
+    
+            circle_marker_a8ba9a1d0419af370d0787f367552705.bindTooltip(
+                `<div>
+                     TEXBESTCARE4SENIORSLLC (6 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_8c806a111853cde5862edf9eaa0fad34 = L.circleMarker(
+                [32.996485, -96.981459],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_e715a3c9037bc0e9590ea852aeb3681b);
+        
+    
+        var popup_19fe310b43ed5b588db8ee799d4f21f2 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_1afe7828c643226f6bd8c8dc66b9fb84 = $(`<div id="html_1afe7828c643226f6bd8c8dc66b9fb84" style="width: 100.0%; height: 100.0%;">     <b>GENTLE BREEZE CARE HOME</b><br>     Type: ALF - TYPE B<br>     Beds: 7<br>     Provider ID: 111914<br>     Rate: $3800 -  $5200<br>     </div>`)[0];
+                popup_19fe310b43ed5b588db8ee799d4f21f2.setContent(html_1afe7828c643226f6bd8c8dc66b9fb84);
+            
+        
+
+        circle_marker_8c806a111853cde5862edf9eaa0fad34.bindPopup(popup_19fe310b43ed5b588db8ee799d4f21f2)
+        ;
+
+        
+    
+    
+            circle_marker_8c806a111853cde5862edf9eaa0fad34.bindTooltip(
+                `<div>
+                     GENTLE BREEZE CARE HOME (7 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_9599cb8924aa9e9481f8590c2adb2fe0 = L.circleMarker(
+                [33.016153, -96.941551],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_e715a3c9037bc0e9590ea852aeb3681b);
+        
+    
+        var popup_287abd4bc8751cf30b01501b0f910510 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_205e7ac6070e1b538be8f363cd70a948 = $(`<div id="html_205e7ac6070e1b538be8f363cd70a948" style="width: 100.0%; height: 100.0%;">     <b>FOUR SEASONS SENIOR LIVING III</b><br>     Type: ALF - TYPE B<br>     Beds: 5<br>     Provider ID: 105078<br>     Rate: $3800 -  $5200<br>     </div>`)[0];
+                popup_287abd4bc8751cf30b01501b0f910510.setContent(html_205e7ac6070e1b538be8f363cd70a948);
+            
+        
+
+        circle_marker_9599cb8924aa9e9481f8590c2adb2fe0.bindPopup(popup_287abd4bc8751cf30b01501b0f910510)
+        ;
+
+        
+    
+    
+            circle_marker_9599cb8924aa9e9481f8590c2adb2fe0.bindTooltip(
+                `<div>
+                     FOUR SEASONS SENIOR LIVING III (5 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_0c557e6d9d20dfb6d7f15d2afbb69692 = L.circleMarker(
+                [33.014118, -96.943938],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 9.76, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_e715a3c9037bc0e9590ea852aeb3681b);
+        
+    
+        var popup_3c652a90866ca590aac866acdc47eb31 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_73e3a616f0a11aadf544a62590196d99 = $(`<div id="html_73e3a616f0a11aadf544a62590196d99" style="width: 100.0%; height: 100.0%;">     <b>RETREAT AT CARROLLTON, LLC</b><br>     Type: ALF - TYPE A<br>     Beds: 122<br>     Provider ID: 111680<br>     Rate: $4500 -  $5800<br>     </div>`)[0];
+                popup_3c652a90866ca590aac866acdc47eb31.setContent(html_73e3a616f0a11aadf544a62590196d99);
+            
+        
+
+        circle_marker_0c557e6d9d20dfb6d7f15d2afbb69692.bindPopup(popup_3c652a90866ca590aac866acdc47eb31)
+        ;
+
+        
+    
+    
+            circle_marker_0c557e6d9d20dfb6d7f15d2afbb69692.bindTooltip(
+                `<div>
+                     RETREAT AT CARROLLTON, LLC (122 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_f5e814c1b66c649d907463580e8574a5 = L.circleMarker(
+                [33.0349, -96.9102],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 9.200000000000001, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_e715a3c9037bc0e9590ea852aeb3681b);
+        
+    
+        var popup_6eb20c9662d09f9df0b5b8b67898bc0b = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_68883b34131bc998a65dd8528e242613 = $(`<div id="html_68883b34131bc998a65dd8528e242613" style="width: 100.0%; height: 100.0%;">     <b>ORCHARD POINTE AT CREEK VALLEY</b><br>     Type: ALF - TYPE B<br>     Beds: 115<br>     Provider ID: 111660<br>     Rate: $4500 -  $5800<br>     </div>`)[0];
+                popup_6eb20c9662d09f9df0b5b8b67898bc0b.setContent(html_68883b34131bc998a65dd8528e242613);
+            
+        
+
+        circle_marker_f5e814c1b66c649d907463580e8574a5.bindPopup(popup_6eb20c9662d09f9df0b5b8b67898bc0b)
+        ;
+
+        
+    
+    
+            circle_marker_f5e814c1b66c649d907463580e8574a5.bindTooltip(
+                `<div>
+                     ORCHARD POINTE AT CREEK VALLEY (115 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_999094398ef05a40ba5eb68f5040c5a8 = L.circleMarker(
+                [32.956655, -97.138748],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 11.84, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_e715a3c9037bc0e9590ea852aeb3681b);
+        
+    
+        var popup_33c45483adda9916b77c8a4fc7755ca7 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_2fadc473e40598f87d2ab925d893cef2 = $(`<div id="html_2fadc473e40598f87d2ab925d893cef2" style="width: 100.0%; height: 100.0%;">     <b>HARBORCHASE OF SOUTHLAKE</b><br>     Type: ALF - TYPE B<br>     Beds: 148<br>     Provider ID: 106942<br>     Rate: $5200 -  $6800<br>     </div>`)[0];
+                popup_33c45483adda9916b77c8a4fc7755ca7.setContent(html_2fadc473e40598f87d2ab925d893cef2);
+            
+        
+
+        circle_marker_999094398ef05a40ba5eb68f5040c5a8.bindPopup(popup_33c45483adda9916b77c8a4fc7755ca7)
+        ;
+
+        
+    
+    
+            circle_marker_999094398ef05a40ba5eb68f5040c5a8.bindTooltip(
+                `<div>
+                     HARBORCHASE OF SOUTHLAKE (148 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_b8d1565640458afcaa80cd3a8d4be512 = L.circleMarker(
+                [32.958071, -97.202546],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_e715a3c9037bc0e9590ea852aeb3681b);
+        
+    
+        var popup_1a446fcdff458ca8c3a684395da4946c = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_a3f6b1978dde452df05adaed5f1701ae = $(`<div id="html_a3f6b1978dde452df05adaed5f1701ae" style="width: 100.0%; height: 100.0%;">     <b>MEADOWVIEW HOUSE</b><br>     Type: ALF - TYPE B<br>     Beds: 8<br>     Provider ID: 105907<br>     Rate: $3800 -  $5200<br>     </div>`)[0];
+                popup_1a446fcdff458ca8c3a684395da4946c.setContent(html_a3f6b1978dde452df05adaed5f1701ae);
+            
+        
+
+        circle_marker_b8d1565640458afcaa80cd3a8d4be512.bindPopup(popup_1a446fcdff458ca8c3a684395da4946c)
+        ;
+
+        
+    
+    
+            circle_marker_b8d1565640458afcaa80cd3a8d4be512.bindTooltip(
+                `<div>
+                     MEADOWVIEW HOUSE (8 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_c00603e881fb3d492531c0628497e85a = L.circleMarker(
+                [33.1204, -96.8321],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_e715a3c9037bc0e9590ea852aeb3681b);
+        
+    
+        var popup_ad1623998410c73dd596028cb4c43348 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_eb8c9db93c37875a8c2989c35ba83604 = $(`<div id="html_eb8c9db93c37875a8c2989c35ba83604" style="width: 100.0%; height: 100.0%;">     <b>BEEHIVE HOMES OF FRISCO</b><br>     Type: ALF - TYPE B<br>     Beds: 16<br>     Provider ID: 110357<br>     Rate: $3800 -  $5200<br>     </div>`)[0];
+                popup_ad1623998410c73dd596028cb4c43348.setContent(html_eb8c9db93c37875a8c2989c35ba83604);
+            
+        
+
+        circle_marker_c00603e881fb3d492531c0628497e85a.bindPopup(popup_ad1623998410c73dd596028cb4c43348)
+        ;
+
+        
+    
+    
+            circle_marker_c00603e881fb3d492531c0628497e85a.bindTooltip(
+                `<div>
+                     BEEHIVE HOMES OF FRISCO (16 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_0eaef89a8134dcbf6062e47f5440bbdd = L.circleMarker(
+                [33.1204, -96.8321],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_e715a3c9037bc0e9590ea852aeb3681b);
+        
+    
+        var popup_8663dcab49f468fd92a7d762b509c1a1 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_eec14f839fb437a799478da2bfc6d49c = $(`<div id="html_eec14f839fb437a799478da2bfc6d49c" style="width: 100.0%; height: 100.0%;">     <b>BEEHIVE HOMES OF FRISCO</b><br>     Type: ALF - TYPE B<br>     Beds: 16<br>     Provider ID: 110420<br>     Rate: $3800 -  $5200<br>     </div>`)[0];
+                popup_8663dcab49f468fd92a7d762b509c1a1.setContent(html_eec14f839fb437a799478da2bfc6d49c);
+            
+        
+
+        circle_marker_0eaef89a8134dcbf6062e47f5440bbdd.bindPopup(popup_8663dcab49f468fd92a7d762b509c1a1)
+        ;
+
+        
+    
+    
+            circle_marker_0eaef89a8134dcbf6062e47f5440bbdd.bindTooltip(
+                `<div>
+                     BEEHIVE HOMES OF FRISCO (16 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_a07d6712795922dc011b00242984e70e = L.circleMarker(
+                [33.10133, -96.840553],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8.32, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_e715a3c9037bc0e9590ea852aeb3681b);
+        
+    
+        var popup_c3d45100e6e0f7ee173c35de07deafad = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_e5cdaba6ddd64a9244607501bf228c10 = $(`<div id="html_e5cdaba6ddd64a9244607501bf228c10" style="width: 100.0%; height: 100.0%;">     <b>SUNRISE OF FRISCO</b><br>     Type: ALF - TYPE B<br>     Beds: 104<br>     Provider ID: 104019<br>     Rate: $4500 -  $5800<br>     </div>`)[0];
+                popup_c3d45100e6e0f7ee173c35de07deafad.setContent(html_e5cdaba6ddd64a9244607501bf228c10);
+            
+        
+
+        circle_marker_a07d6712795922dc011b00242984e70e.bindPopup(popup_c3d45100e6e0f7ee173c35de07deafad)
+        ;
+
+        
+    
+    
+            circle_marker_a07d6712795922dc011b00242984e70e.bindTooltip(
+                `<div>
+                     SUNRISE OF FRISCO (104 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_8dc8e571a72c5aca46a62bbb838fe159 = L.circleMarker(
+                [33.139181, -96.819834],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4.5600000000000005, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_e715a3c9037bc0e9590ea852aeb3681b);
+        
+    
+        var popup_603578f4bbf50eaaaab6df2465b58d21 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_ccefa944b43a771399eb9bce9c905c53 = $(`<div id="html_ccefa944b43a771399eb9bce9c905c53" style="width: 100.0%; height: 100.0%;">     <b>PARKVIEW IN FRISCO</b><br>     Type: ALF - TYPE B<br>     Beds: 57<br>     Provider ID: 106610<br>     Rate: $4200 -  $5400<br>     </div>`)[0];
+                popup_603578f4bbf50eaaaab6df2465b58d21.setContent(html_ccefa944b43a771399eb9bce9c905c53);
+            
+        
+
+        circle_marker_8dc8e571a72c5aca46a62bbb838fe159.bindPopup(popup_603578f4bbf50eaaaab6df2465b58d21)
+        ;
+
+        
+    
+    
+            circle_marker_8dc8e571a72c5aca46a62bbb838fe159.bindTooltip(
+                `<div>
+                     PARKVIEW IN FRISCO (57 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_b4f4fa2ff731e197cf98e040dd4620ba = L.circleMarker(
+                [32.949519, -97.119525],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7.28, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_e715a3c9037bc0e9590ea852aeb3681b);
+        
+    
+        var popup_95af4a001fd617cf7f9a6ca0bcda60d4 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_dc3d1b040e46850cf68693950b9e6ebd = $(`<div id="html_dc3d1b040e46850cf68693950b9e6ebd" style="width: 100.0%; height: 100.0%;">     <b>SILVERADO  SOUTHLAKE</b><br>     Type: ALF - TYPE B<br>     Beds: 91<br>     Provider ID: 105902<br>     Rate: $5200 -  $6800<br>     </div>`)[0];
+                popup_95af4a001fd617cf7f9a6ca0bcda60d4.setContent(html_dc3d1b040e46850cf68693950b9e6ebd);
+            
+        
+
+        circle_marker_b4f4fa2ff731e197cf98e040dd4620ba.bindPopup(popup_95af4a001fd617cf7f9a6ca0bcda60d4)
+        ;
+
+        
+    
+    
+            circle_marker_b4f4fa2ff731e197cf98e040dd4620ba.bindTooltip(
+                `<div>
+                     SILVERADO  SOUTHLAKE (91 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_88048e108add2f4ca93f8a572d00b8e4 = L.circleMarker(
+                [32.7561, -97.136],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4.32, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_e715a3c9037bc0e9590ea852aeb3681b);
+        
+    
+        var popup_a17b176cf2e6ec12b7bd4591b16ba88a = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_21c23dd9333ad81c88edd16ae7056496 = $(`<div id="html_21c23dd9333ad81c88edd16ae7056496" style="width: 100.0%; height: 100.0%;">     <b>PH Ops of Arlington LLC</b><br>     Type: PUREHEALTH<br>     Beds: 54<br>     Provider ID: 676407<br>     Rate: Skilled<br>     </div>`)[0];
+                popup_a17b176cf2e6ec12b7bd4591b16ba88a.setContent(html_21c23dd9333ad81c88edd16ae7056496);
+            
+        
+
+        circle_marker_88048e108add2f4ca93f8a572d00b8e4.bindPopup(popup_a17b176cf2e6ec12b7bd4591b16ba88a)
+        ;
+
+        
+    
+    
+            circle_marker_88048e108add2f4ca93f8a572d00b8e4.bindTooltip(
+                `<div>
+                     PH Ops of Arlington LLC (54 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_62f897216588a7e3266872f50dae911c = L.circleMarker(
+                [33.2372, -97.144],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7.04, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_e715a3c9037bc0e9590ea852aeb3681b);
+        
+    
+        var popup_d76e180e60be54fba2a3da677115e1b5 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_24a6f39d0765c083b9879ccf2545ae53 = $(`<div id="html_24a6f39d0765c083b9879ccf2545ae53" style="width: 100.0%; height: 100.0%;">     <b>Denton Village SNF</b><br>     Type: PUREHEALTH<br>     Beds: 88<br>     Provider ID: 455627<br>     Rate: Skilled<br>     </div>`)[0];
+                popup_d76e180e60be54fba2a3da677115e1b5.setContent(html_24a6f39d0765c083b9879ccf2545ae53);
+            
+        
+
+        circle_marker_62f897216588a7e3266872f50dae911c.bindPopup(popup_d76e180e60be54fba2a3da677115e1b5)
+        ;
+
+        
+    
+    
+            circle_marker_62f897216588a7e3266872f50dae911c.bindTooltip(
+                `<div>
+                     Denton Village SNF (88 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_7faf36a9ec21d6e3695c27ebb8f3e53b = L.circleMarker(
+                [30.2821, -95.474],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 12.0, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_e715a3c9037bc0e9590ea852aeb3681b);
+        
+    
+        var popup_848c65f3e66e235dfa0b76bf590e3917 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_940efcb4522c913b9e0463161f72aab6 = $(`<div id="html_940efcb4522c913b9e0463161f72aab6" style="width: 100.0%; height: 100.0%;">     <b>PH Ops of Conroe LLC</b><br>     Type: PUREHEALTH<br>     Beds: 150<br>     Provider ID: 676420<br>     Rate: Skilled<br>     </div>`)[0];
+                popup_848c65f3e66e235dfa0b76bf590e3917.setContent(html_940efcb4522c913b9e0463161f72aab6);
+            
+        
+
+        circle_marker_7faf36a9ec21d6e3695c27ebb8f3e53b.bindPopup(popup_848c65f3e66e235dfa0b76bf590e3917)
+        ;
+
+        
+    
+    
+            circle_marker_7faf36a9ec21d6e3695c27ebb8f3e53b.bindTooltip(
+                `<div>
+                     PH Ops of Conroe LLC (150 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_b2529b7ec051d6394c1ce58db6f8a7f7 = L.circleMarker(
+                [32.8766, -96.751],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_e715a3c9037bc0e9590ea852aeb3681b);
+        
+    
+        var popup_4a489d97039bc7417f4c79fa3b4ea408 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_7831aa10dd0fbc3dbf856f7e24240023 = $(`<div id="html_7831aa10dd0fbc3dbf856f7e24240023" style="width: 100.0%; height: 100.0%;">     <b>PH Ops of Dallas LLC</b><br>     Type: PUREHEALTH<br>     Beds: 49<br>     Provider ID: 676410<br>     Rate: Skilled<br>     </div>`)[0];
+                popup_4a489d97039bc7417f4c79fa3b4ea408.setContent(html_7831aa10dd0fbc3dbf856f7e24240023);
+            
+        
+
+        circle_marker_b2529b7ec051d6394c1ce58db6f8a7f7.bindPopup(popup_4a489d97039bc7417f4c79fa3b4ea408)
+        ;
+
+        
+    
+    
+            circle_marker_b2529b7ec051d6394c1ce58db6f8a7f7.bindTooltip(
+                `<div>
+                     PH Ops of Dallas LLC (49 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_28ba2547d993d5ccc7d81e161b472b7f = L.circleMarker(
+                [29.3866, -94.987],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 10.72, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_e715a3c9037bc0e9590ea852aeb3681b);
+        
+    
+        var popup_f17ae145f081b534adaa0a3979043505 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_8aea8b9ccfc56b750c08a352eaa1ddee = $(`<div id="html_8aea8b9ccfc56b750c08a352eaa1ddee" style="width: 100.0%; height: 100.0%;">     <b>The Shoal</b><br>     Type: PUREHEALTH<br>     Beds: 134<br>     Provider ID: 676360<br>     Rate: Skilled<br>     </div>`)[0];
+                popup_f17ae145f081b534adaa0a3979043505.setContent(html_8aea8b9ccfc56b750c08a352eaa1ddee);
+            
+        
+
+        circle_marker_28ba2547d993d5ccc7d81e161b472b7f.bindPopup(popup_f17ae145f081b534adaa0a3979043505)
+        ;
+
+        
+    
+    
+            circle_marker_28ba2547d993d5ccc7d81e161b472b7f.bindTooltip(
+                `<div>
+                     The Shoal (134 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_e9ded8b8b221d68f1b36ce8b542a01c3 = L.circleMarker(
+                [35.0188, -106.72],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 9.6, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_e715a3c9037bc0e9590ea852aeb3681b);
+        
+    
+        var popup_97ce92b6fe2a84bbe40de3caca23a857 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_17991a3be5f533215c950542a83d73bb = $(`<div id="html_17991a3be5f533215c950542a83d73bb" style="width: 100.0%; height: 100.0%;">     <b>PH Ops of Las Estancias LLC</b><br>     Type: PUREHEALTH<br>     Beds: 120<br>     Provider ID: 325126<br>     Rate: Skilled<br>     </div>`)[0];
+                popup_97ce92b6fe2a84bbe40de3caca23a857.setContent(html_17991a3be5f533215c950542a83d73bb);
+            
+        
+
+        circle_marker_e9ded8b8b221d68f1b36ce8b542a01c3.bindPopup(popup_97ce92b6fe2a84bbe40de3caca23a857)
+        ;
+
+        
+    
+    
+            circle_marker_e9ded8b8b221d68f1b36ce8b542a01c3.bindTooltip(
+                `<div>
+                     PH Ops of Las Estancias LLC (120 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_c2523015ed26fc0290f1deff8f458f23 = L.circleMarker(
+                [35.0836, -106.57],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 20, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_e715a3c9037bc0e9590ea852aeb3681b);
+        
+    
+        var popup_f796cb48479b90a1d3a8ce3b5d827c96 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_a9d5c52567421495f29f68a70d5bbd4f = $(`<div id="html_a9d5c52567421495f29f68a70d5bbd4f" style="width: 100.0%; height: 100.0%;">     <b>Princeton Health and Rehabilitation</b><br>     Type: PUREHEALTH<br>     Beds: 369<br>     Provider ID: 325045<br>     Rate: Skilled<br>     </div>`)[0];
+                popup_f796cb48479b90a1d3a8ce3b5d827c96.setContent(html_a9d5c52567421495f29f68a70d5bbd4f);
+            
+        
+
+        circle_marker_c2523015ed26fc0290f1deff8f458f23.bindPopup(popup_f796cb48479b90a1d3a8ce3b5d827c96)
+        ;
+
+        
+    
+    
+            circle_marker_c2523015ed26fc0290f1deff8f458f23.bindTooltip(
+                `<div>
+                     Princeton Health and Rehabilitation (369 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_49f095bd2302f1550ab0b8e4b4b41464 = L.circleMarker(
+                [35.0855, -106.59],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 9.36, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_e715a3c9037bc0e9590ea852aeb3681b);
+        
+    
+        var popup_8f5625ff8c0a2d1f9086154d551efcd5 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_3dcc834af9f22ae4fdf8b3ae020b6bfe = $(`<div id="html_3dcc834af9f22ae4fdf8b3ae020b6bfe" style="width: 100.0%; height: 100.0%;">     <b>Manzano Del Sol SNF</b><br>     Type: PUREHEALTH<br>     Beds: 117<br>     Provider ID: 325074<br>     Rate: Skilled<br>     </div>`)[0];
+                popup_8f5625ff8c0a2d1f9086154d551efcd5.setContent(html_3dcc834af9f22ae4fdf8b3ae020b6bfe);
+            
+        
+
+        circle_marker_49f095bd2302f1550ab0b8e4b4b41464.bindPopup(popup_8f5625ff8c0a2d1f9086154d551efcd5)
+        ;
+
+        
+    
+    
+            circle_marker_49f095bd2302f1550ab0b8e4b4b41464.bindTooltip(
+                `<div>
+                     Manzano Del Sol SNF (117 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_e5b2fdd6ac3c59cdaf41fae020744050 = L.circleMarker(
+                [33.1588, -97.12],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4.8, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_e715a3c9037bc0e9590ea852aeb3681b);
+        
+    
+        var popup_bb1449f917c5386b243efe714e7a4859 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_050afe4e24d8fe3de7006fd57bfbe6c6 = $(`<div id="html_050afe4e24d8fe3de7006fd57bfbe6c6" style="width: 100.0%; height: 100.0%;">     <b>Lake Forest Village SNF</b><br>     Type: PUREHEALTH<br>     Beds: 60<br>     Provider ID: 455685<br>     Rate: Skilled<br>     </div>`)[0];
+                popup_bb1449f917c5386b243efe714e7a4859.setContent(html_050afe4e24d8fe3de7006fd57bfbe6c6);
+            
+        
+
+        circle_marker_e5b2fdd6ac3c59cdaf41fae020744050.bindPopup(popup_bb1449f917c5386b243efe714e7a4859)
+        ;
+
+        
+    
+    
+            circle_marker_e5b2fdd6ac3c59cdaf41fae020744050.bindTooltip(
+                `<div>
+                     Lake Forest Village SNF (60 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_473b05f034c74bcfc0f5ba895da530b9 = L.circleMarker(
+                [33.236392, -97.141912],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_e715a3c9037bc0e9590ea852aeb3681b);
+        
+    
+        var popup_1c26eddbe92b5554f15ebff54aadc869 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_376fa0ce36298ce3596b770cf30bd266 = $(`<div id="html_376fa0ce36298ce3596b770cf30bd266" style="width: 100.0%; height: 100.0%;">     <b>DENTON VILLAGE BY PUREHEALTH</b><br>     Type: PUREHEALTH<br>     Beds: 30<br>     Provider ID: 101950<br>     Rate: Skilled<br>     </div>`)[0];
+                popup_1c26eddbe92b5554f15ebff54aadc869.setContent(html_376fa0ce36298ce3596b770cf30bd266);
+            
+        
+
+        circle_marker_473b05f034c74bcfc0f5ba895da530b9.bindPopup(popup_1c26eddbe92b5554f15ebff54aadc869)
+        ;
+
+        
+    
+    
+            circle_marker_473b05f034c74bcfc0f5ba895da530b9.bindTooltip(
+                `<div>
+                     DENTON VILLAGE BY PUREHEALTH (30 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_590378e1e935f6763f3c5c71e7a2574d = L.circleMarker(
+                [0.457748274, -97.137],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4.8, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_e715a3c9037bc0e9590ea852aeb3681b);
+        
+    
+        var popup_c106dda6a57a0daee866c2e8cd11d85d = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_c606f6012f6db1ea8d13038c5129978c = $(`<div id="html_c606f6012f6db1ea8d13038c5129978c" style="width: 100.0%; height: 100.0%;">     <b>COTTONWOOD NURSING AND REHABILITATION</b><br>     Type: SNF<br>     Beds: 60<br>     Provider ID: 675292<br>     Rate: Skilled<br>     </div>`)[0];
+                popup_c106dda6a57a0daee866c2e8cd11d85d.setContent(html_c606f6012f6db1ea8d13038c5129978c);
+            
+        
+
+        circle_marker_590378e1e935f6763f3c5c71e7a2574d.bindPopup(popup_c106dda6a57a0daee866c2e8cd11d85d)
+        ;
+
+        
+    
+    
+            circle_marker_590378e1e935f6763f3c5c71e7a2574d.bindTooltip(
+                `<div>
+                     COTTONWOOD NURSING AND REHABILITATION (60 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_feb8e241c9d2fdba0c8833baf6fc722d = L.circleMarker(
+                [1.769561253, -97.161],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8.48, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_e715a3c9037bc0e9590ea852aeb3681b);
+        
+    
+        var popup_fdfdc276c991126135d5c74178a5edd2 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_453b2312f9865e032ffb71685af8f076 = $(`<div id="html_453b2312f9865e032ffb71685af8f076" style="width: 100.0%; height: 100.0%;">     <b>Vintage Health Care Center</b><br>     Type: SNF<br>     Beds: 106<br>     Provider ID: 675939<br>     Rate: Skilled<br>     </div>`)[0];
+                popup_fdfdc276c991126135d5c74178a5edd2.setContent(html_453b2312f9865e032ffb71685af8f076);
+            
+        
+
+        circle_marker_feb8e241c9d2fdba0c8833baf6fc722d.bindPopup(popup_fdfdc276c991126135d5c74178a5edd2)
+        ;
+
+        
+    
+    
+            circle_marker_feb8e241c9d2fdba0c8833baf6fc722d.bindTooltip(
+                `<div>
+                     Vintage Health Care Center (106 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_c8481b1948610a25e72d475ad6fa0ec7 = L.circleMarker(
+                [4.539639255, -97.096],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 11.68, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_e715a3c9037bc0e9590ea852aeb3681b);
+        
+    
+        var popup_80390d316f9968aa7a602f354c4223e5 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_49d7727a266726fc53326668621519d4 = $(`<div id="html_49d7727a266726fc53326668621519d4" style="width: 100.0%; height: 100.0%;">     <b>UNIVERSITY REHABILITATION CENTER</b><br>     Type: SNF<br>     Beds: 146<br>     Provider ID: 675995<br>     Rate: Skilled<br>     </div>`)[0];
+                popup_80390d316f9968aa7a602f354c4223e5.setContent(html_49d7727a266726fc53326668621519d4);
+            
+        
+
+        circle_marker_c8481b1948610a25e72d475ad6fa0ec7.bindPopup(popup_80390d316f9968aa7a602f354c4223e5)
+        ;
+
+        
+    
+    
+            circle_marker_c8481b1948610a25e72d475ad6fa0ec7.bindTooltip(
+                `<div>
+                     UNIVERSITY REHABILITATION CENTER (146 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_42adbdb7150018ef480a8cd28aa1aa5d = L.circleMarker(
+                [5.59187637, -97.12],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4.8, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_e715a3c9037bc0e9590ea852aeb3681b);
+        
+    
+        var popup_204bd2d6f175285142fdb3d014ede105 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_6b74e3df11bf60f38fe3623078e0d1a6 = $(`<div id="html_6b74e3df11bf60f38fe3623078e0d1a6" style="width: 100.0%; height: 100.0%;">     <b>LAKE FOREST VILLAGE BY PUREHEALTH</b><br>     Type: SNF<br>     Beds: 60<br>     Provider ID: 455685<br>     Rate: Skilled<br>     </div>`)[0];
+                popup_204bd2d6f175285142fdb3d014ede105.setContent(html_6b74e3df11bf60f38fe3623078e0d1a6);
+            
+        
+
+        circle_marker_42adbdb7150018ef480a8cd28aa1aa5d.bindPopup(popup_204bd2d6f175285142fdb3d014ede105)
+        ;
+
+        
+    
+    
+            circle_marker_42adbdb7150018ef480a8cd28aa1aa5d.bindTooltip(
+                `<div>
+                     LAKE FOREST VILLAGE BY PUREHEALTH (60 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_419cb52df510680baceef258c63c817a = L.circleMarker(
+                [7.05730101, -97.09],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7.5200000000000005, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_e715a3c9037bc0e9590ea852aeb3681b);
+        
+    
+        var popup_d8c9be64247c46aad7db2ee12e34bcf6 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_becb1fc493309c87ad339ac32c740054 = $(`<div id="html_becb1fc493309c87ad339ac32c740054" style="width: 100.0%; height: 100.0%;">     <b>DENTON REHABILITATION AND NURSING CENTER</b><br>     Type: SNF<br>     Beds: 94<br>     Provider ID: 675136<br>     Rate: Skilled<br>     </div>`)[0];
+                popup_d8c9be64247c46aad7db2ee12e34bcf6.setContent(html_becb1fc493309c87ad339ac32c740054);
+            
+        
+
+        circle_marker_419cb52df510680baceef258c63c817a.bindPopup(popup_d8c9be64247c46aad7db2ee12e34bcf6)
+        ;
+
+        
+    
+    
+            circle_marker_419cb52df510680baceef258c63c817a.bindTooltip(
+                `<div>
+                     DENTON REHABILITATION AND NURSING CENTER (94 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_b447c988dc47d3784ef026e39df90b2b = L.circleMarker(
+                [7.718383552, -97.056],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 10.72, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_e715a3c9037bc0e9590ea852aeb3681b);
+        
+    
+        var popup_28e1e3ad47c6fae29304c3198aa332ef = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_bae5ab80cc7b85927888263c8238c271 = $(`<div id="html_bae5ab80cc7b85927888263c8238c271" style="width: 100.0%; height: 100.0%;">     <b>CORINTH REHABILITATION SUITES ON THE PARKWAY</b><br>     Type: SNF<br>     Beds: 134<br>     Provider ID: 676319<br>     Rate: Skilled<br>     </div>`)[0];
+                popup_28e1e3ad47c6fae29304c3198aa332ef.setContent(html_bae5ab80cc7b85927888263c8238c271);
+            
+        
+
+        circle_marker_b447c988dc47d3784ef026e39df90b2b.bindPopup(popup_28e1e3ad47c6fae29304c3198aa332ef)
+        ;
+
+        
+    
+    
+            circle_marker_b447c988dc47d3784ef026e39df90b2b.bindTooltip(
+                `<div>
+                     CORINTH REHABILITATION SUITES ON THE PARKWAY (134 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_18eb98e32ff2455d30c7df9f97d6e719 = L.circleMarker(
+                [11.79325562, -97.073],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5.6000000000000005, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_e715a3c9037bc0e9590ea852aeb3681b);
+        
+    
+        var popup_0ad153bb771fd32ec2345e799db16b05 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_ec1453fb5a7a017951e185fa51954882 = $(`<div id="html_ec1453fb5a7a017951e185fa51954882" style="width: 100.0%; height: 100.0%;">     <b>RAMBLING OAKS COURTYARD EXTENSIVE CARE COMMUNITY</b><br>     Type: SNF<br>     Beds: 70<br>     Provider ID: 676168<br>     Rate: Skilled<br>     </div>`)[0];
+                popup_0ad153bb771fd32ec2345e799db16b05.setContent(html_ec1453fb5a7a017951e185fa51954882);
+            
+        
+
+        circle_marker_18eb98e32ff2455d30c7df9f97d6e719.bindPopup(popup_0ad153bb771fd32ec2345e799db16b05)
+        ;
+
+        
+    
+    
+            circle_marker_18eb98e32ff2455d30c7df9f97d6e719.bindTooltip(
+                `<div>
+                     RAMBLING OAKS COURTYARD EXTENSIVE CARE COMMUNITY (70 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_bc122ae27d0ec2e17c4eea207e95159f = L.circleMarker(
+                [13.36289911, -97.287],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 9.6, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_e715a3c9037bc0e9590ea852aeb3681b);
+        
+    
+        var popup_ef02d61567d238cf5c10a7ab9658fed6 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_5c4eaa88ceb6dd6f9bd71c2b10d61b54 = $(`<div id="html_5c4eaa88ceb6dd6f9bd71c2b10d61b54" style="width: 100.0%; height: 100.0%;">     <b>LONGMEADOW HEALTHCARE CENTER</b><br>     Type: SNF<br>     Beds: 120<br>     Provider ID: 675185<br>     Rate: Skilled<br>     </div>`)[0];
+                popup_ef02d61567d238cf5c10a7ab9658fed6.setContent(html_5c4eaa88ceb6dd6f9bd71c2b10d61b54);
+            
+        
+
+        circle_marker_bc122ae27d0ec2e17c4eea207e95159f.bindPopup(popup_ef02d61567d238cf5c10a7ab9658fed6)
+        ;
+
+        
+    
+    
+            circle_marker_bc122ae27d0ec2e17c4eea207e95159f.bindTooltip(
+                `<div>
+                     LONGMEADOW HEALTHCARE CENTER (120 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_66008cac99eaf84737320f3af954a587 = L.circleMarker(
+                [13.717992, -97.013],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8.96, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_e715a3c9037bc0e9590ea852aeb3681b);
+        
+    
+        var popup_39fa15e19f951d1a4b8b8a4cd73661d7 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_b408c09f8c88ec7d5fe2febcc2d332c9 = $(`<div id="html_b408c09f8c88ec7d5fe2febcc2d332c9" style="width: 100.0%; height: 100.0%;">     <b>LAKE VILLAGE NURSING AND REHABILITATION CENTER</b><br>     Type: SNF<br>     Beds: 112<br>     Provider ID: 675560<br>     Rate: Skilled<br>     </div>`)[0];
+                popup_39fa15e19f951d1a4b8b8a4cd73661d7.setContent(html_b408c09f8c88ec7d5fe2febcc2d332c9);
+            
+        
+
+        circle_marker_66008cac99eaf84737320f3af954a587.bindPopup(popup_39fa15e19f951d1a4b8b8a4cd73661d7)
+        ;
+
+        
+    
+    
+            circle_marker_66008cac99eaf84737320f3af954a587.bindTooltip(
+                `<div>
+                     LAKE VILLAGE NURSING AND REHABILITATION CENTER (112 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_b8a042c0300f5b8c361f10593a366afe = L.circleMarker(
+                [14.06618357, -97.08],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 9.6, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_e715a3c9037bc0e9590ea852aeb3681b);
+        
+    
+        var popup_5ef2f0566cd5c722ebb77330e10f9179 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_eaee5fa3e91a46549c138e910bfa24ac = $(`<div id="html_eaee5fa3e91a46549c138e910bfa24ac" style="width: 100.0%; height: 100.0%;">     <b>CROSS TIMBERS REHABILITATION AND HEALTHCARE CENTER</b><br>     Type: SNF<br>     Beds: 120<br>     Provider ID: 675703<br>     Rate: Skilled<br>     </div>`)[0];
+                popup_5ef2f0566cd5c722ebb77330e10f9179.setContent(html_eaee5fa3e91a46549c138e910bfa24ac);
+            
+        
+
+        circle_marker_b8a042c0300f5b8c361f10593a366afe.bindPopup(popup_5ef2f0566cd5c722ebb77330e10f9179)
+        ;
+
+        
+    
+    
+            circle_marker_b8a042c0300f5b8c361f10593a366afe.bindTooltip(
+                `<div>
+                     CROSS TIMBERS REHABILITATION AND HEALTHCARE CENTER (120 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_08f5588a67214f159909f3452b506b30 = L.circleMarker(
+                [15.49731579, -96.957],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5.04, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_e715a3c9037bc0e9590ea852aeb3681b);
+        
+    
+        var popup_207240a1aeb23653f7ad2bfbd6834774 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_97d1dc9ff3289391dcef02ebe30d6ea3 = $(`<div id="html_97d1dc9ff3289391dcef02ebe30d6ea3" style="width: 100.0%; height: 100.0%;">     <b>PILOT POINT CARE CENTER</b><br>     Type: SNF<br>     Beds: 63<br>     Provider ID: 675902<br>     Rate: Skilled<br>     </div>`)[0];
+                popup_207240a1aeb23653f7ad2bfbd6834774.setContent(html_97d1dc9ff3289391dcef02ebe30d6ea3);
+            
+        
+
+        circle_marker_08f5588a67214f159909f3452b506b30.bindPopup(popup_207240a1aeb23653f7ad2bfbd6834774)
+        ;
+
+        
+    
+    
+            circle_marker_08f5588a67214f159909f3452b506b30.bindTooltip(
+                `<div>
+                     PILOT POINT CARE CENTER (63 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_e5e13e98426f0b203026cbdcfe64ab11 = L.circleMarker(
+                [16.325371, -96.88],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 14.4, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_e715a3c9037bc0e9590ea852aeb3681b);
+        
+    
+        var popup_60db354a9d8beb8f205dd19b2b3f0b6f = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_04a28baef0b805985b03c8b8a900ae53 = $(`<div id="html_04a28baef0b805985b03c8b8a900ae53" style="width: 100.0%; height: 100.0%;">     <b>PRAIRIE ESTATES</b><br>     Type: SNF<br>     Beds: 180<br>     Provider ID: 676145<br>     Rate: Skilled<br>     </div>`)[0];
+                popup_60db354a9d8beb8f205dd19b2b3f0b6f.setContent(html_04a28baef0b805985b03c8b8a900ae53);
+            
+        
+
+        circle_marker_e5e13e98426f0b203026cbdcfe64ab11.bindPopup(popup_60db354a9d8beb8f205dd19b2b3f0b6f)
+        ;
+
+        
+    
+    
+            circle_marker_e5e13e98426f0b203026cbdcfe64ab11.bindTooltip(
+                `<div>
+                     PRAIRIE ESTATES (180 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_45765be9048126cfe4f38247106563bb = L.circleMarker(
+                [16.82387867, -96.942],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8.64, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_e715a3c9037bc0e9590ea852aeb3681b);
+        
+    
+        var popup_b8479ed3a930a599c6868983ede2fabe = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_476c8c660481adc7016f4b1af7096845 = $(`<div id="html_476c8c660481adc7016f4b1af7096845" style="width: 100.0%; height: 100.0%;">     <b>CEDAR RIDGE REHABILITATION AND HEALTHCARE CENTER</b><br>     Type: SNF<br>     Beds: 108<br>     Provider ID: 455930<br>     Rate: Skilled<br>     </div>`)[0];
+                popup_b8479ed3a930a599c6868983ede2fabe.setContent(html_476c8c660481adc7016f4b1af7096845);
+            
+        
+
+        circle_marker_45765be9048126cfe4f38247106563bb.bindPopup(popup_b8479ed3a930a599c6868983ede2fabe)
+        ;
+
+        
+    
+    
+            circle_marker_45765be9048126cfe4f38247106563bb.bindTooltip(
+                `<div>
+                     CEDAR RIDGE REHABILITATION AND HEALTHCARE CENTER (108 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_64475988bd1997bd8b07c90ebd2ec7a7 = L.circleMarker(
+                [19.32076926, -96.967],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 10.56, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_e715a3c9037bc0e9590ea852aeb3681b);
+        
+    
+        var popup_6b3a895002fa2bd0b2de2216171b7239 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_58b0176287f59f55fa07320e1f698d96 = $(`<div id="html_58b0176287f59f55fa07320e1f698d96" style="width: 100.0%; height: 100.0%;">     <b>VISTA RIDGE NURSING & REHABILITATION CENTER</b><br>     Type: SNF<br>     Beds: 132<br>     Provider ID: 676036<br>     Rate: Skilled<br>     </div>`)[0];
+                popup_6b3a895002fa2bd0b2de2216171b7239.setContent(html_58b0176287f59f55fa07320e1f698d96);
+            
+        
+
+        circle_marker_64475988bd1997bd8b07c90ebd2ec7a7.bindPopup(popup_6b3a895002fa2bd0b2de2216171b7239)
+        ;
+
+        
+    
+    
+            circle_marker_64475988bd1997bd8b07c90ebd2ec7a7.bindTooltip(
+                `<div>
+                     VISTA RIDGE NURSING & REHABILITATION CENTER (132 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_bd91f75429094c91cb326ca7cb9a78d5 = L.circleMarker(
+                [20.3987912, -97.092],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 10.08, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_e715a3c9037bc0e9590ea852aeb3681b);
+        
+    
+        var popup_7527f7b9a2fa61b8c67fc782e1136099 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_3731169883b7e2c82e04dddc18d6b05f = $(`<div id="html_3731169883b7e2c82e04dddc18d6b05f" style="width: 100.0%; height: 100.0%;">     <b>BIRCHWOOD OF GRAPEVINE</b><br>     Type: SNF<br>     Beds: 126<br>     Provider ID: 675905<br>     Rate: Skilled<br>     </div>`)[0];
+                popup_7527f7b9a2fa61b8c67fc782e1136099.setContent(html_3731169883b7e2c82e04dddc18d6b05f);
+            
+        
+
+        circle_marker_bd91f75429094c91cb326ca7cb9a78d5.bindPopup(popup_7527f7b9a2fa61b8c67fc782e1136099)
+        ;
+
+        
+    
+    
+            circle_marker_bd91f75429094c91cb326ca7cb9a78d5.bindTooltip(
+                `<div>
+                     BIRCHWOOD OF GRAPEVINE (126 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_88ec9c5ab5ae559473fc832f45497e37 = L.circleMarker(
+                [20.70229059, -96.886],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 14.4, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_e715a3c9037bc0e9590ea852aeb3681b);
+        
+    
+        var popup_57bc2e5cffc77f07910c0af35a7782b3 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_34c27e28c71236f8afa63ba60f7eabff = $(`<div id="html_34c27e28c71236f8afa63ba60f7eabff" style="width: 100.0%; height: 100.0%;">     <b>BROOKHAVEN NURSING AND REHABILITATION CENTER</b><br>     Type: SNF<br>     Beds: 180<br>     Provider ID: 455412<br>     Rate: Skilled<br>     </div>`)[0];
+                popup_57bc2e5cffc77f07910c0af35a7782b3.setContent(html_34c27e28c71236f8afa63ba60f7eabff);
+            
+        
+
+        circle_marker_88ec9c5ab5ae559473fc832f45497e37.bindPopup(popup_57bc2e5cffc77f07910c0af35a7782b3)
+        ;
+
+        
+    
+    
+            circle_marker_88ec9c5ab5ae559473fc832f45497e37.bindTooltip(
+                `<div>
+                     BROOKHAVEN NURSING AND REHABILITATION CENTER (180 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            marker_cluster_e715a3c9037bc0e9590ea852aeb3681b.addTo(map_640739ad75f389bd3446b0b64a17683d);
+        
+    
+            var layer_control_2ee2e16f2e171c46489de2d4d3902cbf_layers = {
+                base_layers : {
+                    "Light (Google-like)" : tile_layer_aec59eee49fa05052b3345ed2573b484,
+                    "Detailed" : tile_layer_49efb37cd7ee40c42c4eb877805b2f03,
+                    "Standard" : tile_layer_ef442734473b9a83a378c4ea7813c814,
+                    "Satellite" : tile_layer_ca75a594fdb3105cfb391c4255b93ed4,
+                },
+                overlays :  {
+                    "macro_element_e715a3c9037bc0e9590ea852aeb3681b" : marker_cluster_e715a3c9037bc0e9590ea852aeb3681b,
+                },
+            };
+            let layer_control_2ee2e16f2e171c46489de2d4d3902cbf = L.control.layers(
+                layer_control_2ee2e16f2e171c46489de2d4d3902cbf_layers.base_layers,
+                layer_control_2ee2e16f2e171c46489de2d4d3902cbf_layers.overlays,
+                {
+  "position": "topright",
+  "collapsed": false,
+  "autoZIndex": true,
+}
+            ).addTo(map_640739ad75f389bd3446b0b64a17683d);
+
+        
+</script>
+</html>
