@@ -1,0 +1,1502 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_a384e706a7033b3c7b72d35e5821eee9 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+
+            <style>html, body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            </style>
+
+            <style>#map {
+                position:absolute;
+                top:0;
+                bottom:0;
+                right:0;
+                left:0;
+                }
+            </style>
+
+            <script>
+                L_NO_TOUCH = false;
+                L_DISABLE_3D = false;
+            </script>
+
+        
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.1.0/leaflet.markercluster.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.1.0/MarkerCluster.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.1.0/MarkerCluster.Default.css"/>
+</head>
+<body>
+    
+    
+    <div style="
+        position: fixed;
+        bottom: 40px; left: 40px;
+        width: 230px;
+        background-color: rgba(255,255,255,0.95);
+        border: 2px solid #888;
+        z-index: 9999;
+        font-size: 13px;
+        padding: 12px;
+        box-shadow: 3px 3px 10px rgba(0,0,0,0.25);
+        border-radius: 8px;
+        font-family: Arial;
+    ">
+      <b>Legend</b><br><br>
+      <span style="color:green;">●</span> ALF<br>
+      <span style="color:orange;">●</span> IL<br>
+      <span style="color:blue;">●</span> PureHealth<br><br>
+      <span style="color:#1f77b4;">◯</span> 5 / 10 / 20 Mile Radius<br><br>
+      Bubble size = # of Beds
+    </div>
+    
+    
+    <div style="
+        position: fixed;
+        top: 20px; left: 50%;
+        transform: translateX(-50%);
+        z-index: 9999;
+        background-color: rgba(255,255,255,0.95);
+        padding: 10px 20px;
+        border-radius: 10px;
+        box-shadow: 3px 3px 10px rgba(0,0,0,0.25);
+        font-size: 18px;
+        font-weight: 700;
+        font-family: Arial;
+    ">
+        MANZANO DEL SOL BY PUREHEALTH ALF & IL - Hub and Competitors
+    </div>
+    
+    
+            <div class="folium-map" id="map_a384e706a7033b3c7b72d35e5821eee9" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_a384e706a7033b3c7b72d35e5821eee9 = L.map(
+                "map_a384e706a7033b3c7b72d35e5821eee9",
+                {
+                    center: [35.0859191, -106.5874326],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 10,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_f73235b5710609e31d8019a42dfdd80c = L.tileLayer(
+                "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 20,
+  "maxNativeZoom": 20,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"https://carto.com/attributions\"\u003eCARTO\u003c/a\u003e",
+  "subdomains": "abcd",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_f73235b5710609e31d8019a42dfdd80c.addTo(map_a384e706a7033b3c7b72d35e5821eee9);
+        
+    
+            var tile_layer_9a65a712d427048622776ab215f8d91a = L.tileLayer(
+                "https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 17,
+  "maxNativeZoom": 17,
+  "noWrap": false,
+  "attribution": "Map data: \u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors, \u003ca href=\"http://viewfinderpanoramas.org\"\u003eSRTM\u003c/a\u003e | Map style: \u0026copy; \u003ca href=\"https://opentopomap.org\"\u003eOpenTopoMap\u003c/a\u003e (\u003ca href=\"https://creativecommons.org/licenses/by-sa/3.0/\"\u003eCC-BY-SA\u003c/a\u003e)",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_9a65a712d427048622776ab215f8d91a.addTo(map_a384e706a7033b3c7b72d35e5821eee9);
+        
+    
+            var tile_layer_5a326c5365f51dad3f8bdf02567c8d34 = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 19,
+  "maxNativeZoom": 19,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_5a326c5365f51dad3f8bdf02567c8d34.addTo(map_a384e706a7033b3c7b72d35e5821eee9);
+        
+    
+            var tile_layer_26bc9aa8f28f7aa741fe42ca6d029e04 = L.tileLayer(
+                "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+                {
+  "minZoom": 0,
+  "maxZoom": 18,
+  "maxNativeZoom": 18,
+  "noWrap": false,
+  "attribution": "Esri",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_26bc9aa8f28f7aa741fe42ca6d029e04.addTo(map_a384e706a7033b3c7b72d35e5821eee9);
+        
+    
+            var circle_bb7bced71436828dc2f4d1c09ec38529 = L.circle(
+                [35.0859191, -106.5874326],
+                {"bubblingMouseEvents": true, "color": "#1f77b4", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#1f77b4", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8046.7, "stroke": true, "weight": 2}
+            ).addTo(map_a384e706a7033b3c7b72d35e5821eee9);
+        
+    
+            circle_bb7bced71436828dc2f4d1c09ec38529.bindTooltip(
+                `<div>
+                     5 mile radius
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_183eacf21b197e2c8d23f28f82ed20a8 = L.circle(
+                [35.0859191, -106.5874326],
+                {"bubblingMouseEvents": true, "color": "#1f77b4", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#1f77b4", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 16093.4, "stroke": true, "weight": 2}
+            ).addTo(map_a384e706a7033b3c7b72d35e5821eee9);
+        
+    
+            circle_183eacf21b197e2c8d23f28f82ed20a8.bindTooltip(
+                `<div>
+                     10 mile radius
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_d9a127b0118dedf85d380782b2fcb950 = L.circle(
+                [35.0859191, -106.5874326],
+                {"bubblingMouseEvents": true, "color": "#1f77b4", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#1f77b4", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 32186.8, "stroke": true, "weight": 2}
+            ).addTo(map_a384e706a7033b3c7b72d35e5821eee9);
+        
+    
+            circle_d9a127b0118dedf85d380782b2fcb950.bindTooltip(
+                `<div>
+                     20 mile radius
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_fd8e48154bfcb5336b8027022d6e0575 = L.marker(
+                [35.0859191, -106.5874326],
+                {
+}
+            ).addTo(map_a384e706a7033b3c7b72d35e5821eee9);
+        
+    
+            var icon_4ef63d2df0a57bcdbb83aba490062104 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "star",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+            marker_fd8e48154bfcb5336b8027022d6e0575.bindTooltip(
+                `<div>
+                     Hub: MANZANO DEL SOL BY PUREHEALTH
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_fd8e48154bfcb5336b8027022d6e0575.setIcon(icon_4ef63d2df0a57bcdbb83aba490062104);
+            
+    
+            var marker_cluster_9f4db2a4aa998d0df4a64ad084e4ed2e = L.markerClusterGroup(
+                {
+}
+            );
+        
+    
+            var circle_marker_ffb769a1883b900d06dfd32f79a63974 = L.circleMarker(
+                [35.0749024, -106.5799952],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8.0, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_9f4db2a4aa998d0df4a64ad084e4ed2e);
+        
+    
+        var popup_2a93f7482bff016dc67999b77c3ec0fe = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_b49200661d8bfc2ecb13a4597868a692 = $(`<div id="html_b49200661d8bfc2ecb13a4597868a692" style="width: 100.0%; height: 100.0%;">     <div style="font-family: Arial; font-size: 13px; min-width: 220px;">         <b>BROOKDALE VALENCIA</b><br><br>         <b>Type:</b> ALF<br>         <b># of Beds:</b> 100<br>         <b>Rate(s):</b> $2740 -  $4200<br>         <b>Provider ID:</b> N/A     </div>     </div>`)[0];
+                popup_2a93f7482bff016dc67999b77c3ec0fe.setContent(html_b49200661d8bfc2ecb13a4597868a692);
+            
+        
+
+        circle_marker_ffb769a1883b900d06dfd32f79a63974.bindPopup(popup_2a93f7482bff016dc67999b77c3ec0fe)
+        ;
+
+        
+    
+    
+            circle_marker_ffb769a1883b900d06dfd32f79a63974.bindTooltip(
+                `<div>
+                     BROOKDALE VALENCIA | Beds: 100 | Rates: $2740 -  $4200
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_ab7399205c4ae8bbfadd9213ef8dd37f = L.circleMarker(
+                [35.0996839, -106.6254828],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 20, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_9f4db2a4aa998d0df4a64ad084e4ed2e);
+        
+    
+        var popup_fde170a703c85e361531785f855dedc4 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_25223653c98511e5c437ab16983a3229 = $(`<div id="html_25223653c98511e5c437ab16983a3229" style="width: 100.0%; height: 100.0%;">     <div style="font-family: Arial; font-size: 13px; min-width: 220px;">         <b>MORADA ALBUQUERQUE</b><br><br>         <b>Type:</b> ALF<br>         <b># of Beds:</b> 294<br>         <b>Rate(s):</b> $3825 -  $6255<br>         <b>Provider ID:</b> N/A     </div>     </div>`)[0];
+                popup_fde170a703c85e361531785f855dedc4.setContent(html_25223653c98511e5c437ab16983a3229);
+            
+        
+
+        circle_marker_ab7399205c4ae8bbfadd9213ef8dd37f.bindPopup(popup_fde170a703c85e361531785f855dedc4)
+        ;
+
+        
+    
+    
+            circle_marker_ab7399205c4ae8bbfadd9213ef8dd37f.bindTooltip(
+                `<div>
+                     MORADA ALBUQUERQUE | Beds: 294 | Rates: $3825 -  $6255
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_0d83197c029c2b27aa28518adca8466e = L.circleMarker(
+                [35.1404237, -106.5563813],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_9f4db2a4aa998d0df4a64ad084e4ed2e);
+        
+    
+        var popup_7e562049a2989a88d239b8bef4c9e11c = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_61e05a38de49f75030473c3204f46afe = $(`<div id="html_61e05a38de49f75030473c3204f46afe" style="width: 100.0%; height: 100.0%;">     <div style="font-family: Arial; font-size: 13px; min-width: 220px;">         <b>HAVEN CARE COTTONWOOD</b><br><br>         <b>Type:</b> ALF<br>         <b># of Beds:</b> 12<br>         <b>Rate(s):</b> $4700 -  $5600<br>         <b>Provider ID:</b> N/A     </div>     </div>`)[0];
+                popup_7e562049a2989a88d239b8bef4c9e11c.setContent(html_61e05a38de49f75030473c3204f46afe);
+            
+        
+
+        circle_marker_0d83197c029c2b27aa28518adca8466e.bindPopup(popup_7e562049a2989a88d239b8bef4c9e11c)
+        ;
+
+        
+    
+    
+            circle_marker_0d83197c029c2b27aa28518adca8466e.bindTooltip(
+                `<div>
+                     HAVEN CARE COTTONWOOD | Beds: 12 | Rates: $4700 -  $5600
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_a7134a0bec4b3bbd801238e9f21dba93 = L.circleMarker(
+                [35.1481242, -106.5574507],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 12.0, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_9f4db2a4aa998d0df4a64ad084e4ed2e);
+        
+    
+        var popup_3473f99d3ceb8b48873570b935a6f264 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_0c3aad8059e6a8b63edadae7ed84ecbc = $(`<div id="html_0c3aad8059e6a8b63edadae7ed84ecbc" style="width: 100.0%; height: 100.0%;">     <div style="font-family: Arial; font-size: 13px; min-width: 220px;">         <b>THE WATERMARK AT CHERRY HILLS</b><br><br>         <b>Type:</b> ALF<br>         <b># of Beds:</b> 150<br>         <b>Rate(s):</b> $4800 -  $7200<br>         <b>Provider ID:</b> N/A     </div>     </div>`)[0];
+                popup_3473f99d3ceb8b48873570b935a6f264.setContent(html_0c3aad8059e6a8b63edadae7ed84ecbc);
+            
+        
+
+        circle_marker_a7134a0bec4b3bbd801238e9f21dba93.bindPopup(popup_3473f99d3ceb8b48873570b935a6f264)
+        ;
+
+        
+    
+    
+            circle_marker_a7134a0bec4b3bbd801238e9f21dba93.bindTooltip(
+                `<div>
+                     THE WATERMARK AT CHERRY HILLS | Beds: 150 | Rates: $4800 -  $7200
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_e84d9d9411c9c87e0ccb571cd92d8035 = L.circleMarker(
+                [35.1481242, -106.5574507],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 12.0, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_9f4db2a4aa998d0df4a64ad084e4ed2e);
+        
+    
+        var popup_f61fc69c9245a9f6a1d2f54b4af84c9e = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_e9ea71f0930b4202fc170bc6255ac825 = $(`<div id="html_e9ea71f0930b4202fc170bc6255ac825" style="width: 100.0%; height: 100.0%;">     <div style="font-family: Arial; font-size: 13px; min-width: 220px;">         <b>THE WATERMARK AT CHERRY HILLS</b><br><br>         <b>Type:</b> ALF<br>         <b># of Beds:</b> 150<br>         <b>Rate(s):</b> $4800 -  $7200<br>         <b>Provider ID:</b> N/A     </div>     </div>`)[0];
+                popup_f61fc69c9245a9f6a1d2f54b4af84c9e.setContent(html_e9ea71f0930b4202fc170bc6255ac825);
+            
+        
+
+        circle_marker_e84d9d9411c9c87e0ccb571cd92d8035.bindPopup(popup_f61fc69c9245a9f6a1d2f54b4af84c9e)
+        ;
+
+        
+    
+    
+            circle_marker_e84d9d9411c9c87e0ccb571cd92d8035.bindTooltip(
+                `<div>
+                     THE WATERMARK AT CHERRY HILLS | Beds: 150 | Rates: $4800 -  $7200
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_665c76b339d82b3f1af5af6cfe4c39ac = L.circleMarker(
+                [35.1262103, -106.5141824],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4.32, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_9f4db2a4aa998d0df4a64ad084e4ed2e);
+        
+    
+        var popup_f6606df9a42f80af3118df9324ba7182 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_bc0036061beeb42e21666f993df4996d = $(`<div id="html_bc0036061beeb42e21666f993df4996d" style="width: 100.0%; height: 100.0%;">     <div style="font-family: Arial; font-size: 13px; min-width: 220px;">         <b>AVISTA SENIOR LIVING ALBUQUERQUE</b><br><br>         <b>Type:</b> ALF<br>         <b># of Beds:</b> 54<br>         <b>Rate(s):</b> $6850 -  $7900<br>         <b>Provider ID:</b> N/A     </div>     </div>`)[0];
+                popup_f6606df9a42f80af3118df9324ba7182.setContent(html_bc0036061beeb42e21666f993df4996d);
+            
+        
+
+        circle_marker_665c76b339d82b3f1af5af6cfe4c39ac.bindPopup(popup_f6606df9a42f80af3118df9324ba7182)
+        ;
+
+        
+    
+    
+            circle_marker_665c76b339d82b3f1af5af6cfe4c39ac.bindTooltip(
+                `<div>
+                     AVISTA SENIOR LIVING ALBUQUERQUE | Beds: 54 | Rates: $6850 -  $7900
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_5d2769bcd1df5ff8dca6740fbca19c0f = L.circleMarker(
+                [35.0653137, -106.4963654],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_9f4db2a4aa998d0df4a64ad084e4ed2e);
+        
+    
+        var popup_ebeae3a7a38b6d06a5a8675d55b9bc53 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_2861405b6933dfbc0f1762111f66da25 = $(`<div id="html_2861405b6933dfbc0f1762111f66da25" style="width: 100.0%; height: 100.0%;">     <div style="font-family: Arial; font-size: 13px; min-width: 220px;">         <b>BEEHIVE HOMES OF FOUR HILLS</b><br><br>         <b>Type:</b> ALF<br>         <b># of Beds:</b> 16<br>         <b>Rate(s):</b> $5280 -  $5900<br>         <b>Provider ID:</b> N/A     </div>     </div>`)[0];
+                popup_ebeae3a7a38b6d06a5a8675d55b9bc53.setContent(html_2861405b6933dfbc0f1762111f66da25);
+            
+        
+
+        circle_marker_5d2769bcd1df5ff8dca6740fbca19c0f.bindPopup(popup_ebeae3a7a38b6d06a5a8675d55b9bc53)
+        ;
+
+        
+    
+    
+            circle_marker_5d2769bcd1df5ff8dca6740fbca19c0f.bindTooltip(
+                `<div>
+                     BEEHIVE HOMES OF FOUR HILLS | Beds: 16 | Rates: $5280 -  $5900
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_4d593ddfad92c7f24bd4dcaf5aefe08c = L.circleMarker(
+                [35.1527707, -106.5222428],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 11.200000000000001, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_9f4db2a4aa998d0df4a64ad084e4ed2e);
+        
+    
+        var popup_a9279acd94ea3d2bf6475a9c1aed6e49 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_02c70f4ee8eb46dad15db97b1c24bc22 = $(`<div id="html_02c70f4ee8eb46dad15db97b1c24bc22" style="width: 100.0%; height: 100.0%;">     <div style="font-family: Arial; font-size: 13px; min-width: 220px;">         <b>THE MONTEBELLO ON ACADEMY</b><br><br>         <b>Type:</b> ALF<br>         <b># of Beds:</b> 140<br>         <b>Rate(s):</b> $3900 -  $5500<br>         <b>Provider ID:</b> N/A     </div>     </div>`)[0];
+                popup_a9279acd94ea3d2bf6475a9c1aed6e49.setContent(html_02c70f4ee8eb46dad15db97b1c24bc22);
+            
+        
+
+        circle_marker_4d593ddfad92c7f24bd4dcaf5aefe08c.bindPopup(popup_a9279acd94ea3d2bf6475a9c1aed6e49)
+        ;
+
+        
+    
+    
+            circle_marker_4d593ddfad92c7f24bd4dcaf5aefe08c.bindTooltip(
+                `<div>
+                     THE MONTEBELLO ON ACADEMY | Beds: 140 | Rates: $3900 -  $5500
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_911fba7b614553cbace47dd07942dc9a = L.circleMarker(
+                [35.1527707, -106.5222428],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 11.200000000000001, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_9f4db2a4aa998d0df4a64ad084e4ed2e);
+        
+    
+        var popup_54e1eff083f99795872f887f4b39928b = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_d673a9bf72d40007871aca8f1a03e0e9 = $(`<div id="html_d673a9bf72d40007871aca8f1a03e0e9" style="width: 100.0%; height: 100.0%;">     <div style="font-family: Arial; font-size: 13px; min-width: 220px;">         <b>THE MONTEBELLO ON ACADEMY</b><br><br>         <b>Type:</b> ALF<br>         <b># of Beds:</b> 140<br>         <b>Rate(s):</b> $3900 -  $5500<br>         <b>Provider ID:</b> N/A     </div>     </div>`)[0];
+                popup_54e1eff083f99795872f887f4b39928b.setContent(html_d673a9bf72d40007871aca8f1a03e0e9);
+            
+        
+
+        circle_marker_911fba7b614553cbace47dd07942dc9a.bindPopup(popup_54e1eff083f99795872f887f4b39928b)
+        ;
+
+        
+    
+    
+            circle_marker_911fba7b614553cbace47dd07942dc9a.bindTooltip(
+                `<div>
+                     THE MONTEBELLO ON ACADEMY | Beds: 140 | Rates: $3900 -  $5500
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_aeeca639dda6ad9e46ee09744d6526be = L.circleMarker(
+                [35.1373375, -106.4987539],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_9f4db2a4aa998d0df4a64ad084e4ed2e);
+        
+    
+        var popup_da7ca4e8782b3f841ee4e799e749fab2 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_f8a1ca13b985cd3048da96dcb054f9d1 = $(`<div id="html_f8a1ca13b985cd3048da96dcb054f9d1" style="width: 100.0%; height: 100.0%;">     <div style="font-family: Arial; font-size: 13px; min-width: 220px;">         <b>BROOKDALE TRAMWAY RIDGE</b><br><br>         <b>Type:</b> ALF<br>         <b># of Beds:</b> 40<br>         <b>Rate(s):</b> $6655 -  $7600<br>         <b>Provider ID:</b> N/A     </div>     </div>`)[0];
+                popup_da7ca4e8782b3f841ee4e799e749fab2.setContent(html_f8a1ca13b985cd3048da96dcb054f9d1);
+            
+        
+
+        circle_marker_aeeca639dda6ad9e46ee09744d6526be.bindPopup(popup_da7ca4e8782b3f841ee4e799e749fab2)
+        ;
+
+        
+    
+    
+            circle_marker_aeeca639dda6ad9e46ee09744d6526be.bindTooltip(
+                `<div>
+                     BROOKDALE TRAMWAY RIDGE | Beds: 40 | Rates: $6655 -  $7600
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_22e25f9b33f0e82b5c7c9d6790b5c825 = L.circleMarker(
+                [35.1732484, -106.5560882],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6.8, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_9f4db2a4aa998d0df4a64ad084e4ed2e);
+        
+    
+        var popup_8b4ab394210d14e2c97b5ad321943901 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_e3dd2b126d60dc46d45c5fac69bc0637 = $(`<div id="html_e3dd2b126d60dc46d45c5fac69bc0637" style="width: 100.0%; height: 100.0%;">     <div style="font-family: Arial; font-size: 13px; min-width: 220px;">         <b>MORNINGSTAR ASSISTED LIVING ALBUQUERQUE</b><br><br>         <b>Type:</b> ALF<br>         <b># of Beds:</b> 85<br>         <b>Rate(s):</b> $5400 -  $6800<br>         <b>Provider ID:</b> N/A     </div>     </div>`)[0];
+                popup_8b4ab394210d14e2c97b5ad321943901.setContent(html_e3dd2b126d60dc46d45c5fac69bc0637);
+            
+        
+
+        circle_marker_22e25f9b33f0e82b5c7c9d6790b5c825.bindPopup(popup_8b4ab394210d14e2c97b5ad321943901)
+        ;
+
+        
+    
+    
+            circle_marker_22e25f9b33f0e82b5c7c9d6790b5c825.bindTooltip(
+                `<div>
+                     MORNINGSTAR ASSISTED LIVING ALBUQUERQUE | Beds: 85 | Rates: $5400 -  $6800
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_3f7bf0f317090703240a69d61946ce7d = L.circleMarker(
+                [35.1803441, -106.5772953],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_9f4db2a4aa998d0df4a64ad084e4ed2e);
+        
+    
+        var popup_40662cf4751a421b3e4fb06fac1ee658 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_9f2d6828acb5724d89118a1a32edda44 = $(`<div id="html_9f2d6828acb5724d89118a1a32edda44" style="width: 100.0%; height: 100.0%;">     <div style="font-family: Arial; font-size: 13px; min-width: 220px;">         <b>BEEHIVE HOMES SAN PEDRO VILLAGE</b><br><br>         <b>Type:</b> ALF<br>         <b># of Beds:</b> 16<br>         <b>Rate(s):</b> $5280 -  $5900<br>         <b>Provider ID:</b> N/A     </div>     </div>`)[0];
+                popup_40662cf4751a421b3e4fb06fac1ee658.setContent(html_9f2d6828acb5724d89118a1a32edda44);
+            
+        
+
+        circle_marker_3f7bf0f317090703240a69d61946ce7d.bindPopup(popup_40662cf4751a421b3e4fb06fac1ee658)
+        ;
+
+        
+    
+    
+            circle_marker_3f7bf0f317090703240a69d61946ce7d.bindTooltip(
+                `<div>
+                     BEEHIVE HOMES SAN PEDRO VILLAGE | Beds: 16 | Rates: $5280 -  $5900
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_9a7678f53d46ff2818322a6129da83e7 = L.circleMarker(
+                [35.2043481, -106.6788715],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 13.6, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_9f4db2a4aa998d0df4a64ad084e4ed2e);
+        
+    
+        var popup_680c048a2abf466dccc4c9623dcb2c42 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_577067f831b6d3382455843d085585f9 = $(`<div id="html_577067f831b6d3382455843d085585f9" style="width: 100.0%; height: 100.0%;">     <div style="font-family: Arial; font-size: 13px; min-width: 220px;">         <b>PALMILLA SENIOR LIVING</b><br><br>         <b>Type:</b> ALF<br>         <b># of Beds:</b> 170<br>         <b>Rate(s):</b> $4200 -  $6500<br>         <b>Provider ID:</b> N/A     </div>     </div>`)[0];
+                popup_680c048a2abf466dccc4c9623dcb2c42.setContent(html_577067f831b6d3382455843d085585f9);
+            
+        
+
+        circle_marker_9a7678f53d46ff2818322a6129da83e7.bindPopup(popup_680c048a2abf466dccc4c9623dcb2c42)
+        ;
+
+        
+    
+    
+            circle_marker_9a7678f53d46ff2818322a6129da83e7.bindTooltip(
+                `<div>
+                     PALMILLA SENIOR LIVING | Beds: 170 | Rates: $4200 -  $6500
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_6d13cdf3f01a920a8537624b09a4295d = L.circleMarker(
+                [35.2043481, -106.6788715],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 13.6, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_9f4db2a4aa998d0df4a64ad084e4ed2e);
+        
+    
+        var popup_848797b06d9614cbf1aad5e48407e314 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_fc20e587d0b77e60b5aa57f678bc2208 = $(`<div id="html_fc20e587d0b77e60b5aa57f678bc2208" style="width: 100.0%; height: 100.0%;">     <div style="font-family: Arial; font-size: 13px; min-width: 220px;">         <b>PALMILLA SENIOR LIVING</b><br><br>         <b>Type:</b> ALF<br>         <b># of Beds:</b> 170<br>         <b>Rate(s):</b> $4200 -  $6500<br>         <b>Provider ID:</b> N/A     </div>     </div>`)[0];
+                popup_848797b06d9614cbf1aad5e48407e314.setContent(html_fc20e587d0b77e60b5aa57f678bc2208);
+            
+        
+
+        circle_marker_6d13cdf3f01a920a8537624b09a4295d.bindPopup(popup_848797b06d9614cbf1aad5e48407e314)
+        ;
+
+        
+    
+    
+            circle_marker_6d13cdf3f01a920a8537624b09a4295d.bindTooltip(
+                `<div>
+                     PALMILLA SENIOR LIVING | Beds: 170 | Rates: $4200 -  $6500
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_46fd7d48f4aee68459a372a8abb3de7b = L.circleMarker(
+                [35.2389233, -106.6420251],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 12.0, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_9f4db2a4aa998d0df4a64ad084e4ed2e);
+        
+    
+        var popup_71b72def3c669761e4ec6d67e8cfc757 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_9796e3a09fa19b41e1b4563258ee67a3 = $(`<div id="html_9796e3a09fa19b41e1b4563258ee67a3" style="width: 100.0%; height: 100.0%;">     <div style="font-family: Arial; font-size: 13px; min-width: 220px;">         <b>FAIRWINDS RIO RANCHO</b><br><br>         <b>Type:</b> ALF<br>         <b># of Beds:</b> 150<br>         <b>Rate(s):</b> $4200 -  $6500<br>         <b>Provider ID:</b> N/A     </div>     </div>`)[0];
+                popup_71b72def3c669761e4ec6d67e8cfc757.setContent(html_9796e3a09fa19b41e1b4563258ee67a3);
+            
+        
+
+        circle_marker_46fd7d48f4aee68459a372a8abb3de7b.bindPopup(popup_71b72def3c669761e4ec6d67e8cfc757)
+        ;
+
+        
+    
+    
+            circle_marker_46fd7d48f4aee68459a372a8abb3de7b.bindTooltip(
+                `<div>
+                     FAIRWINDS RIO RANCHO | Beds: 150 | Rates: $4200 -  $6500
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_4c2b299638338567ce60c6987f6c9b7e = L.circleMarker(
+                [35.2403476, -106.6425778],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 11.200000000000001, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_9f4db2a4aa998d0df4a64ad084e4ed2e);
+        
+    
+        var popup_8b05bccb9014447f904096308be5c648 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_603db93d9dded8f84485d5027f15fd05 = $(`<div id="html_603db93d9dded8f84485d5027f15fd05" style="width: 100.0%; height: 100.0%;">     <div style="font-family: Arial; font-size: 13px; min-width: 220px;">         <b>AVAMERE AT RIO RANCHO</b><br><br>         <b>Type:</b> ALF<br>         <b># of Beds:</b> 140<br>         <b>Rate(s):</b> $4300 -  $6400<br>         <b>Provider ID:</b> N/A     </div>     </div>`)[0];
+                popup_8b05bccb9014447f904096308be5c648.setContent(html_603db93d9dded8f84485d5027f15fd05);
+            
+        
+
+        circle_marker_4c2b299638338567ce60c6987f6c9b7e.bindPopup(popup_8b05bccb9014447f904096308be5c648)
+        ;
+
+        
+    
+    
+            circle_marker_4c2b299638338567ce60c6987f6c9b7e.bindTooltip(
+                `<div>
+                     AVAMERE AT RIO RANCHO | Beds: 140 | Rates: $4300 -  $6400
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_911fc318413f588df3733f52fe41bda7 = L.circleMarker(
+                [35.2722223, -106.6567629],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 11.200000000000001, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_9f4db2a4aa998d0df4a64ad084e4ed2e);
+        
+    
+        var popup_a4f83996a6fa1476d0fcc2e3840f4153 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_41fd6cac6dbe451a77086ad7045f0f7b = $(`<div id="html_41fd6cac6dbe451a77086ad7045f0f7b" style="width: 100.0%; height: 100.0%;">     <div style="font-family: Arial; font-size: 13px; min-width: 220px;">         <b>THE NEIGHBORHOOD IN RIO RANCHO</b><br><br>         <b>Type:</b> ALF<br>         <b># of Beds:</b> 140<br>         <b>Rate(s):</b> $4000 -  $6200<br>         <b>Provider ID:</b> N/A     </div>     </div>`)[0];
+                popup_a4f83996a6fa1476d0fcc2e3840f4153.setContent(html_41fd6cac6dbe451a77086ad7045f0f7b);
+            
+        
+
+        circle_marker_911fc318413f588df3733f52fe41bda7.bindPopup(popup_a4f83996a6fa1476d0fcc2e3840f4153)
+        ;
+
+        
+    
+    
+            circle_marker_911fc318413f588df3733f52fe41bda7.bindTooltip(
+                `<div>
+                     THE NEIGHBORHOOD IN RIO RANCHO | Beds: 140 | Rates: $4000 -  $6200
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_2d4cccc8064ff9b5488d1ebb6ec65c3f = L.circleMarker(
+                [35.0749024, -106.5799952],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "orange", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8.0, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_9f4db2a4aa998d0df4a64ad084e4ed2e);
+        
+    
+        var popup_b3f74b1acf0595d01e886282ab1f63a8 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_0bd1e6d8277f236a200c9d52a5c4682e = $(`<div id="html_0bd1e6d8277f236a200c9d52a5c4682e" style="width: 100.0%; height: 100.0%;">     <div style="font-family: Arial; font-size: 13px; min-width: 220px;">         <b>BROOKDALE VALENCIA</b><br><br>         <b>Type:</b> IL<br>         <b># of Beds:</b> 100<br>         <b>Rate(s):</b> $2800 -  $3800<br>         <b>Provider ID:</b> N/A     </div>     </div>`)[0];
+                popup_b3f74b1acf0595d01e886282ab1f63a8.setContent(html_0bd1e6d8277f236a200c9d52a5c4682e);
+            
+        
+
+        circle_marker_2d4cccc8064ff9b5488d1ebb6ec65c3f.bindPopup(popup_b3f74b1acf0595d01e886282ab1f63a8)
+        ;
+
+        
+    
+    
+            circle_marker_2d4cccc8064ff9b5488d1ebb6ec65c3f.bindTooltip(
+                `<div>
+                     BROOKDALE VALENCIA | Beds: 100 | Rates: $2800 -  $3800
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_f37a3634a43303523dec823f73e3309b = L.circleMarker(
+                [35.0838121, -106.6290936],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "orange", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 16.0, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_9f4db2a4aa998d0df4a64ad084e4ed2e);
+        
+    
+        var popup_6f6054eb8d01c37268c110f09bc6c3d2 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_d387ef7d5123cceab44b3e4cadfbc684 = $(`<div id="html_d387ef7d5123cceab44b3e4cadfbc684" style="width: 100.0%; height: 100.0%;">     <div style="font-family: Arial; font-size: 13px; min-width: 220px;">         <b>ALBUQUERQUE GRAND SENIOR LIVING</b><br><br>         <b>Type:</b> IL<br>         <b># of Beds:</b> 200<br>         <b>Rate(s):</b> $3000 -  $4200<br>         <b>Provider ID:</b> N/A     </div>     </div>`)[0];
+                popup_6f6054eb8d01c37268c110f09bc6c3d2.setContent(html_d387ef7d5123cceab44b3e4cadfbc684);
+            
+        
+
+        circle_marker_f37a3634a43303523dec823f73e3309b.bindPopup(popup_6f6054eb8d01c37268c110f09bc6c3d2)
+        ;
+
+        
+    
+    
+            circle_marker_f37a3634a43303523dec823f73e3309b.bindTooltip(
+                `<div>
+                     ALBUQUERQUE GRAND SENIOR LIVING | Beds: 200 | Rates: $3000 -  $4200
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_27b9b35c36e5974cd9c8d9e289ac4a9d = L.circleMarker(
+                [35.1481242, -106.5574507],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "orange", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 12.0, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_9f4db2a4aa998d0df4a64ad084e4ed2e);
+        
+    
+        var popup_d4abc43971e0c6241eb1d2e76298c30d = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_1b3c1a02c9a0bfd693606d5e132a84cd = $(`<div id="html_1b3c1a02c9a0bfd693606d5e132a84cd" style="width: 100.0%; height: 100.0%;">     <div style="font-family: Arial; font-size: 13px; min-width: 220px;">         <b>THE WATERMARK AT CHERRY HILLS</b><br><br>         <b>Type:</b> IL<br>         <b># of Beds:</b> 150<br>         <b>Rate(s):</b> $4200 -  $6200<br>         <b>Provider ID:</b> N/A     </div>     </div>`)[0];
+                popup_d4abc43971e0c6241eb1d2e76298c30d.setContent(html_1b3c1a02c9a0bfd693606d5e132a84cd);
+            
+        
+
+        circle_marker_27b9b35c36e5974cd9c8d9e289ac4a9d.bindPopup(popup_d4abc43971e0c6241eb1d2e76298c30d)
+        ;
+
+        
+    
+    
+            circle_marker_27b9b35c36e5974cd9c8d9e289ac4a9d.bindTooltip(
+                `<div>
+                     THE WATERMARK AT CHERRY HILLS | Beds: 150 | Rates: $4200 -  $6200
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_9146cad104504275af752c2362bc55e0 = L.circleMarker(
+                [35.1328028, -106.5232383],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "orange", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 9.6, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_9f4db2a4aa998d0df4a64ad084e4ed2e);
+        
+    
+        var popup_17981d48e6d21fd1249e8c21050c0a68 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_faa2ea75d6b5ac32b29c01a159fddde3 = $(`<div id="html_faa2ea75d6b5ac32b29c01a159fddde3" style="width: 100.0%; height: 100.0%;">     <div style="font-family: Arial; font-size: 13px; min-width: 220px;">         <b>BEAR CANYON ESTATES</b><br><br>         <b>Type:</b> IL<br>         <b># of Beds:</b> 120<br>         <b>Rate(s):</b> $2400 -  $3400<br>         <b>Provider ID:</b> N/A     </div>     </div>`)[0];
+                popup_17981d48e6d21fd1249e8c21050c0a68.setContent(html_faa2ea75d6b5ac32b29c01a159fddde3);
+            
+        
+
+        circle_marker_9146cad104504275af752c2362bc55e0.bindPopup(popup_17981d48e6d21fd1249e8c21050c0a68)
+        ;
+
+        
+    
+    
+            circle_marker_9146cad104504275af752c2362bc55e0.bindTooltip(
+                `<div>
+                     BEAR CANYON ESTATES | Beds: 120 | Rates: $2400 -  $3400
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_bd6763da81067469a27c1d7a30b13ba8 = L.circleMarker(
+                [35.1329429, -106.5211496],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "orange", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 20, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_9f4db2a4aa998d0df4a64ad084e4ed2e);
+        
+    
+        var popup_e3209ed2a81e8bbe3f611551a51440c1 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_11279de843c35e7b6c3bf75ca6e0b66e = $(`<div id="html_11279de843c35e7b6c3bf75ca6e0b66e" style="width: 100.0%; height: 100.0%;">     <div style="font-family: Arial; font-size: 13px; min-width: 220px;">         <b>LA VIDA LLENA LIFEPLAN COMMUNITY</b><br><br>         <b>Type:</b> IL<br>         <b># of Beds:</b> 300<br>         <b>Rate(s):</b> $3800 -  $5500<br>         <b>Provider ID:</b> N/A     </div>     </div>`)[0];
+                popup_e3209ed2a81e8bbe3f611551a51440c1.setContent(html_11279de843c35e7b6c3bf75ca6e0b66e);
+            
+        
+
+        circle_marker_bd6763da81067469a27c1d7a30b13ba8.bindPopup(popup_e3209ed2a81e8bbe3f611551a51440c1)
+        ;
+
+        
+    
+    
+            circle_marker_bd6763da81067469a27c1d7a30b13ba8.bindTooltip(
+                `<div>
+                     LA VIDA LLENA LIFEPLAN COMMUNITY | Beds: 300 | Rates: $3800 -  $5500
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_fa14af67fcab855c9ac9718242f29339 = L.circleMarker(
+                [35.1621203, -106.570561],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "orange", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 10.4, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_9f4db2a4aa998d0df4a64ad084e4ed2e);
+        
+    
+        var popup_876152c32b519bcaff7c9e6a9ba787d6 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_ff14908e08cbb7ca576a1311870656eb = $(`<div id="html_ff14908e08cbb7ca576a1311870656eb" style="width: 100.0%; height: 100.0%;">     <div style="font-family: Arial; font-size: 13px; min-width: 220px;">         <b>CORONADO VILLA RETIREMENT RESORT</b><br><br>         <b>Type:</b> IL<br>         <b># of Beds:</b> 130<br>         <b>Rate(s):</b> $3500 -  $4800<br>         <b>Provider ID:</b> N/A     </div>     </div>`)[0];
+                popup_876152c32b519bcaff7c9e6a9ba787d6.setContent(html_ff14908e08cbb7ca576a1311870656eb);
+            
+        
+
+        circle_marker_fa14af67fcab855c9ac9718242f29339.bindPopup(popup_876152c32b519bcaff7c9e6a9ba787d6)
+        ;
+
+        
+    
+    
+            circle_marker_fa14af67fcab855c9ac9718242f29339.bindTooltip(
+                `<div>
+                     CORONADO VILLA RETIREMENT RESORT | Beds: 130 | Rates: $3500 -  $4800
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_f5a6073e36ad54da96718bbdc6886113 = L.circleMarker(
+                [35.1527707, -106.5222428],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "orange", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 11.200000000000001, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_9f4db2a4aa998d0df4a64ad084e4ed2e);
+        
+    
+        var popup_6f0ca5dbc45beb4fff1871c444bc6928 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_9cf158fdb190a163cbf7a100dd066e8e = $(`<div id="html_9cf158fdb190a163cbf7a100dd066e8e" style="width: 100.0%; height: 100.0%;">     <div style="font-family: Arial; font-size: 13px; min-width: 220px;">         <b>THE MONTEBELLO ON ACADEMY</b><br><br>         <b>Type:</b> IL<br>         <b># of Beds:</b> 140<br>         <b>Rate(s):</b> $3600 -  $5200<br>         <b>Provider ID:</b> N/A     </div>     </div>`)[0];
+                popup_6f0ca5dbc45beb4fff1871c444bc6928.setContent(html_9cf158fdb190a163cbf7a100dd066e8e);
+            
+        
+
+        circle_marker_f5a6073e36ad54da96718bbdc6886113.bindPopup(popup_6f0ca5dbc45beb4fff1871c444bc6928)
+        ;
+
+        
+    
+    
+            circle_marker_f5a6073e36ad54da96718bbdc6886113.bindTooltip(
+                `<div>
+                     THE MONTEBELLO ON ACADEMY | Beds: 140 | Rates: $3600 -  $5200
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_1343baee7cc2d40a3c914fa074a96bcb = L.circleMarker(
+                [35.2043481, -106.6788715],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "orange", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 13.6, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_9f4db2a4aa998d0df4a64ad084e4ed2e);
+        
+    
+        var popup_1c8d53e2f7111e5ed83859eac53d4e5a = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_b487be6d268ddc5866c9185ce1297707 = $(`<div id="html_b487be6d268ddc5866c9185ce1297707" style="width: 100.0%; height: 100.0%;">     <div style="font-family: Arial; font-size: 13px; min-width: 220px;">         <b>PALMILLA SENIOR LIVING</b><br><br>         <b>Type:</b> IL<br>         <b># of Beds:</b> 170<br>         <b>Rate(s):</b> $3600 -  $5400<br>         <b>Provider ID:</b> N/A     </div>     </div>`)[0];
+                popup_1c8d53e2f7111e5ed83859eac53d4e5a.setContent(html_b487be6d268ddc5866c9185ce1297707);
+            
+        
+
+        circle_marker_1343baee7cc2d40a3c914fa074a96bcb.bindPopup(popup_1c8d53e2f7111e5ed83859eac53d4e5a)
+        ;
+
+        
+    
+    
+            circle_marker_1343baee7cc2d40a3c914fa074a96bcb.bindTooltip(
+                `<div>
+                     PALMILLA SENIOR LIVING | Beds: 170 | Rates: $3600 -  $5400
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_851b14f17547feab67143eaff84f73e5 = L.circleMarker(
+                [35.2389233, -106.6420251],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "orange", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 12.0, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_9f4db2a4aa998d0df4a64ad084e4ed2e);
+        
+    
+        var popup_f7fa499b297886ec0b5327deb7769352 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_0a5448307d8181a966d5418a6b69d24b = $(`<div id="html_0a5448307d8181a966d5418a6b69d24b" style="width: 100.0%; height: 100.0%;">     <div style="font-family: Arial; font-size: 13px; min-width: 220px;">         <b>FAIRWINDS RIO RANCHO</b><br><br>         <b>Type:</b> IL<br>         <b># of Beds:</b> 150<br>         <b>Rate(s):</b> $3800 -  $5800<br>         <b>Provider ID:</b> N/A     </div>     </div>`)[0];
+                popup_f7fa499b297886ec0b5327deb7769352.setContent(html_0a5448307d8181a966d5418a6b69d24b);
+            
+        
+
+        circle_marker_851b14f17547feab67143eaff84f73e5.bindPopup(popup_f7fa499b297886ec0b5327deb7769352)
+        ;
+
+        
+    
+    
+            circle_marker_851b14f17547feab67143eaff84f73e5.bindTooltip(
+                `<div>
+                     FAIRWINDS RIO RANCHO | Beds: 150 | Rates: $3800 -  $5800
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_f96e8e3e5dc267c6794deaf723b87e00 = L.circleMarker(
+                [35.2403476, -106.6425778],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "orange", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 11.200000000000001, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_9f4db2a4aa998d0df4a64ad084e4ed2e);
+        
+    
+        var popup_a886624b43484bf230290d6c2a8a64ed = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_b0279fcdcdf32f4a691f14fd2395f23c = $(`<div id="html_b0279fcdcdf32f4a691f14fd2395f23c" style="width: 100.0%; height: 100.0%;">     <div style="font-family: Arial; font-size: 13px; min-width: 220px;">         <b>AVAMERE AT RIO RANCHO</b><br><br>         <b>Type:</b> IL<br>         <b># of Beds:</b> 140<br>         <b>Rate(s):</b> $3600 -  $5200<br>         <b>Provider ID:</b> N/A     </div>     </div>`)[0];
+                popup_a886624b43484bf230290d6c2a8a64ed.setContent(html_b0279fcdcdf32f4a691f14fd2395f23c);
+            
+        
+
+        circle_marker_f96e8e3e5dc267c6794deaf723b87e00.bindPopup(popup_a886624b43484bf230290d6c2a8a64ed)
+        ;
+
+        
+    
+    
+            circle_marker_f96e8e3e5dc267c6794deaf723b87e00.bindTooltip(
+                `<div>
+                     AVAMERE AT RIO RANCHO | Beds: 140 | Rates: $3600 -  $5200
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_3ec3741f2cfc31f35d4e935ddcd16bbd = L.circleMarker(
+                [35.2722223, -106.6567629],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "orange", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 11.200000000000001, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_9f4db2a4aa998d0df4a64ad084e4ed2e);
+        
+    
+        var popup_4bf095a9ff75970243acec5812cb4e37 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_86497f700a1d878dd7665819d2966f94 = $(`<div id="html_86497f700a1d878dd7665819d2966f94" style="width: 100.0%; height: 100.0%;">     <div style="font-family: Arial; font-size: 13px; min-width: 220px;">         <b>THE NEIGHBORHOOD IN RIO RANCHO</b><br><br>         <b>Type:</b> IL<br>         <b># of Beds:</b> 140<br>         <b>Rate(s):</b> $3500 -  $5200<br>         <b>Provider ID:</b> N/A     </div>     </div>`)[0];
+                popup_4bf095a9ff75970243acec5812cb4e37.setContent(html_86497f700a1d878dd7665819d2966f94);
+            
+        
+
+        circle_marker_3ec3741f2cfc31f35d4e935ddcd16bbd.bindPopup(popup_4bf095a9ff75970243acec5812cb4e37)
+        ;
+
+        
+    
+    
+            circle_marker_3ec3741f2cfc31f35d4e935ddcd16bbd.bindTooltip(
+                `<div>
+                     THE NEIGHBORHOOD IN RIO RANCHO | Beds: 140 | Rates: $3500 -  $5200
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_63d3b258ad2815f421cedaa2fcbb162e = L.circleMarker(
+                [32.7561, -97.136],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4.32, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_9f4db2a4aa998d0df4a64ad084e4ed2e);
+        
+    
+        var popup_6d05259545939917d77b8f300a7d7eb8 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_7a0112fdf436a6f7c1b311655b68fedb = $(`<div id="html_7a0112fdf436a6f7c1b311655b68fedb" style="width: 100.0%; height: 100.0%;">     <div style="font-family: Arial; font-size: 13px; min-width: 220px;">         <b>PH OPS OF ARLINGTON LLC</b><br><br>         <b>Type:</b> PUREHEALTH<br>         <b># of Beds:</b> 54<br>         <b>Rate(s):</b> N/A<br>         <b>Provider ID:</b> 676407.0     </div>     </div>`)[0];
+                popup_6d05259545939917d77b8f300a7d7eb8.setContent(html_7a0112fdf436a6f7c1b311655b68fedb);
+            
+        
+
+        circle_marker_63d3b258ad2815f421cedaa2fcbb162e.bindPopup(popup_6d05259545939917d77b8f300a7d7eb8)
+        ;
+
+        
+    
+    
+            circle_marker_63d3b258ad2815f421cedaa2fcbb162e.bindTooltip(
+                `<div>
+                     PH OPS OF ARLINGTON LLC | Beds: 54 | Rates: N/A
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_f8f3c1010cca03ff08d93649620696cf = L.circleMarker(
+                [33.2372, -97.144],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7.04, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_9f4db2a4aa998d0df4a64ad084e4ed2e);
+        
+    
+        var popup_547153987e74ab25ef2e9470ed54ea08 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_5809114e92f160b06b4164c32e1605c1 = $(`<div id="html_5809114e92f160b06b4164c32e1605c1" style="width: 100.0%; height: 100.0%;">     <div style="font-family: Arial; font-size: 13px; min-width: 220px;">         <b>DENTON VILLAGE BY PUREHEALTH</b><br><br>         <b>Type:</b> PUREHEALTH<br>         <b># of Beds:</b> 88<br>         <b>Rate(s):</b> N/A<br>         <b>Provider ID:</b> 455627.0     </div>     </div>`)[0];
+                popup_547153987e74ab25ef2e9470ed54ea08.setContent(html_5809114e92f160b06b4164c32e1605c1);
+            
+        
+
+        circle_marker_f8f3c1010cca03ff08d93649620696cf.bindPopup(popup_547153987e74ab25ef2e9470ed54ea08)
+        ;
+
+        
+    
+    
+            circle_marker_f8f3c1010cca03ff08d93649620696cf.bindTooltip(
+                `<div>
+                     DENTON VILLAGE BY PUREHEALTH | Beds: 88 | Rates: N/A
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_a625040ab38a118f76faa3728f66d526 = L.circleMarker(
+                [30.2821, -95.474],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 12.0, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_9f4db2a4aa998d0df4a64ad084e4ed2e);
+        
+    
+        var popup_6f8794731f7cfa032b59787607f4133d = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_9dece99c6c4a0acc7cd5e4ba95459653 = $(`<div id="html_9dece99c6c4a0acc7cd5e4ba95459653" style="width: 100.0%; height: 100.0%;">     <div style="font-family: Arial; font-size: 13px; min-width: 220px;">         <b>PH OPS OF CONROE LLC</b><br><br>         <b>Type:</b> PUREHEALTH<br>         <b># of Beds:</b> 150<br>         <b>Rate(s):</b> N/A<br>         <b>Provider ID:</b> 676420.0     </div>     </div>`)[0];
+                popup_6f8794731f7cfa032b59787607f4133d.setContent(html_9dece99c6c4a0acc7cd5e4ba95459653);
+            
+        
+
+        circle_marker_a625040ab38a118f76faa3728f66d526.bindPopup(popup_6f8794731f7cfa032b59787607f4133d)
+        ;
+
+        
+    
+    
+            circle_marker_a625040ab38a118f76faa3728f66d526.bindTooltip(
+                `<div>
+                     PH OPS OF CONROE LLC | Beds: 150 | Rates: N/A
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_eb5214a45c1b79e48d6ef8dc018eba44 = L.circleMarker(
+                [32.8766, -96.751],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_9f4db2a4aa998d0df4a64ad084e4ed2e);
+        
+    
+        var popup_8ca7fdad685c74d5ffb6cff9d1dbe1f4 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_eb15f37069eebf438516c0d5b38ab6e6 = $(`<div id="html_eb15f37069eebf438516c0d5b38ab6e6" style="width: 100.0%; height: 100.0%;">     <div style="font-family: Arial; font-size: 13px; min-width: 220px;">         <b>PH OPS OF DALLAS LLC</b><br><br>         <b>Type:</b> PUREHEALTH<br>         <b># of Beds:</b> 49<br>         <b>Rate(s):</b> N/A<br>         <b>Provider ID:</b> 676410.0     </div>     </div>`)[0];
+                popup_8ca7fdad685c74d5ffb6cff9d1dbe1f4.setContent(html_eb15f37069eebf438516c0d5b38ab6e6);
+            
+        
+
+        circle_marker_eb5214a45c1b79e48d6ef8dc018eba44.bindPopup(popup_8ca7fdad685c74d5ffb6cff9d1dbe1f4)
+        ;
+
+        
+    
+    
+            circle_marker_eb5214a45c1b79e48d6ef8dc018eba44.bindTooltip(
+                `<div>
+                     PH OPS OF DALLAS LLC | Beds: 49 | Rates: N/A
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_6e4e6fad6ecb94585d625793acfd2f56 = L.circleMarker(
+                [29.3866, -94.987],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 10.72, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_9f4db2a4aa998d0df4a64ad084e4ed2e);
+        
+    
+        var popup_3aff0761c68d2d7f013e19d4fa9a07c3 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_16d5ece5e48b13079a152ca52160bc35 = $(`<div id="html_16d5ece5e48b13079a152ca52160bc35" style="width: 100.0%; height: 100.0%;">     <div style="font-family: Arial; font-size: 13px; min-width: 220px;">         <b>THE SHOAL</b><br><br>         <b>Type:</b> PUREHEALTH<br>         <b># of Beds:</b> 134<br>         <b>Rate(s):</b> N/A<br>         <b>Provider ID:</b> 676360.0     </div>     </div>`)[0];
+                popup_3aff0761c68d2d7f013e19d4fa9a07c3.setContent(html_16d5ece5e48b13079a152ca52160bc35);
+            
+        
+
+        circle_marker_6e4e6fad6ecb94585d625793acfd2f56.bindPopup(popup_3aff0761c68d2d7f013e19d4fa9a07c3)
+        ;
+
+        
+    
+    
+            circle_marker_6e4e6fad6ecb94585d625793acfd2f56.bindTooltip(
+                `<div>
+                     THE SHOAL | Beds: 134 | Rates: N/A
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_429babed6237e9768eb8980e0718f4df = L.circleMarker(
+                [35.0188, -106.72],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 9.6, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_9f4db2a4aa998d0df4a64ad084e4ed2e);
+        
+    
+        var popup_4686692cdaea5b9764dfeca448163890 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_aadc76b3c78300c935bef45929c78953 = $(`<div id="html_aadc76b3c78300c935bef45929c78953" style="width: 100.0%; height: 100.0%;">     <div style="font-family: Arial; font-size: 13px; min-width: 220px;">         <b>PH OPS OF LAS ESTANCIAS LLC</b><br><br>         <b>Type:</b> PUREHEALTH<br>         <b># of Beds:</b> 120<br>         <b>Rate(s):</b> N/A<br>         <b>Provider ID:</b> 325126.0     </div>     </div>`)[0];
+                popup_4686692cdaea5b9764dfeca448163890.setContent(html_aadc76b3c78300c935bef45929c78953);
+            
+        
+
+        circle_marker_429babed6237e9768eb8980e0718f4df.bindPopup(popup_4686692cdaea5b9764dfeca448163890)
+        ;
+
+        
+    
+    
+            circle_marker_429babed6237e9768eb8980e0718f4df.bindTooltip(
+                `<div>
+                     PH OPS OF LAS ESTANCIAS LLC | Beds: 120 | Rates: N/A
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_473cbc0c4a43cf9015dfb227571c94e0 = L.circleMarker(
+                [35.0836, -106.57],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 20, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_9f4db2a4aa998d0df4a64ad084e4ed2e);
+        
+    
+        var popup_a765e95d56cc525aaaa7401850c8cf0e = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_172f217b27793da585416529cf92a0ac = $(`<div id="html_172f217b27793da585416529cf92a0ac" style="width: 100.0%; height: 100.0%;">     <div style="font-family: Arial; font-size: 13px; min-width: 220px;">         <b>PRINCETON HEALTH AND REHABILITATION</b><br><br>         <b>Type:</b> PUREHEALTH<br>         <b># of Beds:</b> 369<br>         <b>Rate(s):</b> N/A<br>         <b>Provider ID:</b> 325045.0     </div>     </div>`)[0];
+                popup_a765e95d56cc525aaaa7401850c8cf0e.setContent(html_172f217b27793da585416529cf92a0ac);
+            
+        
+
+        circle_marker_473cbc0c4a43cf9015dfb227571c94e0.bindPopup(popup_a765e95d56cc525aaaa7401850c8cf0e)
+        ;
+
+        
+    
+    
+            circle_marker_473cbc0c4a43cf9015dfb227571c94e0.bindTooltip(
+                `<div>
+                     PRINCETON HEALTH AND REHABILITATION | Beds: 369 | Rates: N/A
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_9b5264aa86b05edb16a6f224ebf82df1 = L.circleMarker(
+                [33.1736, -97.1336],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 9.36, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_9f4db2a4aa998d0df4a64ad084e4ed2e);
+        
+    
+        var popup_03682f542d1e260725025fcefcbd4ffb = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_0340fa653f8990f050abdeb6965c06aa = $(`<div id="html_0340fa653f8990f050abdeb6965c06aa" style="width: 100.0%; height: 100.0%;">     <div style="font-family: Arial; font-size: 13px; min-width: 220px;">         <b>LAKE FOREST VILLAGE BY PUREHEALTH</b><br><br>         <b>Type:</b> PUREHEALTH<br>         <b># of Beds:</b> 117<br>         <b>Rate(s):</b> N/A<br>         <b>Provider ID:</b> 455685.0     </div>     </div>`)[0];
+                popup_03682f542d1e260725025fcefcbd4ffb.setContent(html_0340fa653f8990f050abdeb6965c06aa);
+            
+        
+
+        circle_marker_9b5264aa86b05edb16a6f224ebf82df1.bindPopup(popup_03682f542d1e260725025fcefcbd4ffb)
+        ;
+
+        
+    
+    
+            circle_marker_9b5264aa86b05edb16a6f224ebf82df1.bindTooltip(
+                `<div>
+                     LAKE FOREST VILLAGE BY PUREHEALTH | Beds: 117 | Rates: N/A
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            marker_cluster_9f4db2a4aa998d0df4a64ad084e4ed2e.addTo(map_a384e706a7033b3c7b72d35e5821eee9);
+        
+    
+            var layer_control_bb36ac17b08961ca4dc79e63f5cf0ae7_layers = {
+                base_layers : {
+                    "Light (Google-like)" : tile_layer_f73235b5710609e31d8019a42dfdd80c,
+                    "Detailed" : tile_layer_9a65a712d427048622776ab215f8d91a,
+                    "Standard" : tile_layer_5a326c5365f51dad3f8bdf02567c8d34,
+                    "Satellite" : tile_layer_26bc9aa8f28f7aa741fe42ca6d029e04,
+                },
+                overlays :  {
+                    "macro_element_9f4db2a4aa998d0df4a64ad084e4ed2e" : marker_cluster_9f4db2a4aa998d0df4a64ad084e4ed2e,
+                },
+            };
+            let layer_control_bb36ac17b08961ca4dc79e63f5cf0ae7 = L.control.layers(
+                layer_control_bb36ac17b08961ca4dc79e63f5cf0ae7_layers.base_layers,
+                layer_control_bb36ac17b08961ca4dc79e63f5cf0ae7_layers.overlays,
+                {
+  "position": "topright",
+  "collapsed": false,
+  "autoZIndex": true,
+}
+            ).addTo(map_a384e706a7033b3c7b72d35e5821eee9);
+
+        
+</script>
+</html>
