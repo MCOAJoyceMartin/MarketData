@@ -1,0 +1,2095 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_2b6e8dbf2137ae89b64c04e70ffdaa04 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+
+            <style>html, body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            </style>
+
+            <style>#map {
+                position:absolute;
+                top:0;
+                bottom:0;
+                right:0;
+                left:0;
+                }
+            </style>
+
+            <script>
+                L_NO_TOUCH = false;
+                L_DISABLE_3D = false;
+            </script>
+
+        
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.1.0/leaflet.markercluster.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.1.0/MarkerCluster.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.1.0/MarkerCluster.Default.css"/>
+</head>
+<body>
+    
+    
+    <div style="
+        position: fixed;
+        bottom: 40px; left: 40px;
+        width: 220px;
+        background-color: rgba(255,255,255,0.95);
+        border: 2px solid #888;
+        z-index: 9999;
+        font-size: 13px;
+        padding: 12px;
+        box-shadow: 3px 3px 10px rgba(0,0,0,0.25);
+        border-radius: 8px;
+        font-family: Arial;
+    ">
+      <b>Legend</b><br><br>
+      <span style="color:red;">●</span> SNF<br>
+      <span style="color:blue;">●</span> ACH<br><br>
+      <span style="color:#1f77b4;">◯</span> 5 / 10 / 20 Mile Radius<br><br>
+      Bubble size = # of Beds
+    </div>
+    
+    
+    <div style="
+        position: fixed;
+        top: 20px; left: 50%;
+        transform: translateX(-50%);
+        z-index: 9999;
+        background-color: rgba(255,255,255,0.95);
+        padding: 10px 20px;
+        border-radius: 10px;
+        box-shadow: 3px 3px 10px rgba(0,0,0,0.25);
+        font-size: 18px;
+        font-weight: 700;
+        font-family: Arial;
+    ">
+        KINGWOOD REHABILITATION AND HEALTHCARE CENTER SNF Market - Hub and Competitors
+    </div>
+    
+    
+            <div class="folium-map" id="map_2b6e8dbf2137ae89b64c04e70ffdaa04" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_2b6e8dbf2137ae89b64c04e70ffdaa04 = L.map(
+                "map_2b6e8dbf2137ae89b64c04e70ffdaa04",
+                {
+                    center: [30.0603, -95.254],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 10,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_c5425b78bce26f4a2d8953ea1ea8b098 = L.tileLayer(
+                "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 20,
+  "maxNativeZoom": 20,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"https://carto.com/attributions\"\u003eCARTO\u003c/a\u003e",
+  "subdomains": "abcd",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_c5425b78bce26f4a2d8953ea1ea8b098.addTo(map_2b6e8dbf2137ae89b64c04e70ffdaa04);
+        
+    
+            var tile_layer_fa3c1f7591ec0abd249a7311a8271c90 = L.tileLayer(
+                "https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 17,
+  "maxNativeZoom": 17,
+  "noWrap": false,
+  "attribution": "Map data: \u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors, \u003ca href=\"http://viewfinderpanoramas.org\"\u003eSRTM\u003c/a\u003e | Map style: \u0026copy; \u003ca href=\"https://opentopomap.org\"\u003eOpenTopoMap\u003c/a\u003e (\u003ca href=\"https://creativecommons.org/licenses/by-sa/3.0/\"\u003eCC-BY-SA\u003c/a\u003e)",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_fa3c1f7591ec0abd249a7311a8271c90.addTo(map_2b6e8dbf2137ae89b64c04e70ffdaa04);
+        
+    
+            var tile_layer_de0f189e199248d1a4f2537d3e981dbe = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 19,
+  "maxNativeZoom": 19,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_de0f189e199248d1a4f2537d3e981dbe.addTo(map_2b6e8dbf2137ae89b64c04e70ffdaa04);
+        
+    
+            var tile_layer_bfa30b5fcc5979861330ac8f5db8cc24 = L.tileLayer(
+                "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+                {
+  "minZoom": 0,
+  "maxZoom": 18,
+  "maxNativeZoom": 18,
+  "noWrap": false,
+  "attribution": "Esri",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_bfa30b5fcc5979861330ac8f5db8cc24.addTo(map_2b6e8dbf2137ae89b64c04e70ffdaa04);
+        
+    
+            var circle_6911347e996c083e1118b244abffba86 = L.circle(
+                [30.0603, -95.254],
+                {"bubblingMouseEvents": true, "color": "#1f77b4", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#1f77b4", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8046.7, "stroke": true, "weight": 2}
+            ).addTo(map_2b6e8dbf2137ae89b64c04e70ffdaa04);
+        
+    
+            circle_6911347e996c083e1118b244abffba86.bindTooltip(
+                `<div>
+                     5 mile radius
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_110daacb4146bc8f47082f9b23d931eb = L.circle(
+                [30.0603, -95.254],
+                {"bubblingMouseEvents": true, "color": "#1f77b4", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#1f77b4", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 16093.4, "stroke": true, "weight": 2}
+            ).addTo(map_2b6e8dbf2137ae89b64c04e70ffdaa04);
+        
+    
+            circle_110daacb4146bc8f47082f9b23d931eb.bindTooltip(
+                `<div>
+                     10 mile radius
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_957d1470fc060c0a562694e72cea71de = L.circle(
+                [30.0603, -95.254],
+                {"bubblingMouseEvents": true, "color": "#1f77b4", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#1f77b4", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 32186.8, "stroke": true, "weight": 2}
+            ).addTo(map_2b6e8dbf2137ae89b64c04e70ffdaa04);
+        
+    
+            circle_957d1470fc060c0a562694e72cea71de.bindTooltip(
+                `<div>
+                     20 mile radius
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_d78de24d045ddbb8ea9e34f9f0da35a4 = L.marker(
+                [30.0603, -95.254],
+                {
+}
+            ).addTo(map_2b6e8dbf2137ae89b64c04e70ffdaa04);
+        
+    
+            var icon_7dc114d94c5eae56e9d2f5cc8fff37ec = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "star",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+            marker_d78de24d045ddbb8ea9e34f9f0da35a4.bindTooltip(
+                `<div>
+                     Hub: KINGWOOD REHABILITATION AND HEALTHCARE CENTER
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_d78de24d045ddbb8ea9e34f9f0da35a4.setIcon(icon_7dc114d94c5eae56e9d2f5cc8fff37ec);
+            
+    
+            var marker_cluster_030bf044971c6d45509cc72f64cf273e = L.markerClusterGroup(
+                {
+}
+            );
+        
+    
+            var circle_marker_a2ab5e8afcf3ca0313fa8179eb798cdd = L.circleMarker(
+                [30.1157, -95.251],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 9.76, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_030bf044971c6d45509cc72f64cf273e);
+        
+    
+        var popup_674e6972aa809fd5f6f5301bc9e27f96 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_0aa179bce176e73085804053881d819e = $(`<div id="html_0aa179bce176e73085804053881d819e" style="width: 100.0%; height: 100.0%;">     <b>THE HEIGHTS ON VALLEY RANCH</b><br>     Type: SNF<br>     Beds: 122<br>     Provider ID: 676476<br>     Rate: nan<br>     </div>`)[0];
+                popup_674e6972aa809fd5f6f5301bc9e27f96.setContent(html_0aa179bce176e73085804053881d819e);
+            
+        
+
+        circle_marker_a2ab5e8afcf3ca0313fa8179eb798cdd.bindPopup(popup_674e6972aa809fd5f6f5301bc9e27f96)
+        ;
+
+        
+    
+    
+            circle_marker_a2ab5e8afcf3ca0313fa8179eb798cdd.bindTooltip(
+                `<div>
+                     THE HEIGHTS ON VALLEY RANCH (122 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_b52ced4440b9d13b3dd88ec316d91e38 = L.circleMarker(
+                [30.001, -95.276],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 9.44, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_030bf044971c6d45509cc72f64cf273e);
+        
+    
+        var popup_e5e478c45fbb005a13b4677b896db9e1 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_6b12b992400913cc99d38d8f2d6accd8 = $(`<div id="html_6b12b992400913cc99d38d8f2d6accd8" style="width: 100.0%; height: 100.0%;">     <b>CRIMSON HEIGHTS HEALTH & WELLNESS</b><br>     Type: SNF<br>     Beds: 118<br>     Provider ID: 676463<br>     Rate: nan<br>     </div>`)[0];
+                popup_e5e478c45fbb005a13b4677b896db9e1.setContent(html_6b12b992400913cc99d38d8f2d6accd8);
+            
+        
+
+        circle_marker_b52ced4440b9d13b3dd88ec316d91e38.bindPopup(popup_e5e478c45fbb005a13b4677b896db9e1)
+        ;
+
+        
+    
+    
+            circle_marker_b52ced4440b9d13b3dd88ec316d91e38.bindTooltip(
+                `<div>
+                     CRIMSON HEIGHTS HEALTH & WELLNESS (118 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_f286dffeffe244278d6334d3d1d09292 = L.circleMarker(
+                [30.0015, -95.284],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 9.92, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_030bf044971c6d45509cc72f64cf273e);
+        
+    
+        var popup_8d2d5a0faff79d24faf3b00d9c3e9a68 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_fc2334d187cfcb430ed8aa8b3dc2ed3b = $(`<div id="html_fc2334d187cfcb430ed8aa8b3dc2ed3b" style="width: 100.0%; height: 100.0%;">     <b>DEERBROOK SKILLED NURSING AND REHAB CENTER</b><br>     Type: SNF<br>     Beds: 124<br>     Provider ID: 676263<br>     Rate: nan<br>     </div>`)[0];
+                popup_8d2d5a0faff79d24faf3b00d9c3e9a68.setContent(html_fc2334d187cfcb430ed8aa8b3dc2ed3b);
+            
+        
+
+        circle_marker_f286dffeffe244278d6334d3d1d09292.bindPopup(popup_8d2d5a0faff79d24faf3b00d9c3e9a68)
+        ;
+
+        
+    
+    
+            circle_marker_f286dffeffe244278d6334d3d1d09292.bindTooltip(
+                `<div>
+                     DEERBROOK SKILLED NURSING AND REHAB CENTER (124 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_475e90a1b8d44e63c1601009ac435deb = L.circleMarker(
+                [29.9981, -95.276],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 10.0, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_030bf044971c6d45509cc72f64cf273e);
+        
+    
+        var popup_ba728da98bbffb0267b819d9d0eeea56 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_c6a5eee8cd13f276a7076f9fe99aa3c2 = $(`<div id="html_c6a5eee8cd13f276a7076f9fe99aa3c2" style="width: 100.0%; height: 100.0%;">     <b>PARK MANOR OF HUMBLE</b><br>     Type: SNF<br>     Beds: 125<br>     Provider ID: 675991<br>     Rate: nan<br>     </div>`)[0];
+                popup_ba728da98bbffb0267b819d9d0eeea56.setContent(html_c6a5eee8cd13f276a7076f9fe99aa3c2);
+            
+        
+
+        circle_marker_475e90a1b8d44e63c1601009ac435deb.bindPopup(popup_ba728da98bbffb0267b819d9d0eeea56)
+        ;
+
+        
+    
+    
+            circle_marker_475e90a1b8d44e63c1601009ac435deb.bindTooltip(
+                `<div>
+                     PARK MANOR OF HUMBLE (125 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_53c779611b67b137d6a824110140124a = L.circleMarker(
+                [29.9928, -95.258],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 10.72, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_030bf044971c6d45509cc72f64cf273e);
+        
+    
+        var popup_42c4c6e3c5369f9f11836b2e73a34d4e = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_23f4d968a4790a09329dd80b00c2af30 = $(`<div id="html_23f4d968a4790a09329dd80b00c2af30" style="width: 100.0%; height: 100.0%;">     <b>FOCUSED CARE AT HUMBLE</b><br>     Type: SNF<br>     Beds: 134<br>     Provider ID: 675127<br>     Rate: nan<br>     </div>`)[0];
+                popup_42c4c6e3c5369f9f11836b2e73a34d4e.setContent(html_23f4d968a4790a09329dd80b00c2af30);
+            
+        
+
+        circle_marker_53c779611b67b137d6a824110140124a.bindPopup(popup_42c4c6e3c5369f9f11836b2e73a34d4e)
+        ;
+
+        
+    
+    
+            circle_marker_53c779611b67b137d6a824110140124a.bindTooltip(
+                `<div>
+                     FOCUSED CARE AT HUMBLE (134 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_218e7e94a9470f272c261cfabfbf7664 = L.circleMarker(
+                [29.979, -95.259],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 10.72, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_030bf044971c6d45509cc72f64cf273e);
+        
+    
+        var popup_6e8344ccf32e7060b9f3798ff696794b = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_01842f7356498ed2778753b816215da5 = $(`<div id="html_01842f7356498ed2778753b816215da5" style="width: 100.0%; height: 100.0%;">     <b>OAKMONT HEALTHCARE AND REHABILITATION OF HUMBLE</b><br>     Type: SNF<br>     Beds: 134<br>     Provider ID: 455725<br>     Rate: nan<br>     </div>`)[0];
+                popup_6e8344ccf32e7060b9f3798ff696794b.setContent(html_01842f7356498ed2778753b816215da5);
+            
+        
+
+        circle_marker_218e7e94a9470f272c261cfabfbf7664.bindPopup(popup_6e8344ccf32e7060b9f3798ff696794b)
+        ;
+
+        
+    
+    
+            circle_marker_218e7e94a9470f272c261cfabfbf7664.bindTooltip(
+                `<div>
+                     OAKMONT HEALTHCARE AND REHABILITATION OF HUMBLE (134 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_dc3749790c27af499e97dad6aee256e2 = L.circleMarker(
+                [29.9355, -95.269],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 10.08, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_030bf044971c6d45509cc72f64cf273e);
+        
+    
+        var popup_de2ed092455315c792e4aef96cb1df04 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_ffc979618a45a3d3a1efa6bdd089e305 = $(`<div id="html_ffc979618a45a3d3a1efa6bdd089e305" style="width: 100.0%; height: 100.0%;">     <b>FALL CREEK REHABILITATION AND HEALTHCARE CENTER</b><br>     Type: SNF<br>     Beds: 126<br>     Provider ID: 676412<br>     Rate: nan<br>     </div>`)[0];
+                popup_de2ed092455315c792e4aef96cb1df04.setContent(html_ffc979618a45a3d3a1efa6bdd089e305);
+            
+        
+
+        circle_marker_dc3749790c27af499e97dad6aee256e2.bindPopup(popup_de2ed092455315c792e4aef96cb1df04)
+        ;
+
+        
+    
+    
+            circle_marker_dc3749790c27af499e97dad6aee256e2.bindTooltip(
+                `<div>
+                     FALL CREEK REHABILITATION AND HEALTHCARE CENTER (126 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_bf791987c8c4cd58865dbc93175f8597 = L.circleMarker(
+                [30.0273, -95.435],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 10.48, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_030bf044971c6d45509cc72f64cf273e);
+        
+    
+        var popup_1b85203c2c1628d43f2f74e3c808bf0c = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_bd427d4ede53b2cdf8944a3301e09254 = $(`<div id="html_bd427d4ede53b2cdf8944a3301e09254" style="width: 100.0%; height: 100.0%;">     <b>THE HEIGHTS OF NORTH HOUSTON</b><br>     Type: SNF<br>     Beds: 131<br>     Provider ID: 676356<br>     Rate: nan<br>     </div>`)[0];
+                popup_1b85203c2c1628d43f2f74e3c808bf0c.setContent(html_bd427d4ede53b2cdf8944a3301e09254);
+            
+        
+
+        circle_marker_bf791987c8c4cd58865dbc93175f8597.bindPopup(popup_1b85203c2c1628d43f2f74e3c808bf0c)
+        ;
+
+        
+    
+    
+            circle_marker_bf791987c8c4cd58865dbc93175f8597.bindTooltip(
+                `<div>
+                     THE HEIGHTS OF NORTH HOUSTON (131 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_1028c4698f90835f9ce40198ca0e6b0e = L.circleMarker(
+                [30.0237, -95.436],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 10.0, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_030bf044971c6d45509cc72f64cf273e);
+        
+    
+        var popup_8ac4836588c7f9fc87c52b82ceda3413 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_3213687b9fb36e9d6d319f4952dfe08f = $(`<div id="html_3213687b9fb36e9d6d319f4952dfe08f" style="width: 100.0%; height: 100.0%;">     <b>PARK MANOR OF CYPRESS STATION</b><br>     Type: SNF<br>     Beds: 125<br>     Provider ID: 675986<br>     Rate: nan<br>     </div>`)[0];
+                popup_8ac4836588c7f9fc87c52b82ceda3413.setContent(html_3213687b9fb36e9d6d319f4952dfe08f);
+            
+        
+
+        circle_marker_1028c4698f90835f9ce40198ca0e6b0e.bindPopup(popup_8ac4836588c7f9fc87c52b82ceda3413)
+        ;
+
+        
+    
+    
+            circle_marker_1028c4698f90835f9ce40198ca0e6b0e.bindTooltip(
+                `<div>
+                     PARK MANOR OF CYPRESS STATION (125 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_7028180e6f979aa77a159fa5f8f46610 = L.circleMarker(
+                [30.1039, -95.436],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_030bf044971c6d45509cc72f64cf273e);
+        
+    
+        var popup_4e0e58f69c466c483f4dafc640411e19 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_cb16efa4eab7279c10e603dd2b226671 = $(`<div id="html_cb16efa4eab7279c10e603dd2b226671" style="width: 100.0%; height: 100.0%;">     <b>THE VILLAGE AT GLEANNLOCH FARMS</b><br>     Type: SNF<br>     Beds: 35<br>     Provider ID: 676234<br>     Rate: nan<br>     </div>`)[0];
+                popup_4e0e58f69c466c483f4dafc640411e19.setContent(html_cb16efa4eab7279c10e603dd2b226671);
+            
+        
+
+        circle_marker_7028180e6f979aa77a159fa5f8f46610.bindPopup(popup_4e0e58f69c466c483f4dafc640411e19)
+        ;
+
+        
+    
+    
+            circle_marker_7028180e6f979aa77a159fa5f8f46610.bindTooltip(
+                `<div>
+                     THE VILLAGE AT GLEANNLOCH FARMS (35 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_4cff3af7f317293c047bd41411f85954 = L.circleMarker(
+                [30.0234, -95.445],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 11.84, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_030bf044971c6d45509cc72f64cf273e);
+        
+    
+        var popup_72eba2f14a1ba604b1155090fc9e22c4 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_e183db8f31cae3ca54c842be712d605e = $(`<div id="html_e183db8f31cae3ca54c842be712d605e" style="width: 100.0%; height: 100.0%;">     <b>PARADIGM NORTHWEST</b><br>     Type: SNF<br>     Beds: 148<br>     Provider ID: 455714<br>     Rate: nan<br>     </div>`)[0];
+                popup_72eba2f14a1ba604b1155090fc9e22c4.setContent(html_e183db8f31cae3ca54c842be712d605e);
+            
+        
+
+        circle_marker_4cff3af7f317293c047bd41411f85954.bindPopup(popup_72eba2f14a1ba604b1155090fc9e22c4)
+        ;
+
+        
+    
+    
+            circle_marker_4cff3af7f317293c047bd41411f85954.bindTooltip(
+                `<div>
+                     PARADIGM NORTHWEST (148 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_cac47c974c510b00b412f663c6327bfb = L.circleMarker(
+                [29.9982, -95.467],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 9.6, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_030bf044971c6d45509cc72f64cf273e);
+        
+    
+        var popup_531fb611b7993bc8acd8efe219dc6e4d = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_16d9cfc6945052f259c68aecbc70795e = $(`<div id="html_16d9cfc6945052f259c68aecbc70795e" style="width: 100.0%; height: 100.0%;">     <b>VILLA TOSCANA AT CYPRESS WOODS</b><br>     Type: SNF<br>     Beds: 120<br>     Provider ID: 676239<br>     Rate: nan<br>     </div>`)[0];
+                popup_531fb611b7993bc8acd8efe219dc6e4d.setContent(html_16d9cfc6945052f259c68aecbc70795e);
+            
+        
+
+        circle_marker_cac47c974c510b00b412f663c6327bfb.bindPopup(popup_531fb611b7993bc8acd8efe219dc6e4d)
+        ;
+
+        
+    
+    
+            circle_marker_cac47c974c510b00b412f663c6327bfb.bindTooltip(
+                `<div>
+                     VILLA TOSCANA AT CYPRESS WOODS (120 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_cbda722d94de5011b3385de6b52b7144 = L.circleMarker(
+                [29.9209, -95.445],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 9.6, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_030bf044971c6d45509cc72f64cf273e);
+        
+    
+        var popup_758f0a0ae71cce3fcd607feb720b26f4 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_2e03d7d298b838cf6c6f4bb7a9cd5e1b = $(`<div id="html_2e03d7d298b838cf6c6f4bb7a9cd5e1b" style="width: 100.0%; height: 100.0%;">     <b>CAPSTONE HEALTHCARE ESTATES AT VETERANS MEMORIAL</b><br>     Type: SNF<br>     Beds: 120<br>     Provider ID: 676252<br>     Rate: nan<br>     </div>`)[0];
+                popup_758f0a0ae71cce3fcd607feb720b26f4.setContent(html_2e03d7d298b838cf6c6f4bb7a9cd5e1b);
+            
+        
+
+        circle_marker_cbda722d94de5011b3385de6b52b7144.bindPopup(popup_758f0a0ae71cce3fcd607feb720b26f4)
+        ;
+
+        
+    
+    
+            circle_marker_cbda722d94de5011b3385de6b52b7144.bindTooltip(
+                `<div>
+                     CAPSTONE HEALTHCARE ESTATES AT VETERANS MEMORIAL (120 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_4493f949bb050fe0fa8fc7d5af9a203b = L.circleMarker(
+                [29.8664, -95.398],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 16.16, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_030bf044971c6d45509cc72f64cf273e);
+        
+    
+        var popup_275d2c20bcb9570559f2f9e081718d88 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_74bc72306c21e9c5d5b0136fa445bb25 = $(`<div id="html_74bc72306c21e9c5d5b0136fa445bb25" style="width: 100.0%; height: 100.0%;">     <b>ASHFORD GARDENS</b><br>     Type: SNF<br>     Beds: 202<br>     Provider ID: 675423<br>     Rate: nan<br>     </div>`)[0];
+                popup_275d2c20bcb9570559f2f9e081718d88.setContent(html_74bc72306c21e9c5d5b0136fa445bb25);
+            
+        
+
+        circle_marker_4493f949bb050fe0fa8fc7d5af9a203b.bindPopup(popup_275d2c20bcb9570559f2f9e081718d88)
+        ;
+
+        
+    
+    
+            circle_marker_4493f949bb050fe0fa8fc7d5af9a203b.bindTooltip(
+                `<div>
+                     ASHFORD GARDENS (202 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_14cf3b3dfe7a1e994a2cecff5d7175dc = L.circleMarker(
+                [30.2098, -95.461],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 9.92, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_030bf044971c6d45509cc72f64cf273e);
+        
+    
+        var popup_5c294fcdc29c6d82672b73a056555ab1 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_d0f2614e70deccd656a29d4bcbe769cb = $(`<div id="html_d0f2614e70deccd656a29d4bcbe769cb" style="width: 100.0%; height: 100.0%;">     <b>PARK MANOR OF THE WOODLANDS</b><br>     Type: SNF<br>     Beds: 124<br>     Provider ID: 676273<br>     Rate: nan<br>     </div>`)[0];
+                popup_5c294fcdc29c6d82672b73a056555ab1.setContent(html_d0f2614e70deccd656a29d4bcbe769cb);
+            
+        
+
+        circle_marker_14cf3b3dfe7a1e994a2cecff5d7175dc.bindPopup(popup_5c294fcdc29c6d82672b73a056555ab1)
+        ;
+
+        
+    
+    
+            circle_marker_14cf3b3dfe7a1e994a2cecff5d7175dc.bindTooltip(
+                `<div>
+                     PARK MANOR OF THE WOODLANDS (124 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_efe0246b23ed60b16d2984ff82382ed3 = L.circleMarker(
+                [30.1415, -95.509],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8.96, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_030bf044971c6d45509cc72f64cf273e);
+        
+    
+        var popup_063af60a0028700c61a27b1bc8aed963 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_5b34566650fb50bfc8a213a2be0e8b49 = $(`<div id="html_5b34566650fb50bfc8a213a2be0e8b49" style="width: 100.0%; height: 100.0%;">     <b>THE BROADMOOR AT CREEKSIDE PARK</b><br>     Type: SNF<br>     Beds: 112<br>     Provider ID: 676357<br>     Rate: nan<br>     </div>`)[0];
+                popup_063af60a0028700c61a27b1bc8aed963.setContent(html_5b34566650fb50bfc8a213a2be0e8b49);
+            
+        
+
+        circle_marker_efe0246b23ed60b16d2984ff82382ed3.bindPopup(popup_063af60a0028700c61a27b1bc8aed963)
+        ;
+
+        
+    
+    
+            circle_marker_efe0246b23ed60b16d2984ff82382ed3.bindTooltip(
+                `<div>
+                     THE BROADMOOR AT CREEKSIDE PARK (112 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_78106e8d1ee3715d9737ea63af9f67e2 = L.circleMarker(
+                [30.1641, -95.506],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 17.12, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_030bf044971c6d45509cc72f64cf273e);
+        
+    
+        var popup_1fa1b0e8c566cacefcef73a8806c0a08 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_3b24ce7999baf80ebfa726a09d141563 = $(`<div id="html_3b24ce7999baf80ebfa726a09d141563" style="width: 100.0%; height: 100.0%;">     <b>THE WOODLANDS NURSING AND REHABILITATION CENTER</b><br>     Type: SNF<br>     Beds: 214<br>     Provider ID: 455876<br>     Rate: nan<br>     </div>`)[0];
+                popup_1fa1b0e8c566cacefcef73a8806c0a08.setContent(html_3b24ce7999baf80ebfa726a09d141563);
+            
+        
+
+        circle_marker_78106e8d1ee3715d9737ea63af9f67e2.bindPopup(popup_1fa1b0e8c566cacefcef73a8806c0a08)
+        ;
+
+        
+    
+    
+            circle_marker_78106e8d1ee3715d9737ea63af9f67e2.bindTooltip(
+                `<div>
+                     THE WOODLANDS NURSING AND REHABILITATION CENTER (214 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_d96414d38f3f1ab139fcc0ee9ae8001f = L.circleMarker(
+                [29.8601, -95.41],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 12.0, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_030bf044971c6d45509cc72f64cf273e);
+        
+    
+        var popup_e88212c3c3f33f418db0b0fdff5afff3 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_0a0c5e7a0b00f1e35f5272898ac218c2 = $(`<div id="html_0a0c5e7a0b00f1e35f5272898ac218c2" style="width: 100.0%; height: 100.0%;">     <b>CARADAY OF HOUSTON</b><br>     Type: SNF<br>     Beds: 150<br>     Provider ID: 676470<br>     Rate: nan<br>     </div>`)[0];
+                popup_e88212c3c3f33f418db0b0fdff5afff3.setContent(html_0a0c5e7a0b00f1e35f5272898ac218c2);
+            
+        
+
+        circle_marker_d96414d38f3f1ab139fcc0ee9ae8001f.bindPopup(popup_e88212c3c3f33f418db0b0fdff5afff3)
+        ;
+
+        
+    
+    
+            circle_marker_d96414d38f3f1ab139fcc0ee9ae8001f.bindTooltip(
+                `<div>
+                     CARADAY OF HOUSTON (150 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_750b6d274a67459bb89bd82414100d79 = L.circleMarker(
+                [30.1718, -95.503],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 10.08, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_030bf044971c6d45509cc72f64cf273e);
+        
+    
+        var popup_8e44a941c130fd3a78344a7c46448cee = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_54fe8112af009b10cfd9e56300c1df93 = $(`<div id="html_54fe8112af009b10cfd9e56300c1df93" style="width: 100.0%; height: 100.0%;">     <b>RIDGEWOOD AT THE WOODLANDS</b><br>     Type: SNF<br>     Beds: 126<br>     Provider ID: 675739<br>     Rate: nan<br>     </div>`)[0];
+                popup_8e44a941c130fd3a78344a7c46448cee.setContent(html_54fe8112af009b10cfd9e56300c1df93);
+            
+        
+
+        circle_marker_750b6d274a67459bb89bd82414100d79.bindPopup(popup_8e44a941c130fd3a78344a7c46448cee)
+        ;
+
+        
+    
+    
+            circle_marker_750b6d274a67459bb89bd82414100d79.bindTooltip(
+                `<div>
+                     RIDGEWOOD AT THE WOODLANDS (126 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_840994cd720a83e003d373fa99d49423 = L.circleMarker(
+                [29.8409, -95.376],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 9.6, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_030bf044971c6d45509cc72f64cf273e);
+        
+    
+        var popup_01ff0aa934695db60a5e6a5fd8ef237b = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_61f8b64337c8f715893e81982a043a45 = $(`<div id="html_61f8b64337c8f715893e81982a043a45" style="width: 100.0%; height: 100.0%;">     <b>HIGHLAND PARK CARE CENTER</b><br>     Type: SNF<br>     Beds: 120<br>     Provider ID: 675493<br>     Rate: nan<br>     </div>`)[0];
+                popup_01ff0aa934695db60a5e6a5fd8ef237b.setContent(html_61f8b64337c8f715893e81982a043a45);
+            
+        
+
+        circle_marker_840994cd720a83e003d373fa99d49423.bindPopup(popup_01ff0aa934695db60a5e6a5fd8ef237b)
+        ;
+
+        
+    
+    
+            circle_marker_840994cd720a83e003d373fa99d49423.bindTooltip(
+                `<div>
+                     HIGHLAND PARK CARE CENTER (120 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_64461560e220a784e1a61906d8d67338 = L.circleMarker(
+                [29.8248, -95.17],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 10.4, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_030bf044971c6d45509cc72f64cf273e);
+        
+    
+        var popup_02d2e69e4b44ab49207005d59de27dd5 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_e60d8072b6739e78739ba9db2b2d9015 = $(`<div id="html_e60d8072b6739e78739ba9db2b2d9015" style="width: 100.0%; height: 100.0%;">     <b>BRIDGECREST REHABILITATION SUITES</b><br>     Type: SNF<br>     Beds: 130<br>     Provider ID: 676362<br>     Rate: nan<br>     </div>`)[0];
+                popup_02d2e69e4b44ab49207005d59de27dd5.setContent(html_e60d8072b6739e78739ba9db2b2d9015);
+            
+        
+
+        circle_marker_64461560e220a784e1a61906d8d67338.bindPopup(popup_02d2e69e4b44ab49207005d59de27dd5)
+        ;
+
+        
+    
+    
+            circle_marker_64461560e220a784e1a61906d8d67338.bindTooltip(
+                `<div>
+                     BRIDGECREST REHABILITATION SUITES (130 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_810f33b5211d3226afbd3e56684cde36 = L.circleMarker(
+                [29.8373, -95.409],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 9.28, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_030bf044971c6d45509cc72f64cf273e);
+        
+    
+        var popup_a11448ead10b653544dc61e4727f79ac = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_5d45da6e88d733d409486910b3012abd = $(`<div id="html_5d45da6e88d733d409486910b3012abd" style="width: 100.0%; height: 100.0%;">     <b>WEST JANISCH HEALTH CARE CENTER</b><br>     Type: SNF<br>     Beds: 116<br>     Provider ID: 675543<br>     Rate: nan<br>     </div>`)[0];
+                popup_a11448ead10b653544dc61e4727f79ac.setContent(html_5d45da6e88d733d409486910b3012abd);
+            
+        
+
+        circle_marker_810f33b5211d3226afbd3e56684cde36.bindPopup(popup_a11448ead10b653544dc61e4727f79ac)
+        ;
+
+        
+    
+    
+            circle_marker_810f33b5211d3226afbd3e56684cde36.bindTooltip(
+                `<div>
+                     WEST JANISCH HEALTH CARE CENTER (116 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_9a8a94e5b6308dde5b2549a187c1f760 = L.circleMarker(
+                [29.8095, -95.161],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 10.0, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_030bf044971c6d45509cc72f64cf273e);
+        
+    
+        var popup_9107bb07cc2f4cc0f98afb76a6492167 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_3edecefd626cea34cda391ec49de2921 = $(`<div id="html_3edecefd626cea34cda391ec49de2921" style="width: 100.0%; height: 100.0%;">     <b>EAST VIEW HEALTHCARE</b><br>     Type: SNF<br>     Beds: 125<br>     Provider ID: 676081<br>     Rate: nan<br>     </div>`)[0];
+                popup_9107bb07cc2f4cc0f98afb76a6492167.setContent(html_3edecefd626cea34cda391ec49de2921);
+            
+        
+
+        circle_marker_9a8a94e5b6308dde5b2549a187c1f760.bindPopup(popup_9107bb07cc2f4cc0f98afb76a6492167)
+        ;
+
+        
+    
+    
+            circle_marker_9a8a94e5b6308dde5b2549a187c1f760.bindTooltip(
+                `<div>
+                     EAST VIEW HEALTHCARE (125 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_1b2f95962bd3f1a982dee7bc2e88838d = L.circleMarker(
+                [29.8628, -95.459],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 9.6, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_030bf044971c6d45509cc72f64cf273e);
+        
+    
+        var popup_5b9c91f22ecc1e8afb9a83d0a17d3dc7 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_43b5679463c6cc9998343eef423a54fe = $(`<div id="html_43b5679463c6cc9998343eef423a54fe" style="width: 100.0%; height: 100.0%;">     <b>HOUSTON HEIGHTS NURSING AND REHABILITATION CENTER</b><br>     Type: SNF<br>     Beds: 120<br>     Provider ID: 676337<br>     Rate: nan<br>     </div>`)[0];
+                popup_5b9c91f22ecc1e8afb9a83d0a17d3dc7.setContent(html_43b5679463c6cc9998343eef423a54fe);
+            
+        
+
+        circle_marker_1b2f95962bd3f1a982dee7bc2e88838d.bindPopup(popup_5b9c91f22ecc1e8afb9a83d0a17d3dc7)
+        ;
+
+        
+    
+    
+            circle_marker_1b2f95962bd3f1a982dee7bc2e88838d.bindTooltip(
+                `<div>
+                     HOUSTON HEIGHTS NURSING AND REHABILITATION CENTER (120 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_238198a76fa59372f5eb7f022e47e0a7 = L.circleMarker(
+                [29.9694, -95.543],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7.84, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_030bf044971c6d45509cc72f64cf273e);
+        
+    
+        var popup_b83af5aee1ade28fc4ff500017795753 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_ba5d2e687edfc4d07a992c4ad5584e8f = $(`<div id="html_ba5d2e687edfc4d07a992c4ad5584e8f" style="width: 100.0%; height: 100.0%;">     <b>CHAMPIONS HEALTHCARE AT WILLOWBROOK</b><br>     Type: SNF<br>     Beds: 98<br>     Provider ID: 676236<br>     Rate: nan<br>     </div>`)[0];
+                popup_b83af5aee1ade28fc4ff500017795753.setContent(html_ba5d2e687edfc4d07a992c4ad5584e8f);
+            
+        
+
+        circle_marker_238198a76fa59372f5eb7f022e47e0a7.bindPopup(popup_b83af5aee1ade28fc4ff500017795753)
+        ;
+
+        
+    
+    
+            circle_marker_238198a76fa59372f5eb7f022e47e0a7.bindTooltip(
+                `<div>
+                     CHAMPIONS HEALTHCARE AT WILLOWBROOK (98 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_207750dda7f6657d30d498de409e6e76 = L.circleMarker(
+                [29.9642, -95.558],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 9.92, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_030bf044971c6d45509cc72f64cf273e);
+        
+    
+        var popup_48816aef73fddcbb270a4472d108d7c9 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_30babfb46a6f1f24a4307e319e3f604f = $(`<div id="html_30babfb46a6f1f24a4307e319e3f604f" style="width: 100.0%; height: 100.0%;">     <b>MISTY WILLOW HEALTHCARE AND REHABILITATION CENTER</b><br>     Type: SNF<br>     Beds: 124<br>     Provider ID: 676251<br>     Rate: nan<br>     </div>`)[0];
+                popup_48816aef73fddcbb270a4472d108d7c9.setContent(html_30babfb46a6f1f24a4307e319e3f604f);
+            
+        
+
+        circle_marker_207750dda7f6657d30d498de409e6e76.bindPopup(popup_48816aef73fddcbb270a4472d108d7c9)
+        ;
+
+        
+    
+    
+            circle_marker_207750dda7f6657d30d498de409e6e76.bindTooltip(
+                `<div>
+                     MISTY WILLOW HEALTHCARE AND REHABILITATION CENTER (124 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_8a10a40cd1d30fd2e5b7e676cd0b3074 = L.circleMarker(
+                [29.9669, -95.564],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5.6000000000000005, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_030bf044971c6d45509cc72f64cf273e);
+        
+    
+        var popup_379160a449518594a07fdb31e49dbb48 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_acb8eec4b15732dfcaff81dc2f85639d = $(`<div id="html_acb8eec4b15732dfcaff81dc2f85639d" style="width: 100.0%; height: 100.0%;">     <b>NORTH HOUSTON TRANSITIONAL CARE</b><br>     Type: SNF<br>     Beds: 70<br>     Provider ID: 676434<br>     Rate: nan<br>     </div>`)[0];
+                popup_379160a449518594a07fdb31e49dbb48.setContent(html_acb8eec4b15732dfcaff81dc2f85639d);
+            
+        
+
+        circle_marker_8a10a40cd1d30fd2e5b7e676cd0b3074.bindPopup(popup_379160a449518594a07fdb31e49dbb48)
+        ;
+
+        
+    
+    
+            circle_marker_8a10a40cd1d30fd2e5b7e676cd0b3074.bindTooltip(
+                `<div>
+                     NORTH HOUSTON TRANSITIONAL CARE (70 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_e277307453f354436f393753c1a28a0f = L.circleMarker(
+                [30.2812, -95.466],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 10.0, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_030bf044971c6d45509cc72f64cf273e);
+        
+    
+        var popup_44838820492053c00dd79e58e8400cb7 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_df44fa76bd69dba2f7a47bef9bc0e262 = $(`<div id="html_df44fa76bd69dba2f7a47bef9bc0e262" style="width: 100.0%; height: 100.0%;">     <b>PARK MANOR OF CONROE</b><br>     Type: SNF<br>     Beds: 125<br>     Provider ID: 675894<br>     Rate: nan<br>     </div>`)[0];
+                popup_44838820492053c00dd79e58e8400cb7.setContent(html_df44fa76bd69dba2f7a47bef9bc0e262);
+            
+        
+
+        circle_marker_e277307453f354436f393753c1a28a0f.bindPopup(popup_44838820492053c00dd79e58e8400cb7)
+        ;
+
+        
+    
+    
+            circle_marker_e277307453f354436f393753c1a28a0f.bindTooltip(
+                `<div>
+                     PARK MANOR OF CONROE (125 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_12229be899c5283aebc3a8a3e3cc1e05 = L.circleMarker(
+                [30.0547497, -95.2504893],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_030bf044971c6d45509cc72f64cf273e);
+        
+    
+        var popup_bc6a6eb28e388d24e541e2208dc8abc5 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_946304e86693f31b172dc6d3ac18db82 = $(`<div id="html_946304e86693f31b172dc6d3ac18db82" style="width: 100.0%; height: 100.0%;">     <b>ELITE HOSPITAL KINGWOOD</b><br>     Type: ACH<br>     Beds: 6<br>     Provider ID: 670285<br>     Rate: nan<br>     </div>`)[0];
+                popup_bc6a6eb28e388d24e541e2208dc8abc5.setContent(html_946304e86693f31b172dc6d3ac18db82);
+            
+        
+
+        circle_marker_12229be899c5283aebc3a8a3e3cc1e05.bindPopup(popup_bc6a6eb28e388d24e541e2208dc8abc5)
+        ;
+
+        
+    
+    
+            circle_marker_12229be899c5283aebc3a8a3e3cc1e05.bindTooltip(
+                `<div>
+                     ELITE HOSPITAL KINGWOOD (6 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_fb3d6374edd1e095c91d953854dff936 = L.circleMarker(
+                [30.0480859, -95.255059],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 20, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_030bf044971c6d45509cc72f64cf273e);
+        
+    
+        var popup_d5aa15c04c2890844294b92f2799b8ee = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_7258492bfe05a7a56cae8c6fc3197292 = $(`<div id="html_7258492bfe05a7a56cae8c6fc3197292" style="width: 100.0%; height: 100.0%;">     <b>HCA HOUSTON HEALTHCARE KINGWOOD</b><br>     Type: ACH<br>     Beds: 611<br>     Provider ID: 450775<br>     Rate: nan<br>     </div>`)[0];
+                popup_d5aa15c04c2890844294b92f2799b8ee.setContent(html_7258492bfe05a7a56cae8c6fc3197292);
+            
+        
+
+        circle_marker_fb3d6374edd1e095c91d953854dff936.bindPopup(popup_d5aa15c04c2890844294b92f2799b8ee)
+        ;
+
+        
+    
+    
+            circle_marker_fb3d6374edd1e095c91d953854dff936.bindTooltip(
+                `<div>
+                     HCA HOUSTON HEALTHCARE KINGWOOD (611 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_e702f46d3ec3558aef8f4cecc4179c8f = L.circleMarker(
+                [30.0478364, -95.2590578],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_030bf044971c6d45509cc72f64cf273e);
+        
+    
+        var popup_33b3e54b88e8e06bbe7ba90ed5905812 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_4cd68641d80f476934bb763c70e73831 = $(`<div id="html_4cd68641d80f476934bb763c70e73831" style="width: 100.0%; height: 100.0%;">     <b>MEMORIAL HERMANN SURGICAL HOSPITAL KINGWOOD</b><br>     Type: ACH<br>     Beds: 10<br>     Provider ID: 670005<br>     Rate: nan<br>     </div>`)[0];
+                popup_33b3e54b88e8e06bbe7ba90ed5905812.setContent(html_4cd68641d80f476934bb763c70e73831);
+            
+        
+
+        circle_marker_e702f46d3ec3558aef8f4cecc4179c8f.bindPopup(popup_33b3e54b88e8e06bbe7ba90ed5905812)
+        ;
+
+        
+    
+    
+            circle_marker_e702f46d3ec3558aef8f4cecc4179c8f.bindTooltip(
+                `<div>
+                     MEMORIAL HERMANN SURGICAL HOSPITAL KINGWOOD (10 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_4203e9a935c88f4b99722519eaa8f0be = L.circleMarker(
+                [30.0445479, -95.2298544],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 9.28, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_030bf044971c6d45509cc72f64cf273e);
+        
+    
+        var popup_f75d78b8598ce38f91f0bffa609e05cb = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_ee6d8e57cf1d69bb801ca19a942ecc7a = $(`<div id="html_ee6d8e57cf1d69bb801ca19a942ecc7a" style="width: 100.0%; height: 100.0%;">     <b>KINGWOOD PINES HOSPITAL</b><br>     Type: ACH<br>     Beds: 116<br>     Provider ID: 454103<br>     Rate: nan<br>     </div>`)[0];
+                popup_f75d78b8598ce38f91f0bffa609e05cb.setContent(html_ee6d8e57cf1d69bb801ca19a942ecc7a);
+            
+        
+
+        circle_marker_4203e9a935c88f4b99722519eaa8f0be.bindPopup(popup_f75d78b8598ce38f91f0bffa609e05cb)
+        ;
+
+        
+    
+    
+            circle_marker_4203e9a935c88f4b99722519eaa8f0be.bindTooltip(
+                `<div>
+                     KINGWOOD PINES HOSPITAL (116 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_832abcdc2a9ebd85f3b14022e8815bd0 = L.circleMarker(
+                [30.0048776, -95.2525293],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_030bf044971c6d45509cc72f64cf273e);
+        
+    
+        var popup_283a1ea916752e1f636ccc7905a4a25a = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_f172914c488fab49c380db4edd6e035f = $(`<div id="html_f172914c488fab49c380db4edd6e035f" style="width: 100.0%; height: 100.0%;">     <b>TOWNSEN MEMORIAL HOSPITAL</b><br>     Type: ACH<br>     Beds: 5<br>     Provider ID: 670266<br>     Rate: nan<br>     </div>`)[0];
+                popup_283a1ea916752e1f636ccc7905a4a25a.setContent(html_f172914c488fab49c380db4edd6e035f);
+            
+        
+
+        circle_marker_832abcdc2a9ebd85f3b14022e8815bd0.bindPopup(popup_283a1ea916752e1f636ccc7905a4a25a)
+        ;
+
+        
+    
+    
+            circle_marker_832abcdc2a9ebd85f3b14022e8815bd0.bindTooltip(
+                `<div>
+                     TOWNSEN MEMORIAL HOSPITAL (5 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_6175674443a1476640e76f330426bd48 = L.circleMarker(
+                [30.0064142, -95.2895073],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_030bf044971c6d45509cc72f64cf273e);
+        
+    
+        var popup_bcd6588fa809d8fe4369f69f49c6d689 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_80239af219e73b689ec229f1f61975f6 = $(`<div id="html_80239af219e73b689ec229f1f61975f6" style="width: 100.0%; height: 100.0%;">     <b>CLEVELAND EMERGENCY HOSPITAL</b><br>     Type: ACH<br>     Beds: 16<br>     Provider ID: 670115<br>     Rate: nan<br>     </div>`)[0];
+                popup_bcd6588fa809d8fe4369f69f49c6d689.setContent(html_80239af219e73b689ec229f1f61975f6);
+            
+        
+
+        circle_marker_6175674443a1476640e76f330426bd48.bindPopup(popup_bcd6588fa809d8fe4369f69f49c6d689)
+        ;
+
+        
+    
+    
+            circle_marker_6175674443a1476640e76f330426bd48.bindTooltip(
+                `<div>
+                     CLEVELAND EMERGENCY HOSPITAL (16 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_f0c138480c804b8fdc730534b2605b08 = L.circleMarker(
+                [29.9943891, -95.2758126],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 20, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_030bf044971c6d45509cc72f64cf273e);
+        
+    
+        var popup_2d9d9e51baf0b8c9d351348cca498f30 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_5cf227bc11a305398ff9712fe81d9dc6 = $(`<div id="html_5cf227bc11a305398ff9712fe81d9dc6" style="width: 100.0%; height: 100.0%;">     <b>MEMORIAL HERMANN NORTHEAST HOSPITAL</b><br>     Type: ACH<br>     Beds: 250<br>     Provider ID: 450684<br>     Rate: nan<br>     </div>`)[0];
+                popup_2d9d9e51baf0b8c9d351348cca498f30.setContent(html_5cf227bc11a305398ff9712fe81d9dc6);
+            
+        
+
+        circle_marker_f0c138480c804b8fdc730534b2605b08.bindPopup(popup_2d9d9e51baf0b8c9d351348cca498f30)
+        ;
+
+        
+    
+    
+            circle_marker_f0c138480c804b8fdc730534b2605b08.bindTooltip(
+                `<div>
+                     MEMORIAL HERMANN NORTHEAST HOSPITAL (250 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_78563f9a2b3b4e3c0299eb87e12d231e = L.circleMarker(
+                [30.0204601, -95.4425602],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 20, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_030bf044971c6d45509cc72f64cf273e);
+        
+    
+        var popup_df26d71c30afe52719e6320f8351737d = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_19301324745fc4f8cfa94e1a6f3d2615 = $(`<div id="html_19301324745fc4f8cfa94e1a6f3d2615" style="width: 100.0%; height: 100.0%;">     <b>HCA HOUSTON HEALTHCARE NORTHWEST</b><br>     Type: ACH<br>     Beds: 322<br>     Provider ID: 450638<br>     Rate: nan<br>     </div>`)[0];
+                popup_df26d71c30afe52719e6320f8351737d.setContent(html_19301324745fc4f8cfa94e1a6f3d2615);
+            
+        
+
+        circle_marker_78563f9a2b3b4e3c0299eb87e12d231e.bindPopup(popup_df26d71c30afe52719e6320f8351737d)
+        ;
+
+        
+    
+    
+            circle_marker_78563f9a2b3b4e3c0299eb87e12d231e.bindTooltip(
+                `<div>
+                     HCA HOUSTON HEALTHCARE NORTHWEST (322 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_f3036475e20355c34d35efa0130cda42 = L.circleMarker(
+                [30.0182428, -95.4435391],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_030bf044971c6d45509cc72f64cf273e);
+        
+    
+        var popup_6b335bc26f791520721250f300456368 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_84f9ba10af8bce83f5da362a877b3419 = $(`<div id="html_84f9ba10af8bce83f5da362a877b3419" style="width: 100.0%; height: 100.0%;">     <b>TOPS SURGICAL SPECIALTY HOSPITAL</b><br>     Type: ACH<br>     Beds: 15<br>     Provider ID: 450774<br>     Rate: nan<br>     </div>`)[0];
+                popup_6b335bc26f791520721250f300456368.setContent(html_84f9ba10af8bce83f5da362a877b3419);
+            
+        
+
+        circle_marker_f3036475e20355c34d35efa0130cda42.bindPopup(popup_6b335bc26f791520721250f300456368)
+        ;
+
+        
+    
+    
+            circle_marker_f3036475e20355c34d35efa0130cda42.bindTooltip(
+                `<div>
+                     TOPS SURGICAL SPECIALTY HOSPITAL (15 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_3a85a0c7110a3df006a06734bc636de3 = L.circleMarker(
+                [30.0245194, -95.4453497],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 10.24, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_030bf044971c6d45509cc72f64cf273e);
+        
+    
+        var popup_8035973414c83dc80c27266e649faffa = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_825fdff6c2f4ff6a620bd7b5ddd7d44c = $(`<div id="html_825fdff6c2f4ff6a620bd7b5ddd7d44c" style="width: 100.0%; height: 100.0%;">     <b>CYPRESS CREEK HOSPITAL</b><br>     Type: ACH<br>     Beds: 128<br>     Provider ID: 454108<br>     Rate: nan<br>     </div>`)[0];
+                popup_8035973414c83dc80c27266e649faffa.setContent(html_825fdff6c2f4ff6a620bd7b5ddd7d44c);
+            
+        
+
+        circle_marker_3a85a0c7110a3df006a06734bc636de3.bindPopup(popup_8035973414c83dc80c27266e649faffa)
+        ;
+
+        
+    
+    
+            circle_marker_3a85a0c7110a3df006a06734bc636de3.bindTooltip(
+                `<div>
+                     CYPRESS CREEK HOSPITAL (128 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_aab1cb203d29d36342a41e27ae6da124 = L.circleMarker(
+                [30.1309314, -95.4430982],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_030bf044971c6d45509cc72f64cf273e);
+        
+    
+        var popup_3fd5c9b4920e6433813d0146559acbaf = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_30f5f90cb95f766a6afe6765332b932c = $(`<div id="html_30f5f90cb95f766a6afe6765332b932c" style="width: 100.0%; height: 100.0%;">     <b>THE WOODLANDS SPECIALTY HOSPITAL</b><br>     Type: ACH<br>     Beds: 6<br>     Provider ID: 670267<br>     Rate: nan<br>     </div>`)[0];
+                popup_3fd5c9b4920e6433813d0146559acbaf.setContent(html_30f5f90cb95f766a6afe6765332b932c);
+            
+        
+
+        circle_marker_aab1cb203d29d36342a41e27ae6da124.bindPopup(popup_3fd5c9b4920e6433813d0146559acbaf)
+        ;
+
+        
+    
+    
+            circle_marker_aab1cb203d29d36342a41e27ae6da124.bindTooltip(
+                `<div>
+                     THE WOODLANDS SPECIALTY HOSPITAL (6 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_ffabcece57f695e735b21b6c9b177651 = L.circleMarker(
+                [30.2034937, -95.4573865],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_030bf044971c6d45509cc72f64cf273e);
+        
+    
+        var popup_3cef95d45e58f2835ae743c0e0c8045e = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_65f6fa20dda00740a3676b4abeed8abd = $(`<div id="html_65f6fa20dda00740a3676b4abeed8abd" style="width: 100.0%; height: 100.0%;">     <b>CHI ST LUKES LAKESIDE HOSPITAL</b><br>     Type: ACH<br>     Beds: 30<br>     Provider ID: 670059<br>     Rate: nan<br>     </div>`)[0];
+                popup_3cef95d45e58f2835ae743c0e0c8045e.setContent(html_65f6fa20dda00740a3676b4abeed8abd);
+            
+        
+
+        circle_marker_ffabcece57f695e735b21b6c9b177651.bindPopup(popup_3cef95d45e58f2835ae743c0e0c8045e)
+        ;
+
+        
+    
+    
+            circle_marker_ffabcece57f695e735b21b6c9b177651.bindTooltip(
+                `<div>
+                     CHI ST LUKES LAKESIDE HOSPITAL (30 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_6a5707b8e57c919d6f0ccbfd8e39ab8c = L.circleMarker(
+                [30.205401, -95.4585558],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 19.6, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_030bf044971c6d45509cc72f64cf273e);
+        
+    
+        var popup_fcfdfeb4bcb342253808a29352dcf534 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_ffcc6db9d4f61130d38f76884795b269 = $(`<div id="html_ffcc6db9d4f61130d38f76884795b269" style="width: 100.0%; height: 100.0%;">     <b>ST LUKE'S THE WOODLANDS HOSPITAL</b><br>     Type: ACH<br>     Beds: 245<br>     Provider ID: 450862<br>     Rate: nan<br>     </div>`)[0];
+                popup_fcfdfeb4bcb342253808a29352dcf534.setContent(html_ffcc6db9d4f61130d38f76884795b269);
+            
+        
+
+        circle_marker_6a5707b8e57c919d6f0ccbfd8e39ab8c.bindPopup(popup_fcfdfeb4bcb342253808a29352dcf534)
+        ;
+
+        
+    
+    
+            circle_marker_6a5707b8e57c919d6f0ccbfd8e39ab8c.bindTooltip(
+                `<div>
+                     ST LUKE'S THE WOODLANDS HOSPITAL (245 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_3d9efff0561b19bfb6e3fa91d3379f13 = L.circleMarker(
+                [30.2301733, -95.4581326],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 20, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_030bf044971c6d45509cc72f64cf273e);
+        
+    
+        var popup_08b5f8736fa05da63620c85daa7f51a9 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_e606ad0626592af3334c83112ce95672 = $(`<div id="html_e606ad0626592af3334c83112ce95672" style="width: 100.0%; height: 100.0%;">     <b>HOUSTON METHODIST THE WOODLANDS HOSPITAL</b><br>     Type: ACH<br>     Beds: 292<br>     Provider ID: 670122<br>     Rate: nan<br>     </div>`)[0];
+                popup_08b5f8736fa05da63620c85daa7f51a9.setContent(html_e606ad0626592af3334c83112ce95672);
+            
+        
+
+        circle_marker_3d9efff0561b19bfb6e3fa91d3379f13.bindPopup(popup_08b5f8736fa05da63620c85daa7f51a9)
+        ;
+
+        
+    
+    
+            circle_marker_3d9efff0561b19bfb6e3fa91d3379f13.bindTooltip(
+                `<div>
+                     HOUSTON METHODIST THE WOODLANDS HOSPITAL (292 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_357e203babe5426d1796b2f35804cce9 = L.circleMarker(
+                [29.8078644, -95.1703344],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_030bf044971c6d45509cc72f64cf273e);
+        
+    
+        var popup_66eab04bce0ead9c70369d2c9738ae52 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_7332ba6802d685fe8ae328cefef9db31 = $(`<div id="html_7332ba6802d685fe8ae328cefef9db31" style="width: 100.0%; height: 100.0%;">     <b>EAST HOUSTON MEDICAL CENTER</b><br>     Type: ACH<br>     Beds: 4<br>     Provider ID: 670320<br>     Rate: nan<br>     </div>`)[0];
+                popup_66eab04bce0ead9c70369d2c9738ae52.setContent(html_7332ba6802d685fe8ae328cefef9db31);
+            
+        
+
+        circle_marker_357e203babe5426d1796b2f35804cce9.bindPopup(popup_66eab04bce0ead9c70369d2c9738ae52)
+        ;
+
+        
+    
+    
+            circle_marker_357e203babe5426d1796b2f35804cce9.bindTooltip(
+                `<div>
+                     EAST HOUSTON MEDICAL CENTER (4 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_bbaf61cd7f131d22cdada897f2578974 = L.circleMarker(
+                [29.9672927, -95.5507625],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 20, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_030bf044971c6d45509cc72f64cf273e);
+        
+    
+        var popup_f15426e0c6b675916aa973ac7f1fed18 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_6cacc46dcaf416ad24bf544230f735b3 = $(`<div id="html_6cacc46dcaf416ad24bf544230f735b3" style="width: 100.0%; height: 100.0%;">     <b>HOUSTON METHODIST WILLOWBROOK HOSPITAL</b><br>     Type: ACH<br>     Beds: 346<br>     Provider ID: 450844<br>     Rate: nan<br>     </div>`)[0];
+                popup_f15426e0c6b675916aa973ac7f1fed18.setContent(html_6cacc46dcaf416ad24bf544230f735b3);
+            
+        
+
+        circle_marker_bbaf61cd7f131d22cdada897f2578974.bindPopup(popup_f15426e0c6b675916aa973ac7f1fed18)
+        ;
+
+        
+    
+    
+            circle_marker_bbaf61cd7f131d22cdada897f2578974.bindTooltip(
+                `<div>
+                     HOUSTON METHODIST WILLOWBROOK HOSPITAL (346 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_9a630bfc9ad676692f6b049175623010 = L.circleMarker(
+                [29.9890974, -95.5674613],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8.16, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_030bf044971c6d45509cc72f64cf273e);
+        
+    
+        var popup_ee222d27cdf42d7b9fd45d3eeb7c06e8 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_322a776947e3e412bdbd4ca3c6d9bb7f = $(`<div id="html_322a776947e3e412bdbd4ca3c6d9bb7f" style="width: 100.0%; height: 100.0%;">     <b>ST LUKE'S HOSPITAL AT THE VINTAGE</b><br>     Type: ACH<br>     Beds: 102<br>     Provider ID: 670075<br>     Rate: nan<br>     </div>`)[0];
+                popup_ee222d27cdf42d7b9fd45d3eeb7c06e8.setContent(html_322a776947e3e412bdbd4ca3c6d9bb7f);
+            
+        
+
+        circle_marker_9a630bfc9ad676692f6b049175623010.bindPopup(popup_ee222d27cdf42d7b9fd45d3eeb7c06e8)
+        ;
+
+        
+    
+    
+            circle_marker_9a630bfc9ad676692f6b049175623010.bindTooltip(
+                `<div>
+                     ST LUKE'S HOSPITAL AT THE VINTAGE (102 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_59c7a57ff83fe7c42cc54303f3a5125a = L.circleMarker(
+                [32.7561, -97.136],
+                {"bubblingMouseEvents": true, "color": "gray", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "gray", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4.32, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_030bf044971c6d45509cc72f64cf273e);
+        
+    
+        var popup_501e556c94ba66c807570fb1aeb77df8 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_6b12b8a98134c7b3b81bb09beb2845ce = $(`<div id="html_6b12b8a98134c7b3b81bb09beb2845ce" style="width: 100.0%; height: 100.0%;">     <b>PH OPS OF ARLINGTON LLC</b><br>     Type: PUREHEALTH<br>     Beds: 54<br>     Provider ID: 676407<br>     Rate: nan<br>     </div>`)[0];
+                popup_501e556c94ba66c807570fb1aeb77df8.setContent(html_6b12b8a98134c7b3b81bb09beb2845ce);
+            
+        
+
+        circle_marker_59c7a57ff83fe7c42cc54303f3a5125a.bindPopup(popup_501e556c94ba66c807570fb1aeb77df8)
+        ;
+
+        
+    
+    
+            circle_marker_59c7a57ff83fe7c42cc54303f3a5125a.bindTooltip(
+                `<div>
+                     PH OPS OF ARLINGTON LLC (54 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_2e3b09d15a6766572c652863af0310f8 = L.circleMarker(
+                [30.2821, -95.474],
+                {"bubblingMouseEvents": true, "color": "gray", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "gray", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 12.0, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_030bf044971c6d45509cc72f64cf273e);
+        
+    
+        var popup_47b9dddc80206580ba465fd197a4406d = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_f124b6af828d64825d2b211a75c8f4f6 = $(`<div id="html_f124b6af828d64825d2b211a75c8f4f6" style="width: 100.0%; height: 100.0%;">     <b>PH OPS OF CONROE LLC</b><br>     Type: PUREHEALTH<br>     Beds: 150<br>     Provider ID: 676420<br>     Rate: nan<br>     </div>`)[0];
+                popup_47b9dddc80206580ba465fd197a4406d.setContent(html_f124b6af828d64825d2b211a75c8f4f6);
+            
+        
+
+        circle_marker_2e3b09d15a6766572c652863af0310f8.bindPopup(popup_47b9dddc80206580ba465fd197a4406d)
+        ;
+
+        
+    
+    
+            circle_marker_2e3b09d15a6766572c652863af0310f8.bindTooltip(
+                `<div>
+                     PH OPS OF CONROE LLC (150 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_7fd5136c112ffdebcc400e08d3a5c8eb = L.circleMarker(
+                [32.8766, -96.751],
+                {"bubblingMouseEvents": true, "color": "gray", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "gray", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_030bf044971c6d45509cc72f64cf273e);
+        
+    
+        var popup_df8f54d806c1a0406b9158b148e4639c = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_1c1197f1320e97b5486715c8b5a2f488 = $(`<div id="html_1c1197f1320e97b5486715c8b5a2f488" style="width: 100.0%; height: 100.0%;">     <b>PH OPS OF DALLAS LLC</b><br>     Type: PUREHEALTH<br>     Beds: 49<br>     Provider ID: 676410<br>     Rate: nan<br>     </div>`)[0];
+                popup_df8f54d806c1a0406b9158b148e4639c.setContent(html_1c1197f1320e97b5486715c8b5a2f488);
+            
+        
+
+        circle_marker_7fd5136c112ffdebcc400e08d3a5c8eb.bindPopup(popup_df8f54d806c1a0406b9158b148e4639c)
+        ;
+
+        
+    
+    
+            circle_marker_7fd5136c112ffdebcc400e08d3a5c8eb.bindTooltip(
+                `<div>
+                     PH OPS OF DALLAS LLC (49 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_b15bcc6a0ab54279357d85ef0d078494 = L.circleMarker(
+                [29.3866, -94.987],
+                {"bubblingMouseEvents": true, "color": "gray", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "gray", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 10.72, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_030bf044971c6d45509cc72f64cf273e);
+        
+    
+        var popup_2b3d3d33b68b55890bb0dd85ae88e88d = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_ddd8d60fa61e56f4c499406532fe4af0 = $(`<div id="html_ddd8d60fa61e56f4c499406532fe4af0" style="width: 100.0%; height: 100.0%;">     <b>THE SHOAL</b><br>     Type: PUREHEALTH<br>     Beds: 134<br>     Provider ID: 676360<br>     Rate: nan<br>     </div>`)[0];
+                popup_2b3d3d33b68b55890bb0dd85ae88e88d.setContent(html_ddd8d60fa61e56f4c499406532fe4af0);
+            
+        
+
+        circle_marker_b15bcc6a0ab54279357d85ef0d078494.bindPopup(popup_2b3d3d33b68b55890bb0dd85ae88e88d)
+        ;
+
+        
+    
+    
+            circle_marker_b15bcc6a0ab54279357d85ef0d078494.bindTooltip(
+                `<div>
+                     THE SHOAL (134 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_ec1134bea73b866d4c73aa7c26a2bbb0 = L.circleMarker(
+                [35.0188, -106.72],
+                {"bubblingMouseEvents": true, "color": "gray", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "gray", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 9.6, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_030bf044971c6d45509cc72f64cf273e);
+        
+    
+        var popup_e6c479fdaa20e6579762d5eef9828fb5 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_20e7ff7941c9c016347532c9dae83ad4 = $(`<div id="html_20e7ff7941c9c016347532c9dae83ad4" style="width: 100.0%; height: 100.0%;">     <b>PH OPS OF LAS ESTANCIAS LLC</b><br>     Type: PUREHEALTH<br>     Beds: 120<br>     Provider ID: 325126<br>     Rate: nan<br>     </div>`)[0];
+                popup_e6c479fdaa20e6579762d5eef9828fb5.setContent(html_20e7ff7941c9c016347532c9dae83ad4);
+            
+        
+
+        circle_marker_ec1134bea73b866d4c73aa7c26a2bbb0.bindPopup(popup_e6c479fdaa20e6579762d5eef9828fb5)
+        ;
+
+        
+    
+    
+            circle_marker_ec1134bea73b866d4c73aa7c26a2bbb0.bindTooltip(
+                `<div>
+                     PH OPS OF LAS ESTANCIAS LLC (120 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_277e82b6341a0994d7ca3f408fdc03db = L.circleMarker(
+                [35.0836, -106.57],
+                {"bubblingMouseEvents": true, "color": "gray", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "gray", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 20, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_030bf044971c6d45509cc72f64cf273e);
+        
+    
+        var popup_e2ff46c5441d2256bdebe542fa385fbb = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_1dfd0aca9ad5c7b2ddddabb86bd00a99 = $(`<div id="html_1dfd0aca9ad5c7b2ddddabb86bd00a99" style="width: 100.0%; height: 100.0%;">     <b>PRINCETON HEALTH AND REHABILITATION</b><br>     Type: PUREHEALTH<br>     Beds: 369<br>     Provider ID: 325045<br>     Rate: nan<br>     </div>`)[0];
+                popup_e2ff46c5441d2256bdebe542fa385fbb.setContent(html_1dfd0aca9ad5c7b2ddddabb86bd00a99);
+            
+        
+
+        circle_marker_277e82b6341a0994d7ca3f408fdc03db.bindPopup(popup_e2ff46c5441d2256bdebe542fa385fbb)
+        ;
+
+        
+    
+    
+            circle_marker_277e82b6341a0994d7ca3f408fdc03db.bindTooltip(
+                `<div>
+                     PRINCETON HEALTH AND REHABILITATION (369 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_5b7e646bc11294425dde27d2b021767a = L.circleMarker(
+                [33.1736, -97.1336],
+                {"bubblingMouseEvents": true, "color": "gray", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "gray", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 9.36, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_030bf044971c6d45509cc72f64cf273e);
+        
+    
+        var popup_1f2b308dc51c21cc7bf1ab80d9c87f2e = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_d0be1ba1eb577eeb1133bd4eb21ed71a = $(`<div id="html_d0be1ba1eb577eeb1133bd4eb21ed71a" style="width: 100.0%; height: 100.0%;">     <b>LAKE FOREST VILLAGE BY PUREHEALTH</b><br>     Type: PUREHEALTH<br>     Beds: 117<br>     Provider ID: 455685<br>     Rate: nan<br>     </div>`)[0];
+                popup_1f2b308dc51c21cc7bf1ab80d9c87f2e.setContent(html_d0be1ba1eb577eeb1133bd4eb21ed71a);
+            
+        
+
+        circle_marker_5b7e646bc11294425dde27d2b021767a.bindPopup(popup_1f2b308dc51c21cc7bf1ab80d9c87f2e)
+        ;
+
+        
+    
+    
+            circle_marker_5b7e646bc11294425dde27d2b021767a.bindTooltip(
+                `<div>
+                     LAKE FOREST VILLAGE BY PUREHEALTH (117 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_12296217c44ab311281332a289d4c089 = L.circleMarker(
+                [35.0855, -106.59],
+                {"bubblingMouseEvents": true, "color": "gray", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "gray", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 9.36, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_030bf044971c6d45509cc72f64cf273e);
+        
+    
+        var popup_d902b6692d555f07d2340efa3b6da8a8 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_a37c2339b6f525f4c2ddea77aaeec799 = $(`<div id="html_a37c2339b6f525f4c2ddea77aaeec799" style="width: 100.0%; height: 100.0%;">     <b>MANZANO DEL SOL BY PUREHEALTH</b><br>     Type: PUREHEALTH<br>     Beds: 117<br>     Provider ID: 325074<br>     Rate: nan<br>     </div>`)[0];
+                popup_d902b6692d555f07d2340efa3b6da8a8.setContent(html_a37c2339b6f525f4c2ddea77aaeec799);
+            
+        
+
+        circle_marker_12296217c44ab311281332a289d4c089.bindPopup(popup_d902b6692d555f07d2340efa3b6da8a8)
+        ;
+
+        
+    
+    
+            circle_marker_12296217c44ab311281332a289d4c089.bindTooltip(
+                `<div>
+                     MANZANO DEL SOL BY PUREHEALTH (117 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_7cbd578f16dc3370cc11799606c998f4 = L.circleMarker(
+                [33.2372, -97.144],
+                {"bubblingMouseEvents": true, "color": "gray", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "gray", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7.04, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_030bf044971c6d45509cc72f64cf273e);
+        
+    
+        var popup_4595ae6c375c03daadd6af036a74df5c = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_8857aa1cab3eaad49acd93da3b5f1edc = $(`<div id="html_8857aa1cab3eaad49acd93da3b5f1edc" style="width: 100.0%; height: 100.0%;">     <b>DENTON VILLAGE BY PUREHEALTH</b><br>     Type: PUREHEALTH<br>     Beds: 88<br>     Provider ID: 455627<br>     Rate: nan<br>     </div>`)[0];
+                popup_4595ae6c375c03daadd6af036a74df5c.setContent(html_8857aa1cab3eaad49acd93da3b5f1edc);
+            
+        
+
+        circle_marker_7cbd578f16dc3370cc11799606c998f4.bindPopup(popup_4595ae6c375c03daadd6af036a74df5c)
+        ;
+
+        
+    
+    
+            circle_marker_7cbd578f16dc3370cc11799606c998f4.bindTooltip(
+                `<div>
+                     DENTON VILLAGE BY PUREHEALTH (88 beds)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            marker_cluster_030bf044971c6d45509cc72f64cf273e.addTo(map_2b6e8dbf2137ae89b64c04e70ffdaa04);
+        
+    
+            var layer_control_cefa989730d3e9d14b81b394a57a8173_layers = {
+                base_layers : {
+                    "Light (Google-like)" : tile_layer_c5425b78bce26f4a2d8953ea1ea8b098,
+                    "Detailed" : tile_layer_fa3c1f7591ec0abd249a7311a8271c90,
+                    "Standard" : tile_layer_de0f189e199248d1a4f2537d3e981dbe,
+                    "Satellite" : tile_layer_bfa30b5fcc5979861330ac8f5db8cc24,
+                },
+                overlays :  {
+                    "macro_element_030bf044971c6d45509cc72f64cf273e" : marker_cluster_030bf044971c6d45509cc72f64cf273e,
+                },
+            };
+            let layer_control_cefa989730d3e9d14b81b394a57a8173 = L.control.layers(
+                layer_control_cefa989730d3e9d14b81b394a57a8173_layers.base_layers,
+                layer_control_cefa989730d3e9d14b81b394a57a8173_layers.overlays,
+                {
+  "position": "topright",
+  "collapsed": false,
+  "autoZIndex": true,
+}
+            ).addTo(map_2b6e8dbf2137ae89b64c04e70ffdaa04);
+
+        
+</script>
+</html>
