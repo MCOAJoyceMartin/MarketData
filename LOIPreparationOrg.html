@@ -1,0 +1,1420 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_66759b02f80468681cf8a3cbe7518368 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+
+            <style>html, body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            </style>
+
+            <style>#map {
+                position:absolute;
+                top:0;
+                bottom:0;
+                right:0;
+                left:0;
+                }
+            </style>
+
+            <script>
+                L_NO_TOUCH = false;
+                L_DISABLE_3D = false;
+            </script>
+
+        
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.1.0/leaflet.markercluster.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.1.0/MarkerCluster.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.1.0/MarkerCluster.Default.css"/>
+</head>
+<body>
+    
+    
+    <div style="
+        position: fixed;
+        bottom: 40px; left: 40px;
+        width: 200px;
+        background-color: white;
+        border: 2px solid gray;
+        z-index: 9999;
+        padding: 10px;
+        border-radius: 8px;
+        font-size: 13px;
+    ">
+    <b>Legend</b><br><br>
+    <span style="color:red;">●</span> SNF<br>
+    <span style="color:green;">●</span> ALF<br>
+    <span style="color:orange;">●</span> IL<br>
+    <span style="color:purple;">●</span> MC<br>
+    <span style="color:gray;">●</span> Other<br><br>
+    Bubble size = Beds
+    </div>
+    
+    
+    <div style="
+        position: fixed;
+        top: 20px; left: 50%;
+        transform: translateX(-50%);
+        background: white;
+        padding: 10px 20px;
+        border-radius: 8px;
+        font-weight: bold;
+        z-index: 9999;
+        font-size: 18px;
+    ">
+    Map for LOI Prepartion Orgs
+    </div>
+    
+    
+            <div class="folium-map" id="map_66759b02f80468681cf8a3cbe7518368" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_66759b02f80468681cf8a3cbe7518368 = L.map(
+                "map_66759b02f80468681cf8a3cbe7518368",
+                {
+                    center: [38.30841270555556, -80.42357705277779],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 10,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_741df39f49688d658cba14378bf3f05f = L.tileLayer(
+                "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 20,
+  "maxNativeZoom": 20,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"https://carto.com/attributions\"\u003eCARTO\u003c/a\u003e",
+  "subdomains": "abcd",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_741df39f49688d658cba14378bf3f05f.addTo(map_66759b02f80468681cf8a3cbe7518368);
+        
+    
+            var tile_layer_c55fcd14286a91f0d122bc961129e882 = L.tileLayer(
+                "https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 17,
+  "maxNativeZoom": 17,
+  "noWrap": false,
+  "attribution": "Map data: \u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors, \u003ca href=\"http://viewfinderpanoramas.org\"\u003eSRTM\u003c/a\u003e | Map style: \u0026copy; \u003ca href=\"https://opentopomap.org\"\u003eOpenTopoMap\u003c/a\u003e (\u003ca href=\"https://creativecommons.org/licenses/by-sa/3.0/\"\u003eCC-BY-SA\u003c/a\u003e)",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_c55fcd14286a91f0d122bc961129e882.addTo(map_66759b02f80468681cf8a3cbe7518368);
+        
+    
+            var tile_layer_11065ecbbb6ef7ce251566d68b95f46e = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 19,
+  "maxNativeZoom": 19,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_11065ecbbb6ef7ce251566d68b95f46e.addTo(map_66759b02f80468681cf8a3cbe7518368);
+        
+    
+            var tile_layer_14b5d41d2f9fd1442a030b20b9629ac7 = L.tileLayer(
+                "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+                {
+  "minZoom": 0,
+  "maxZoom": 18,
+  "maxNativeZoom": 18,
+  "noWrap": false,
+  "attribution": "Esri",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_14b5d41d2f9fd1442a030b20b9629ac7.addTo(map_66759b02f80468681cf8a3cbe7518368);
+        
+    
+            var marker_cluster_b9e42b98468257e29d0ee37b1820a4f2 = L.markerClusterGroup(
+                {
+}
+            );
+        
+    
+            var circle_marker_00fc0a91883881d9574bcc2d46bfdfd8 = L.circleMarker(
+                [37.2335, -79.972],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7.84, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_b9e42b98468257e29d0ee37b1820a4f2);
+        
+    
+        var popup_c71c3a81ce3ab6064ce3f73f9dd06e2d = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_99897520e924adaf3417221f58bce373 = $(`<div id="html_99897520e924adaf3417221f58bce373" style="width: 100.0%; height: 100.0%;">     <b>SOUTH ROANOKE NURSING AND REHABILITATION</b><br>     Type: SNF<br>     Beds: 98.0<br>     </div>`)[0];
+                popup_c71c3a81ce3ab6064ce3f73f9dd06e2d.setContent(html_99897520e924adaf3417221f58bce373);
+            
+        
+
+        circle_marker_00fc0a91883881d9574bcc2d46bfdfd8.bindPopup(popup_c71c3a81ce3ab6064ce3f73f9dd06e2d)
+        ;
+
+        
+    
+    
+            circle_marker_00fc0a91883881d9574bcc2d46bfdfd8.bindTooltip(
+                `<div>
+                     SOUTH ROANOKE NURSING AND REHABILITATION (SNF)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_d9d6f43ce1c8ad6c299703a557fbd4c7 = L.circleMarker(
+                [36.8754, -82.756],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 14.4, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_b9e42b98468257e29d0ee37b1820a4f2);
+        
+    
+        var popup_40d9e9ae2996e9e31a982ee00e3c381c = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_1d94571206074a9962936355694db9cd = $(`<div id="html_1d94571206074a9962936355694db9cd" style="width: 100.0%; height: 100.0%;">     <b>HERITAGE HALL BIG STONE GAP</b><br>     Type: SNF<br>     Beds: 180.0<br>     </div>`)[0];
+                popup_40d9e9ae2996e9e31a982ee00e3c381c.setContent(html_1d94571206074a9962936355694db9cd);
+            
+        
+
+        circle_marker_d9d6f43ce1c8ad6c299703a557fbd4c7.bindPopup(popup_40d9e9ae2996e9e31a982ee00e3c381c)
+        ;
+
+        
+    
+    
+            circle_marker_d9d6f43ce1c8ad6c299703a557fbd4c7.bindTooltip(
+                `<div>
+                     HERITAGE HALL BIG STONE GAP (SNF)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_f6519aa2c1d4da2d33b276d81e89ac2b = L.circleMarker(
+                [37.1258, -81.49],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 14.4, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_b9e42b98468257e29d0ee37b1820a4f2);
+        
+    
+        var popup_25b471f17d50c05b4e1155d96ff9bd91 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_1b8972c9686ed92267ae725ce5baf8ec = $(`<div id="html_1b8972c9686ed92267ae725ce5baf8ec" style="width: 100.0%; height: 100.0%;">     <b>HERITAGE HALL TAZEWELL</b><br>     Type: SNF<br>     Beds: 180.0<br>     </div>`)[0];
+                popup_25b471f17d50c05b4e1155d96ff9bd91.setContent(html_1b8972c9686ed92267ae725ce5baf8ec);
+            
+        
+
+        circle_marker_f6519aa2c1d4da2d33b276d81e89ac2b.bindPopup(popup_25b471f17d50c05b4e1155d96ff9bd91)
+        ;
+
+        
+    
+    
+            circle_marker_f6519aa2c1d4da2d33b276d81e89ac2b.bindTooltip(
+                `<div>
+                     HERITAGE HALL TAZEWELL (SNF)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_51d08651045c7ae6e336615fe7ebe5d9 = L.circleMarker(
+                [37.0442, -78.933],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4.8, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_b9e42b98468257e29d0ee37b1820a4f2);
+        
+    
+        var popup_124a7314d5e952eadf76b412874be71f = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_f8179fa2f2da8baaf8737bf3c30fcdc9 = $(`<div id="html_f8179fa2f2da8baaf8737bf3c30fcdc9" style="width: 100.0%; height: 100.0%;">     <b>HERITAGE HALL - BROOKNEAL</b><br>     Type: SNF<br>     Beds: 60.0<br>     </div>`)[0];
+                popup_124a7314d5e952eadf76b412874be71f.setContent(html_f8179fa2f2da8baaf8737bf3c30fcdc9);
+            
+        
+
+        circle_marker_51d08651045c7ae6e336615fe7ebe5d9.bindPopup(popup_124a7314d5e952eadf76b412874be71f)
+        ;
+
+        
+    
+    
+            circle_marker_51d08651045c7ae6e336615fe7ebe5d9.bindTooltip(
+                `<div>
+                     HERITAGE HALL - BROOKNEAL (SNF)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_881c2d49f62a629e5417e1972fbea297 = L.circleMarker(
+                [37.2963, -82.058],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 9.6, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_b9e42b98468257e29d0ee37b1820a4f2);
+        
+    
+        var popup_3dc8ba2e8b4b6dba9d3f66065685d6a5 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_d632d2b0d2954c05f2c4c91e926266f8 = $(`<div id="html_d632d2b0d2954c05f2c4c91e926266f8" style="width: 100.0%; height: 100.0%;">     <b>HERITAGE HALL GRUNDY</b><br>     Type: SNF<br>     Beds: 120.0<br>     </div>`)[0];
+                popup_3dc8ba2e8b4b6dba9d3f66065685d6a5.setContent(html_d632d2b0d2954c05f2c4c91e926266f8);
+            
+        
+
+        circle_marker_881c2d49f62a629e5417e1972fbea297.bindPopup(popup_3dc8ba2e8b4b6dba9d3f66065685d6a5)
+        ;
+
+        
+    
+    
+            circle_marker_881c2d49f62a629e5417e1972fbea297.bindTooltip(
+                `<div>
+                     HERITAGE HALL GRUNDY (SNF)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_e21db98b0d36069dc29df922b1b1dc24 = L.circleMarker(
+                [39.1204, -77.573],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 13.120000000000001, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_b9e42b98468257e29d0ee37b1820a4f2);
+        
+    
+        var popup_cff9f746e3596438eaf4a61368585577 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_a9163e33774a327e9c4a496b2e62a1d2 = $(`<div id="html_a9163e33774a327e9c4a496b2e62a1d2" style="width: 100.0%; height: 100.0%;">     <b>HERITAGE HALL-LEESBURG</b><br>     Type: SNF<br>     Beds: 164.0<br>     </div>`)[0];
+                popup_cff9f746e3596438eaf4a61368585577.setContent(html_a9163e33774a327e9c4a496b2e62a1d2);
+            
+        
+
+        circle_marker_e21db98b0d36069dc29df922b1b1dc24.bindPopup(popup_cff9f746e3596438eaf4a61368585577)
+        ;
+
+        
+    
+    
+            circle_marker_e21db98b0d36069dc29df922b1b1dc24.bindTooltip(
+                `<div>
+                     HERITAGE HALL-LEESBURG (SNF)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_6e60bfb03d37be030a3b74f2383dfd53 = L.circleMarker(
+                [38.2759, -77.195],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 10.4, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_b9e42b98468257e29d0ee37b1820a4f2);
+        
+    
+        var popup_159ce8af895c8fe3ed74ec1dcc437c14 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_11b570c5ba0b0d90d319fa18265d8fa6 = $(`<div id="html_11b570c5ba0b0d90d319fa18265d8fa6" style="width: 100.0%; height: 100.0%;">     <b>HERITAGE HALL KING GEORGE</b><br>     Type: SNF<br>     Beds: 130.0<br>     </div>`)[0];
+                popup_159ce8af895c8fe3ed74ec1dcc437c14.setContent(html_11b570c5ba0b0d90d319fa18265d8fa6);
+            
+        
+
+        circle_marker_6e60bfb03d37be030a3b74f2383dfd53.bindPopup(popup_159ce8af895c8fe3ed74ec1dcc437c14)
+        ;
+
+        
+    
+    
+            circle_marker_6e60bfb03d37be030a3b74f2383dfd53.bindTooltip(
+                `<div>
+                     HERITAGE HALL KING GEORGE (SNF)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_867d9d29c2d412b1aaf0ce1c51d9f158 = L.circleMarker(
+                [38.9476, -78.211],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4.8, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_b9e42b98468257e29d0ee37b1820a4f2);
+        
+    
+        var popup_ebcc89d88d6c0f2aa438fb11b7fe4c79 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_d78869977936a2e0e94605976a4430e2 = $(`<div id="html_d78869977936a2e0e94605976a4430e2" style="width: 100.0%; height: 100.0%;">     <b>HERITAGE HALL FRONT ROYAL</b><br>     Type: SNF<br>     Beds: 60.0<br>     </div>`)[0];
+                popup_ebcc89d88d6c0f2aa438fb11b7fe4c79.setContent(html_d78869977936a2e0e94605976a4430e2);
+            
+        
+
+        circle_marker_867d9d29c2d412b1aaf0ce1c51d9f158.bindPopup(popup_ebcc89d88d6c0f2aa438fb11b7fe4c79)
+        ;
+
+        
+    
+    
+            circle_marker_867d9d29c2d412b1aaf0ce1c51d9f158.bindTooltip(
+                `<div>
+                     HERITAGE HALL FRONT ROYAL (SNF)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_b3a8397ebadfebc2cfb5a72af4bbb21f = L.circleMarker(
+                [37.5435, -78.466],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4.8, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_b9e42b98468257e29d0ee37b1820a4f2);
+        
+    
+        var popup_699a9a678ecc42bd4aaef8bc35ee542f = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_0374c8e62eed61e752dde2679cdb1ba4 = $(`<div id="html_0374c8e62eed61e752dde2679cdb1ba4" style="width: 100.0%; height: 100.0%;">     <b>HERITAGE HALL DILLWYN</b><br>     Type: SNF<br>     Beds: 60.0<br>     </div>`)[0];
+                popup_699a9a678ecc42bd4aaef8bc35ee542f.setContent(html_0374c8e62eed61e752dde2679cdb1ba4);
+            
+        
+
+        circle_marker_b3a8397ebadfebc2cfb5a72af4bbb21f.bindPopup(popup_699a9a678ecc42bd4aaef8bc35ee542f)
+        ;
+
+        
+    
+    
+            circle_marker_b3a8397ebadfebc2cfb5a72af4bbb21f.bindTooltip(
+                `<div>
+                     HERITAGE HALL DILLWYN (SNF)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_14e2023a63ff63ffdbae6e4b1c9f6128 = L.circleMarker(
+                [37.152, -82.459],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8.0, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_b9e42b98468257e29d0ee37b1820a4f2);
+        
+    
+        var popup_e63eff28831f54bad9cf76999a251eae = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_a0b08c26a2d8eb5fa6f38fdcfeeb6265 = $(`<div id="html_a0b08c26a2d8eb5fa6f38fdcfeeb6265" style="width: 100.0%; height: 100.0%;">     <b>HERITAGE HALL CLINTWOOD</b><br>     Type: SNF<br>     Beds: 100.0<br>     </div>`)[0];
+                popup_e63eff28831f54bad9cf76999a251eae.setContent(html_a0b08c26a2d8eb5fa6f38fdcfeeb6265);
+            
+        
+
+        circle_marker_14e2023a63ff63ffdbae6e4b1c9f6128.bindPopup(popup_e63eff28831f54bad9cf76999a251eae)
+        ;
+
+        
+    
+    
+            circle_marker_14e2023a63ff63ffdbae6e4b1c9f6128.bindTooltip(
+                `<div>
+                     HERITAGE HALL CLINTWOOD (SNF)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_d2c2a36549937824e134029abf3b52bf = L.circleMarker(
+                [37.7758, -79.442],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4.8, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_b9e42b98468257e29d0ee37b1820a4f2);
+        
+    
+        var popup_00ce1ba8bfc57dab86cb40eaf4ebe8c7 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_dfa284ccd00fd84019b9a1a6b2819663 = $(`<div id="html_dfa284ccd00fd84019b9a1a6b2819663" style="width: 100.0%; height: 100.0%;">     <b>HERITAGE HALL LEXINGTON</b><br>     Type: SNF<br>     Beds: 60.0<br>     </div>`)[0];
+                popup_00ce1ba8bfc57dab86cb40eaf4ebe8c7.setContent(html_dfa284ccd00fd84019b9a1a6b2819663);
+            
+        
+
+        circle_marker_d2c2a36549937824e134029abf3b52bf.bindPopup(popup_00ce1ba8bfc57dab86cb40eaf4ebe8c7)
+        ;
+
+        
+    
+    
+            circle_marker_d2c2a36549937824e134029abf3b52bf.bindTooltip(
+                `<div>
+                     HERITAGE HALL LEXINGTON (SNF)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_39a083a0ea01f01721b3bd665215b7d0 = L.circleMarker(
+                [36.7197, -80.476],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4.8, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_b9e42b98468257e29d0ee37b1820a4f2);
+        
+    
+        var popup_17ac4f698562c49410b9ec3325978db2 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_47353bc650ba3cbacc0f822e567aece4 = $(`<div id="html_47353bc650ba3cbacc0f822e567aece4" style="width: 100.0%; height: 100.0%;">     <b>HERITAGE HALL - LAUREL MEADOWS</b><br>     Type: SNF<br>     Beds: 60.0<br>     </div>`)[0];
+                popup_17ac4f698562c49410b9ec3325978db2.setContent(html_47353bc650ba3cbacc0f822e567aece4);
+            
+        
+
+        circle_marker_39a083a0ea01f01721b3bd665215b7d0.bindPopup(popup_17ac4f698562c49410b9ec3325978db2)
+        ;
+
+        
+    
+    
+            circle_marker_39a083a0ea01f01721b3bd665215b7d0.bindTooltip(
+                `<div>
+                     HERITAGE HALL - LAUREL MEADOWS (SNF)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_9da0d6d41cd3f1a674d571d52a044f34 = L.circleMarker(
+                [36.9687, -82.559],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7.76, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_b9e42b98468257e29d0ee37b1820a4f2);
+        
+    
+        var popup_41622f82802e1fa9d471774dd6beaf57 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_e9941e763bcbceef0a0ff5da32ac468e = $(`<div id="html_e9941e763bcbceef0a0ff5da32ac468e" style="width: 100.0%; height: 100.0%;">     <b>HERITAGE HALL WISE</b><br>     Type: SNF<br>     Beds: 97.0<br>     </div>`)[0];
+                popup_41622f82802e1fa9d471774dd6beaf57.setContent(html_e9941e763bcbceef0a0ff5da32ac468e);
+            
+        
+
+        circle_marker_9da0d6d41cd3f1a674d571d52a044f34.bindPopup(popup_41622f82802e1fa9d471774dd6beaf57)
+        ;
+
+        
+    
+    
+            circle_marker_9da0d6d41cd3f1a674d571d52a044f34.bindTooltip(
+                `<div>
+                     HERITAGE HALL WISE (SNF)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_79ebd9d43075983f0fecf9a3de9e8081 = L.circleMarker(
+                [37.0707, -78.003],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 14.4, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_b9e42b98468257e29d0ee37b1820a4f2);
+        
+    
+        var popup_e5809259617599c19345613c07fbb859 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_3cab7101aa7fd5a751449f0ec303f37c = $(`<div id="html_3cab7101aa7fd5a751449f0ec303f37c" style="width: 100.0%; height: 100.0%;">     <b>HERITAGE HALL-BLACKSTONE</b><br>     Type: SNF<br>     Beds: 180.0<br>     </div>`)[0];
+                popup_e5809259617599c19345613c07fbb859.setContent(html_3cab7101aa7fd5a751449f0ec303f37c);
+            
+        
+
+        circle_marker_79ebd9d43075983f0fecf9a3de9e8081.bindPopup(popup_e5809259617599c19345613c07fbb859)
+        ;
+
+        
+    
+    
+            circle_marker_79ebd9d43075983f0fecf9a3de9e8081.bindTooltip(
+                `<div>
+                     HERITAGE HALL-BLACKSTONE (SNF)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_77ea5e313146cef618fe5839bed457ae = L.circleMarker(
+                [37.187, -80.408],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 14.32, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_b9e42b98468257e29d0ee37b1820a4f2);
+        
+    
+        var popup_4e53a6dc2b1d4e162a00aa9f1d68562e = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_b72f72896c975e1ceb21e3a87aedbd1b = $(`<div id="html_b72f72896c975e1ceb21e3a87aedbd1b" style="width: 100.0%; height: 100.0%;">     <b>HERITAGE HALL BLACKSBURG</b><br>     Type: SNF<br>     Beds: 179.0<br>     </div>`)[0];
+                popup_4e53a6dc2b1d4e162a00aa9f1d68562e.setContent(html_b72f72896c975e1ceb21e3a87aedbd1b);
+            
+        
+
+        circle_marker_77ea5e313146cef618fe5839bed457ae.bindPopup(popup_4e53a6dc2b1d4e162a00aa9f1d68562e)
+        ;
+
+        
+    
+    
+            circle_marker_77ea5e313146cef618fe5839bed457ae.bindTooltip(
+                `<div>
+                     HERITAGE HALL BLACKSBURG (SNF)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_6f48951c6a14b56ad19465dd644c9dc6 = L.circleMarker(
+                [37.3879, -80.826],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 9.6, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_b9e42b98468257e29d0ee37b1820a4f2);
+        
+    
+        var popup_da70c3c5b75e9be1828a7f35b8010268 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_9227aa045e43b0f7e87784980e4c5dfb = $(`<div id="html_9227aa045e43b0f7e87784980e4c5dfb" style="width: 100.0%; height: 100.0%;">     <b>HERITAGE HALL-RICH CREEK</b><br>     Type: SNF<br>     Beds: 120.0<br>     </div>`)[0];
+                popup_da70c3c5b75e9be1828a7f35b8010268.setContent(html_9227aa045e43b0f7e87784980e4c5dfb);
+            
+        
+
+        circle_marker_6f48951c6a14b56ad19465dd644c9dc6.bindPopup(popup_da70c3c5b75e9be1828a7f35b8010268)
+        ;
+
+        
+    
+    
+            circle_marker_6f48951c6a14b56ad19465dd644c9dc6.bindTooltip(
+                `<div>
+                     HERITAGE HALL-RICH CREEK (SNF)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_0773de3e948e8fbf2c2ee6fe2c22caa0 = L.circleMarker(
+                [26.6402, -80.208],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 9.6, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_b9e42b98468257e29d0ee37b1820a4f2);
+        
+    
+        var popup_73caba8bed97e834315c7bf059214894 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_e14476a2f64c94dbb8cb584320ae690f = $(`<div id="html_e14476a2f64c94dbb8cb584320ae690f" style="width: 100.0%; height: 100.0%;">     <b>LUXE AT WELLINGTON REHABILITATION CENTER THE</b><br>     Type: SNF<br>     Beds: 120.0<br>     </div>`)[0];
+                popup_73caba8bed97e834315c7bf059214894.setContent(html_e14476a2f64c94dbb8cb584320ae690f);
+            
+        
+
+        circle_marker_0773de3e948e8fbf2c2ee6fe2c22caa0.bindPopup(popup_73caba8bed97e834315c7bf059214894)
+        ;
+
+        
+    
+    
+            circle_marker_0773de3e948e8fbf2c2ee6fe2c22caa0.bindTooltip(
+                `<div>
+                     LUXE AT WELLINGTON REHABILITATION CENTER THE (SNF)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_81b9a53d5f70286e3d52a5212d0c596c = L.circleMarker(
+                [28.1551, -82.487],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 9.6, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_b9e42b98468257e29d0ee37b1820a4f2);
+        
+    
+        var popup_b5796c7332a502b09ca28a10da4848a7 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_b3c909e75da047ae4011614298ff649e = $(`<div id="html_b3c909e75da047ae4011614298ff649e" style="width: 100.0%; height: 100.0%;">     <b>LUXE AT LUTZ REHABILITATION CENTER (THE)</b><br>     Type: SNF<br>     Beds: 120.0<br>     </div>`)[0];
+                popup_b5796c7332a502b09ca28a10da4848a7.setContent(html_b3c909e75da047ae4011614298ff649e);
+            
+        
+
+        circle_marker_81b9a53d5f70286e3d52a5212d0c596c.bindPopup(popup_b5796c7332a502b09ca28a10da4848a7)
+        ;
+
+        
+    
+    
+            circle_marker_81b9a53d5f70286e3d52a5212d0c596c.bindTooltip(
+                `<div>
+                     LUXE AT LUTZ REHABILITATION CENTER (THE) (SNF)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_19d9c3527c93fa03644441a6e9c489fd = L.circleMarker(
+                [26.8883, -80.108],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 10.32, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_b9e42b98468257e29d0ee37b1820a4f2);
+        
+    
+        var popup_6b41de30c9ee6812f123119ef77627fa = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_586282c6d9ad1aa4f33299abe8166451 = $(`<div id="html_586282c6d9ad1aa4f33299abe8166451" style="width: 100.0%; height: 100.0%;">     <b>LUXE AT JUPITER REHABILITATION CENTER (THE)</b><br>     Type: SNF<br>     Beds: 129.0<br>     </div>`)[0];
+                popup_6b41de30c9ee6812f123119ef77627fa.setContent(html_586282c6d9ad1aa4f33299abe8166451);
+            
+        
+
+        circle_marker_19d9c3527c93fa03644441a6e9c489fd.bindPopup(popup_6b41de30c9ee6812f123119ef77627fa)
+        ;
+
+        
+    
+    
+            circle_marker_19d9c3527c93fa03644441a6e9c489fd.bindTooltip(
+                `<div>
+                     LUXE AT JUPITER REHABILITATION CENTER (THE) (SNF)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_b2c2c2a18933868cefe7bd280a10f4f5 = L.circleMarker(
+                [41.1148, -80.767],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5.92, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_b9e42b98468257e29d0ee37b1820a4f2);
+        
+    
+        var popup_660e3ef747a2210b34a1a81fd1b86dc7 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_e00df81028848a05a53d96f5b57ad9fe = $(`<div id="html_e00df81028848a05a53d96f5b57ad9fe" style="width: 100.0%; height: 100.0%;">     <b>BRIARFIELD AT ASHLEY CIRCLE</b><br>     Type: SNF<br>     Beds: 74.0<br>     </div>`)[0];
+                popup_660e3ef747a2210b34a1a81fd1b86dc7.setContent(html_e00df81028848a05a53d96f5b57ad9fe);
+            
+        
+
+        circle_marker_b2c2c2a18933868cefe7bd280a10f4f5.bindPopup(popup_660e3ef747a2210b34a1a81fd1b86dc7)
+        ;
+
+        
+    
+    
+            circle_marker_b2c2c2a18933868cefe7bd280a10f4f5.bindTooltip(
+                `<div>
+                     BRIARFIELD AT ASHLEY CIRCLE (SNF)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_e359d4d9b3d48f3769941466f1d022ed = L.circleMarker(
+                [41.095, -80.763],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7.36, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_b9e42b98468257e29d0ee37b1820a4f2);
+        
+    
+        var popup_99f9a1198428230577bbc37a3acb8965 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_ad29fa5fcb68da22784b75b9c64d62ec = $(`<div id="html_ad29fa5fcb68da22784b75b9c64d62ec" style="width: 100.0%; height: 100.0%;">     <b>BRIARFIELD MANOR</b><br>     Type: SNF<br>     Beds: 92.0<br>     </div>`)[0];
+                popup_99f9a1198428230577bbc37a3acb8965.setContent(html_ad29fa5fcb68da22784b75b9c64d62ec);
+            
+        
+
+        circle_marker_e359d4d9b3d48f3769941466f1d022ed.bindPopup(popup_99f9a1198428230577bbc37a3acb8965)
+        ;
+
+        
+    
+    
+            circle_marker_e359d4d9b3d48f3769941466f1d022ed.bindTooltip(
+                `<div>
+                     BRIARFIELD MANOR (SNF)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_bc5aaa647aa1f2a932dfc553da56b1eb = L.circleMarker(
+                [40.9953, -80.663],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4.64, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_b9e42b98468257e29d0ee37b1820a4f2);
+        
+    
+        var popup_57030e3b6d4f149d280176c4834a6534 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_9db75b0d902147d91830c2864bf92cf2 = $(`<div id="html_9db75b0d902147d91830c2864bf92cf2" style="width: 100.0%; height: 100.0%;">     <b>BRIARFIELD PLACE</b><br>     Type: SNF<br>     Beds: 58.0<br>     </div>`)[0];
+                popup_57030e3b6d4f149d280176c4834a6534.setContent(html_9db75b0d902147d91830c2864bf92cf2);
+            
+        
+
+        circle_marker_bc5aaa647aa1f2a932dfc553da56b1eb.bindPopup(popup_57030e3b6d4f149d280176c4834a6534)
+        ;
+
+        
+    
+    
+            circle_marker_bc5aaa647aa1f2a932dfc553da56b1eb.bindTooltip(
+                `<div>
+                     BRIARFIELD PLACE (SNF)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_be62438cc103c2b8830ab72f9a80d3e6 = L.circleMarker(
+                [41.0954025, -80.7613625],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 9.6, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_b9e42b98468257e29d0ee37b1820a4f2);
+        
+    
+        var popup_e859626a235fd7c99f4ef67244878f84 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_ce766bfe05fd7779450c9082ad213403 = $(`<div id="html_ce766bfe05fd7779450c9082ad213403" style="width: 100.0%; height: 100.0%;">     <b>Briarfield Manor</b><br>     Type: Other<br>     Beds: 120.0<br>     </div>`)[0];
+                popup_e859626a235fd7c99f4ef67244878f84.setContent(html_ce766bfe05fd7779450c9082ad213403);
+            
+        
+
+        circle_marker_be62438cc103c2b8830ab72f9a80d3e6.bindPopup(popup_e859626a235fd7c99f4ef67244878f84)
+        ;
+
+        
+    
+    
+            circle_marker_be62438cc103c2b8830ab72f9a80d3e6.bindTooltip(
+                `<div>
+                     Briarfield Manor (Other)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_e28ef9268189e433547a6b9ecd39e0ce = L.circleMarker(
+                [41.0228789, -80.5830172],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6.4, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_b9e42b98468257e29d0ee37b1820a4f2);
+        
+    
+        var popup_065570d38b44bbcbbb96b005d83bb771 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_fdbda0244436680b3b23c663b37797eb = $(`<div id="html_fdbda0244436680b3b23c663b37797eb" style="width: 100.0%; height: 100.0%;">     <b>The Inn at Poland Way</b><br>     Type: Other<br>     Beds: 80.0<br>     </div>`)[0];
+                popup_065570d38b44bbcbbb96b005d83bb771.setContent(html_fdbda0244436680b3b23c663b37797eb);
+            
+        
+
+        circle_marker_e28ef9268189e433547a6b9ecd39e0ce.bindPopup(popup_065570d38b44bbcbbb96b005d83bb771)
+        ;
+
+        
+    
+    
+            circle_marker_e28ef9268189e433547a6b9ecd39e0ce.bindTooltip(
+                `<div>
+                     The Inn at Poland Way (Other)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_6a27516e899765ec8e3648758126e699 = L.circleMarker(
+                [41.0064632, -80.6101444],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5.6000000000000005, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_b9e42b98468257e29d0ee37b1820a4f2);
+        
+    
+        var popup_de27ef4d27f0bd48d768b4a3ee229be4 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_f860feed3c332f03f5a0117ae2b60601 = $(`<div id="html_f860feed3c332f03f5a0117ae2b60601" style="width: 100.0%; height: 100.0%;">     <b>The Inn at Walker Mill</b><br>     Type: Other<br>     Beds: 70.0<br>     </div>`)[0];
+                popup_de27ef4d27f0bd48d768b4a3ee229be4.setContent(html_f860feed3c332f03f5a0117ae2b60601);
+            
+        
+
+        circle_marker_6a27516e899765ec8e3648758126e699.bindPopup(popup_de27ef4d27f0bd48d768b4a3ee229be4)
+        ;
+
+        
+    
+    
+            circle_marker_6a27516e899765ec8e3648758126e699.bindTooltip(
+                `<div>
+                     The Inn at Walker Mill (Other)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_2e8eb3b191500869fceeca60ae863737 = L.circleMarker(
+                [41.0653652, -80.6981368],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6.0, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_b9e42b98468257e29d0ee37b1820a4f2);
+        
+    
+        var popup_46742aa060d088db8761972bbfbbaa3e = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_ba73812230a566b23319b148a05895a3 = $(`<div id="html_ba73812230a566b23319b148a05895a3" style="width: 100.0%; height: 100.0%;">     <b>The Inn at Old Saybrook</b><br>     Type: Other<br>     Beds: 75.0<br>     </div>`)[0];
+                popup_46742aa060d088db8761972bbfbbaa3e.setContent(html_ba73812230a566b23319b148a05895a3);
+            
+        
+
+        circle_marker_2e8eb3b191500869fceeca60ae863737.bindPopup(popup_46742aa060d088db8761972bbfbbaa3e)
+        ;
+
+        
+    
+    
+            circle_marker_2e8eb3b191500869fceeca60ae863737.bindTooltip(
+                `<div>
+                     The Inn at Old Saybrook (Other)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_e5f38c0659d7d8cdca6f700679980c4c = L.circleMarker(
+                [41.06691, -80.7006901],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6.4, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_b9e42b98468257e29d0ee37b1820a4f2);
+        
+    
+        var popup_7efa5f2703b27f771c0eebcc15b6d171 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_dba743c3dc33534b4d56a5776fbebcd9 = $(`<div id="html_dba743c3dc33534b4d56a5776fbebcd9" style="width: 100.0%; height: 100.0%;">     <b>The Inn at Christine Valley</b><br>     Type: Other<br>     Beds: 80.0<br>     </div>`)[0];
+                popup_7efa5f2703b27f771c0eebcc15b6d171.setContent(html_dba743c3dc33534b4d56a5776fbebcd9);
+            
+        
+
+        circle_marker_e5f38c0659d7d8cdca6f700679980c4c.bindPopup(popup_7efa5f2703b27f771c0eebcc15b6d171)
+        ;
+
+        
+    
+    
+            circle_marker_e5f38c0659d7d8cdca6f700679980c4c.bindTooltip(
+                `<div>
+                     The Inn at Christine Valley (Other)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_a5deac54e0bf9702729be9fb84e592e0 = L.circleMarker(
+                [40.9785175, -80.6605707],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7.6000000000000005, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_b9e42b98468257e29d0ee37b1820a4f2);
+        
+    
+        var popup_4d380fadc52b7ced9af49c93412c4efe = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_9da649475d621a92764817e6d19f86bc = $(`<div id="html_9da649475d621a92764817e6d19f86bc" style="width: 100.0%; height: 100.0%;">     <b>The Inn at Glenellen</b><br>     Type: Other<br>     Beds: 95.0<br>     </div>`)[0];
+                popup_4d380fadc52b7ced9af49c93412c4efe.setContent(html_9da649475d621a92764817e6d19f86bc);
+            
+        
+
+        circle_marker_a5deac54e0bf9702729be9fb84e592e0.bindPopup(popup_4d380fadc52b7ced9af49c93412c4efe)
+        ;
+
+        
+    
+    
+            circle_marker_a5deac54e0bf9702729be9fb84e592e0.bindTooltip(
+                `<div>
+                     The Inn at Glenellen (Other)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_b1a4a1aca038d0918d7edf87faaa2c73 = L.circleMarker(
+                [41.0213725, -80.7340986],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6.4, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_b9e42b98468257e29d0ee37b1820a4f2);
+        
+    
+        var popup_f8594f7db899fa5594789df2a7e9f643 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_c53e8a58fda5375292bbcf9280f0a4e2 = $(`<div id="html_c53e8a58fda5375292bbcf9280f0a4e2" style="width: 100.0%; height: 100.0%;">     <b>The Inn at Ironwood</b><br>     Type: Other<br>     Beds: 80.0<br>     </div>`)[0];
+                popup_f8594f7db899fa5594789df2a7e9f643.setContent(html_c53e8a58fda5375292bbcf9280f0a4e2);
+            
+        
+
+        circle_marker_b1a4a1aca038d0918d7edf87faaa2c73.bindPopup(popup_f8594f7db899fa5594789df2a7e9f643)
+        ;
+
+        
+    
+    
+            circle_marker_b1a4a1aca038d0918d7edf87faaa2c73.bindTooltip(
+                `<div>
+                     The Inn at Ironwood (Other)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_aca20703737f6f7dbbb293114e388964 = L.circleMarker(
+                [40.9785175, -80.6605707],
+                {"bubblingMouseEvents": true, "color": "gray", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "gray", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 20, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_b9e42b98468257e29d0ee37b1820a4f2);
+        
+    
+        var popup_8ad5a33b2a4fb88ab0cd587431ae2b62 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_cbd4411fba28c38bc1a06fcfd271f335 = $(`<div id="html_cbd4411fba28c38bc1a06fcfd271f335" style="width: 100.0%; height: 100.0%;">     <b>The Villas at GlenEllen - North Lima, OH</b><br>     Type: Other<br>     Beds: nan<br>     </div>`)[0];
+                popup_8ad5a33b2a4fb88ab0cd587431ae2b62.setContent(html_cbd4411fba28c38bc1a06fcfd271f335);
+            
+        
+
+        circle_marker_aca20703737f6f7dbbb293114e388964.bindPopup(popup_8ad5a33b2a4fb88ab0cd587431ae2b62)
+        ;
+
+        
+    
+    
+            circle_marker_aca20703737f6f7dbbb293114e388964.bindTooltip(
+                `<div>
+                     The Villas at GlenEllen - North Lima, OH (Other)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_98a77d2946e699833f6895e7a58bb335 = L.circleMarker(
+                [41.1141953, -80.7646237],
+                {"bubblingMouseEvents": true, "color": "gray", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "gray", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 20, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_b9e42b98468257e29d0ee37b1820a4f2);
+        
+    
+        var popup_3c362fa32edfceb5c5f9620c17042ba0 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_1912f616e343cb9892d6339b0b47aef7 = $(`<div id="html_1912f616e343cb9892d6339b0b47aef7" style="width: 100.0%; height: 100.0%;">     <b>Briarfield at Ashley Circle</b><br>     Type: Other<br>     Beds: nan<br>     </div>`)[0];
+                popup_3c362fa32edfceb5c5f9620c17042ba0.setContent(html_1912f616e343cb9892d6339b0b47aef7);
+            
+        
+
+        circle_marker_98a77d2946e699833f6895e7a58bb335.bindPopup(popup_3c362fa32edfceb5c5f9620c17042ba0)
+        ;
+
+        
+    
+    
+            circle_marker_98a77d2946e699833f6895e7a58bb335.bindTooltip(
+                `<div>
+                     Briarfield at Ashley Circle (Other)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_4aa5f8bdab3a048eada88bf280093532 = L.circleMarker(
+                [41.0228789, -80.5830172],
+                {"bubblingMouseEvents": true, "color": "gray", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "gray", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 20, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_b9e42b98468257e29d0ee37b1820a4f2);
+        
+    
+        var popup_5e2a262ffa4068717ddffeb088371a19 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_fce7664dc1e2444cdb4a3b1482b34a74 = $(`<div id="html_fce7664dc1e2444cdb4a3b1482b34a74" style="width: 100.0%; height: 100.0%;">     <b>The Inn at Poland Way</b><br>     Type: Other<br>     Beds: nan<br>     </div>`)[0];
+                popup_5e2a262ffa4068717ddffeb088371a19.setContent(html_fce7664dc1e2444cdb4a3b1482b34a74);
+            
+        
+
+        circle_marker_4aa5f8bdab3a048eada88bf280093532.bindPopup(popup_5e2a262ffa4068717ddffeb088371a19)
+        ;
+
+        
+    
+    
+            circle_marker_4aa5f8bdab3a048eada88bf280093532.bindTooltip(
+                `<div>
+                     The Inn at Poland Way (Other)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_989068e376436f8ac65a0f7204c5db6b = L.circleMarker(
+                [41.0064632, -80.6101444],
+                {"bubblingMouseEvents": true, "color": "gray", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "gray", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 20, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_b9e42b98468257e29d0ee37b1820a4f2);
+        
+    
+        var popup_6047d7fcb291bebdfe9d265603f23788 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_6274793ef6b03667feb65bb46edddd3a = $(`<div id="html_6274793ef6b03667feb65bb46edddd3a" style="width: 100.0%; height: 100.0%;">     <b>The Inn at Walker Mill</b><br>     Type: Other<br>     Beds: nan<br>     </div>`)[0];
+                popup_6047d7fcb291bebdfe9d265603f23788.setContent(html_6274793ef6b03667feb65bb46edddd3a);
+            
+        
+
+        circle_marker_989068e376436f8ac65a0f7204c5db6b.bindPopup(popup_6047d7fcb291bebdfe9d265603f23788)
+        ;
+
+        
+    
+    
+            circle_marker_989068e376436f8ac65a0f7204c5db6b.bindTooltip(
+                `<div>
+                     The Inn at Walker Mill (Other)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_27cb9e4c75c61db46397426e10c61b8d = L.circleMarker(
+                [41.0653652, -80.6981368],
+                {"bubblingMouseEvents": true, "color": "gray", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "gray", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 20, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_b9e42b98468257e29d0ee37b1820a4f2);
+        
+    
+        var popup_8e635efe2e2d1e7f3868fec202fd4458 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_9a74d80031342c652f25dca616c7b7a2 = $(`<div id="html_9a74d80031342c652f25dca616c7b7a2" style="width: 100.0%; height: 100.0%;">     <b>The Inn at Old Saybrook</b><br>     Type: Other<br>     Beds: nan<br>     </div>`)[0];
+                popup_8e635efe2e2d1e7f3868fec202fd4458.setContent(html_9a74d80031342c652f25dca616c7b7a2);
+            
+        
+
+        circle_marker_27cb9e4c75c61db46397426e10c61b8d.bindPopup(popup_8e635efe2e2d1e7f3868fec202fd4458)
+        ;
+
+        
+    
+    
+            circle_marker_27cb9e4c75c61db46397426e10c61b8d.bindTooltip(
+                `<div>
+                     The Inn at Old Saybrook (Other)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_318b47b0a3254dd3411092ac6265590c = L.circleMarker(
+                [41.06691, -80.7006901],
+                {"bubblingMouseEvents": true, "color": "gray", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "gray", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 20, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_b9e42b98468257e29d0ee37b1820a4f2);
+        
+    
+        var popup_4652968b931ee5eec5ef7ca6a493e8c3 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_0eb0c15182d74743e54223ad0556cdc4 = $(`<div id="html_0eb0c15182d74743e54223ad0556cdc4" style="width: 100.0%; height: 100.0%;">     <b>The Inn at Christine Valley</b><br>     Type: Other<br>     Beds: nan<br>     </div>`)[0];
+                popup_4652968b931ee5eec5ef7ca6a493e8c3.setContent(html_0eb0c15182d74743e54223ad0556cdc4);
+            
+        
+
+        circle_marker_318b47b0a3254dd3411092ac6265590c.bindPopup(popup_4652968b931ee5eec5ef7ca6a493e8c3)
+        ;
+
+        
+    
+    
+            circle_marker_318b47b0a3254dd3411092ac6265590c.bindTooltip(
+                `<div>
+                     The Inn at Christine Valley (Other)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_775d3c0783edfcdf728ca4bfa4e380ac = L.circleMarker(
+                [40.9785175, -80.6605707],
+                {"bubblingMouseEvents": true, "color": "gray", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "gray", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 20, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_b9e42b98468257e29d0ee37b1820a4f2);
+        
+    
+        var popup_28c84bbf379b9ad86cb125295822395e = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_1a888bcc1d00f0c4d0f7536c5caaacb8 = $(`<div id="html_1a888bcc1d00f0c4d0f7536c5caaacb8" style="width: 100.0%; height: 100.0%;">     <b>The Inn at Glenellen</b><br>     Type: Other<br>     Beds: nan<br>     </div>`)[0];
+                popup_28c84bbf379b9ad86cb125295822395e.setContent(html_1a888bcc1d00f0c4d0f7536c5caaacb8);
+            
+        
+
+        circle_marker_775d3c0783edfcdf728ca4bfa4e380ac.bindPopup(popup_28c84bbf379b9ad86cb125295822395e)
+        ;
+
+        
+    
+    
+            circle_marker_775d3c0783edfcdf728ca4bfa4e380ac.bindTooltip(
+                `<div>
+                     The Inn at Glenellen (Other)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            marker_cluster_b9e42b98468257e29d0ee37b1820a4f2.addTo(map_66759b02f80468681cf8a3cbe7518368);
+        
+    
+            var layer_control_3d0ca76e1b0007d329f70dba0f99fdc8_layers = {
+                base_layers : {
+                    "Light" : tile_layer_741df39f49688d658cba14378bf3f05f,
+                    "Topo" : tile_layer_c55fcd14286a91f0d122bc961129e882,
+                    "Standard" : tile_layer_11065ecbbb6ef7ce251566d68b95f46e,
+                    "Satellite" : tile_layer_14b5d41d2f9fd1442a030b20b9629ac7,
+                },
+                overlays :  {
+                    "macro_element_b9e42b98468257e29d0ee37b1820a4f2" : marker_cluster_b9e42b98468257e29d0ee37b1820a4f2,
+                },
+            };
+            let layer_control_3d0ca76e1b0007d329f70dba0f99fdc8 = L.control.layers(
+                layer_control_3d0ca76e1b0007d329f70dba0f99fdc8_layers.base_layers,
+                layer_control_3d0ca76e1b0007d329f70dba0f99fdc8_layers.overlays,
+                {
+  "position": "topright",
+  "collapsed": true,
+  "autoZIndex": true,
+}
+            ).addTo(map_66759b02f80468681cf8a3cbe7518368);
+
+        
+</script>
+</html>
